@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DataMining | 世界的审美！]]></title>
   <link href="http://mvj3.github.io/blog/categories/datamining/atom.xml" rel="self"/>
   <link href="http://mvj3.github.io/"/>
-  <updated>2013-07-08T20:51:32+08:00</updated>
+  <updated>2013-07-08T21:36:57+08:00</updated>
   <id>http://mvj3.github.io/</id>
   <author>
     <name><![CDATA[mvj3]]></name>
@@ -56,6 +56,10 @@
 <li>数据展示 采用Rails web框架开发。用户访问统计时，应用程序先在内存声明空值的多维数组，再填入数据库里有值的部分，最后在浏览器里用图表展示出来，这样有效避免了磁盘IO过慢的问题。</li>
 </ul>
 
+
+<h2>相关演讲</h2>
+
+<p><a href="http://ruby-china.org/topics/5092">2012年09月01日</a> 在盛大创新院做过一次分享, 幻灯片地址在 <a href="http://mvj3.github.io/statistics-analytics-and-dark-knight">统计分析与黑暗骑士</a> 。</p>
 
 <h2>缺陷</h2>
 
