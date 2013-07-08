@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Backbones | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/backbones/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[解决Backbones视图的事件重复绑定]]></title>
+    <link href="http://mvj3.github.io/2013/05/28/fix-backbones-view-duplicated-events-bind/"/>
+    <updated>2013-05-28T15:28:32+08:00</updated>
+    <id>http://mvj3.github.io/2013/05/28/fix-backbones-view-duplicated-events-bind</id>
+    <content type="html"><![CDATA[<h2>原理</h2>
+
+<p>Backbones的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。</p>
+
+<p>```javascript
+var QAListTopicView = Backbone.View.extend({
+  events: {</p>
+
+<pre><code>"click li": 'topic_show'
+</code></pre>
+
+<p>  },
+  topic_show: function(event) {
+  },
+  template: _.template($(&ldquo;#qa_list_topic_template&rdquo;).html()),
+  initialize: function(opts) {</p>
+
+<pre><code>this.topics = opts.topics;
+return this;
+</code></pre>
+
+<p>  },
+  render: function() {</p>
+
+<pre><code>this.$el.html(this.template());
+return this;
+</code></pre>
+
+<p>  }
+});</p>
+
+<p>var list_topic_view = new QAListTopicView(data);
+$(&ldquo;#qa ul&rdquo;).html(list_topic_view.render().el);
+```</p>
+
+<p>如果在View.render方法里进行事件绑定，那么就会对多重Backbones.View的多重实例进行重复绑定。</p>
+
+<h2>例子</h2>
+
+<p>详细的一个使用Backbones里的View和Event的例子见: <a href="https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js">https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js</a></p>
+]]></content>
+  </entry>
+  
+</feed>

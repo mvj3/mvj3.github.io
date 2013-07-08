@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Proc | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/proc/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[统计分析DSL设计，解决惰性加载 和 作用域 两个问题]]></title>
+    <link href="http://mvj3.github.io/2013/04/17/statlysis-analysis-design-solve-two-problems-lazy-loading-and-scope/"/>
+    <updated>2013-04-17T21:42:44+08:00</updated>
+    <id>http://mvj3.github.io/2013/04/17/statlysis-analysis-design-solve-two-problems-lazy-loading-and-scope</id>
+    <content type="html"><![CDATA[<p>```ruby</p>
+
+<h1>encoding: UTF-8</h1>
+
+<p>#</p>
+
+<h1>统计分析DSL设计</h1>
+
+<p>#</p>
+
+<p>require &lsquo;singleton&rsquo;</p>
+
+<p>module StatlysisDslDesign
+  class &lt;&lt; self</p>
+
+<pre><code>def setup &amp;block
+  raise "必须配置proc" if not block
+
+  puts "开始配置 StatlysisDslDesign"
+  # 1, 作用域   使用&amp;block把proc对象传递给其他对象作用域执行
+  StatlysisDslDesign.time_log do
+    config.push block
+  end
+  puts
+end
+
+def process
+  config.daily_crons.each do |name, _proc|
+    puts "开始执行 #{name} 任务"
+    StatlysisDslDesign.time_log do
+      puts "结果 #{_proc.call}"
+    end
+  end
+end
+
+def config
+  Configuration.instance
+end
+
+protected
+def time_log
+  t = Time.now
+  yield
+  puts "时长 #{(Time.now - t).round(2)}秒"
+  puts "-" * 42
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>  class Configuration</p>
+
+<pre><code>include Singleton
+attr_accessor :daily_crons
+self.instance.daily_crons = {}
+
+def push _proc
+  self.instance_exec(&amp;_proc)
+  self
+end
+
+def daily symbol
+  raise "必须配置一个和symbol对应的proc" if not block_given?
+  # 2, 惰性加载 实现方法用proc包装block
+  self.daily_crons[symbol] ||= Proc.new { yield }
+  return self
+end
+</code></pre>
+
+<p>  end</p>
+
+<p>end</p>
+
+<p>StatlysisDslDesign.setup do
+  daily :large_count do</p>
+
+<pre><code>sleep rand
+Struct.new(:count).new(10**10)
+</code></pre>
+
+<p>  end</p>
+
+<p>  daily :slow_count do</p>
+
+<pre><code>sleep 3
+Struct.new(:count).new(1)
+</code></pre>
+
+<p>  end
+end
+StatlysisDslDesign.process</p>
+
+<p><strong>END</strong>
+开始配置 StatlysisDslDesign</p>
+
+<h2>时长 0.0秒</h2>
+
+<p>开始执行 large_count 任务
+结果 #<struct count=10000000000></p>
+
+<h2>时长 0.57秒</h2>
+
+<p>开始执行 slow_count 任务
+结果 #<struct count=1></p>
+
+<h2>时长 3.0秒</h2>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

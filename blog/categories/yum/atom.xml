@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: yum | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/yum/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[解决yum错误Error: requested datatype primary not available]]></title>
+    <link href="http://mvj3.github.io/2011/11/15/Fix-yum-Error-requested-datatype-primary-not-available/"/>
+    <updated>2011-11-15T16:45:09+08:00</updated>
+    <id>http://mvj3.github.io/2011/11/15/Fix-yum-Error-requested-datatype-primary-not-available</id>
+    <content type="html"><![CDATA[<h2>服务器信息</h2>
+
+<p><code>text
+[mvj3@sdk2 ~]$ cat /proc/version
+Linux version 2.6.18-194.el5 (mockbuild@ca-build10.us.oracle.com) (gcc version 4.1.2 20080704 (Red Hat 4.1.2-48)) #1 SMP Mon Mar 29 22:10:29 EDT 2010
+</code></p>
+
+<h2>出错信息</h2>
+
+<p><code>text
+[mvj3@sdk2 ~]$ sudo yum install gettext-devel httpd-devel openssl-devel zlib-devel gcc gcc-c++ curl-devel expat-devel gettext-devel mysql-server mysql-devel libevent-devel mysql-devel mysql pcre pcre-devel libxml2-devel sqlite-devel ruby-devel -y
+Loaded plugins: security
+Error: requested datatype primary not available
+[mvj3@sdk2 ~]$ sudo yum upgrade
+Loaded plugins: security
+Error: requested datatype primary not available
+</code></p>
+
+<h2>解决方案</h2>
+
+<p><code>text
+[mvj3@sdk2 ~]$ sudo yum clean all
+Loaded plugins: security
+Cleaning up Everything
+[mvj3@sdk2 ~]$ sudo rpm --rebuilddb
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

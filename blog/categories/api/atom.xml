@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: API | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/api/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[最近访客实现]]></title>
+    <link href="http://mvj3.github.io/2013/01/30/recent-visitors-implement/"/>
+    <updated>2013-01-30T18:19:00+08:00</updated>
+    <id>http://mvj3.github.io/2013/01/30/recent-visitors-implement</id>
+    <content type="html"><![CDATA[<h2>问题分两个，一个是后端，一个是前端。</h2>
+
+<p>对后端来说，用户每次blog/index|show访问都生成访问记录，后端需要进行排重和去掉未登陆用户。如果在该次访问里进行，特别是某个博客突然火了，必然每次访问都产生IO(磁盘或网络，因为多进程要共享信息），所以必定是异步的。</p>
+
+<p>前端展示考虑到缓存，一般是页面片段缓存，或者ajax载入。</p>
+
+<p>后端异步如何计算每个blog的最近访客，log.js记录了最近访问，一个后台常驻进程循环对日志表按时间记录来读取blog访问信息，把最近访客信息刷新。相对单次请求全部处理，这里处理次数更少，资源更节约，当然瓶颈也在日志表的索引更新和读取。</p>
+
+<h2>把当前自己的访问也添加上</h2>
+
+<p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
+]]></content>
+  </entry>
+  
+</feed>

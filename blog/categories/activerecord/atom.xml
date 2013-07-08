@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ActiveRecord | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/activerecord/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[给xunsearch提供一对多的不重复的数据列表]]></title>
+    <link href="http://mvj3.github.io/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/"/>
+    <updated>2013-03-25T14:07:30+08:00</updated>
+    <id>http://mvj3.github.io/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list</id>
+    <content type="html"><![CDATA[<h2>问题概述</h2>
+
+<p>同事采用的xunsearch搜索引擎在搜索一对多表时遇到了重复内容的问题，问题在通过SQL语句来生成的单表有因为一对多而导致的重复信息。简单google下，发现要用group_concat把两个表要用到的文本字段来把每个都合成到一行记录里，但是这样复杂的SQL估计只有大拿才能写的出来。</p>
+
+<h2>解决方案</h2>
+
+<p>于是我想到之前做的thinking-sphinx是支持一对多联合查询的，那就看看thinking-sphinx是如何来生成SQL的。</p>
+
+<p>配置thinking-sphinx，这个参考官网。</p>
+
+<p>code_gists对应多个code_documents，给搜索模块配置索引结构</p>
+
+<p>```ruby
+class CodeGist &lt; ActiveRecord::Base
+  define_index do</p>
+
+<pre><code>indexes documents.filename, :as =&gt; :content
+indexes documents.content, :as =&gt; :content
+indexes :description, :as =&gt; :content
+indexes :author, :as =&gt; :content
+
+where "(code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)"
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>运行bundle exec rake ts:config后，在config目录就有了config/production.sphinx.conf文件，察看source区块的sql_query为</p>
+
+<p><code>sql
+SELECT SQL_NO_CACHE `code_gists`.`id` * CAST(3 AS SIGNED) + 0 AS `id` , GROUP_CONCAT(DISTINCT IFNULL(`code_documents`.`filename`, '0') SEPARATOR ' ') AS `content`, GROUP_CONCAT(DISTINCT IFNULL(`code_documents`.`content`, '0') SEPARATOR ' ') AS `content`, `code_gists`.`description` AS `content`, `code_gists`.`id` AS `sphinx_internal_id`, 0 AS `sphinx_deleted`, 1875287073 AS `class_crc`, IFNULL(`code_gists`.`author`, '') AS `author` FROM `code_gists` LEFT OUTER JOIN `code_documents` ON `code_documents`.`gist_id` = `code_gists`.`id` WHERE (`code_gists`.`id` &gt;= $start AND `code_gists`.`id` &lt;= $end AND (code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)) GROUP BY `code_gists`.`id` ORDER BY NULL;
+</code></p>
+
+<p>稍微整理后，变成</p>
+
+<p><code>``sql
+SELECT SQL_NO_CACHE</code>code_gists<code>.</code>id`,</p>
+
+<pre><code>                GROUP_CONCAT(DISTINCT IFNULL(`code_documents`.`filename`, '0') SEPARATOR ' ') AS `content`,
+                GROUP_CONCAT(DISTINCT IFNULL(`code_documents`.`content`, '0') SEPARATOR ' ') AS `content`,
+                `code_gists`.`description` AS `content`,
+                IFNULL(`code_gists`.`author`, '') AS `content`
+</code></pre>
+
+<p>FROM <code>code_gists</code>
+LEFT OUTER JOIN <code>code_documents</code> ON <code>code_documents</code>.<code>gist_id</code> = <code>code_gists</code>.<code>id</code>
+WHERE (code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)
+GROUP BY <code>code_gists</code>.<code>id</code>;
+```</p>
+
+<p>运行一下，就返回了不重复的数据列表了</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ActiveRecord兼容非正规数据库表名和表字段设计的多对多，一对多关系]]></title>
+    <link href="http://mvj3.github.io/2013/01/24/define-many-to-many-and-one-to-many-associations-for-informal-database-table-and-field-design-in-activerecord/"/>
+    <updated>2013-01-24T16:07:41+08:00</updated>
+    <id>http://mvj3.github.io/2013/01/24/define-many-to-many-and-one-to-many-associations-for-informal-database-table-and-field-design-in-activerecord</id>
+    <content type="html"><![CDATA[<p>Rails里的多对多关系声明极其简单，一句 <code>has_and_belongs_to_many :projects</code> 就可表示当前表通过一个中间表来拥有多个projects，唯一的约定就是复数的表名和_id后缀的外键。</p>
+
+<p>但是如果你接手的数据库是在别的不同约定的语言框架里设计的，这样去套用Rails的 <code>has_and_belongs_to_many</code> 就炕爹了，你得一个一个去声明每一个选项，以下就是本人惨痛的经历，其他人看了就不用重蹈覆辙了。</p>
+
+<p>参考：<a href="http://guides.rubyonrails.org/association_basics.html">http://guides.rubyonrails.org/association_basics.html</a> ，和本地的Rails rdoc文档</p>
+
+<p>需求是查出一个用户收藏的所有代码。</p>
+
+<p> 先来看下表结构。用户，收藏，代码三个表结构主要部分如下：
+<code>``sql
+CREATE TABLE</code>common_member<code>(
+ </code>uid<code>mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (</code>uid`),
+) ENGINE=MyISAM AUTO_INCREMENT=802058 DEFAULT CHARSET=utf8;</p>
+
+<p>CREATE TABLE <code>common_user_favorite</code> (
+  <code>itemid</code> int(11) NOT NULL,
+  <code>uid</code> int(11) NOT NULL,
+  <code>model</code> enum(&lsquo;blog&rsquo;,&lsquo;code&rsquo;,&lsquo;news&rsquo;,&lsquo;book&rsquo;) NOT NULL,
+  <code>create_time</code> int(11) NOT NULL,
+  <code>is_delete</code> tinyint(1) NOT NULL DEFAULT &lsquo;0&rsquo;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;</p>
+
+<p>CREATE TABLE <code>code_gists</code> (
+  <code>id</code> int(11) NOT NULL AUTO_INCREMENT,
+  <code>user_id</code> int(11) DEFAULT NULL,
+  <code>created_at</code> datetime NOT NULL,
+  <code>updated_at</code> datetime NOT NULL,
+  <code>deleted_at</code> tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (<code>id</code>),
+  KEY <code>index_code_gists_on_deleted_at_and_user_id_and_updated_at</code> (<code>deleted_at</code>,<code>user_id</code>,<code>updated_at</code>)
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8;
+```</p>
+
+<p>我们接下来的代码逻辑就是查找出目标用户，通过收藏表，来找出该用户的所有代码。</p>
+
+<p>先声明三个model如下：
+<code>ruby
+class CommonMember &lt; ActiveRecord::Base
+  self.table_name = :common_member
+end
+class CommonUserFavorite &lt; ActiveRecord::Base
+  self.table_name = :common_user_favorite
+end
+class CodeGist &lt; ActiveRecord::Base
+end
+</code></p>
+
+<p>接着声明三个model之间的关系
+<code>ruby
+CommonUserFavoriteConditions = "`common_user_favorite`.`is_delete` = 0 AND `common_user_favorite`.`model` = 'code'"
+class CommonMember &lt; ActiveRecord::Base
+  has_many :fav_gists, :through =&gt; :favs, :order =&gt; "`common_user_favorite`.`create_time` DESC", :source =&gt; :gist
+  has_many :favs, :class_name =&gt; CommonUserFavorite, :foreign_key =&gt; :uid, :conditions =&gt; CommonUserFavoriteConditions
+end
+class CommonUserFavorite &lt; ActiveRecord::Base
+  belongs_to :gist, :class_name =&gt; CodeGist, :foreign_key =&gt; :itemid
+end
+class CodeGist &lt; ActiveRecord::Base
+  has_many :favs, :class_name =&gt; CommonUserFavorite, :foreign_key =&gt; :itemid, :conditions =&gt; CommonUserFavoriteConditions
+end
+</code></p>
+
+<p>以下是解释</p>
+
+<p>先声明收藏表(CommonUserFavorite) <code>belongs_to</code> 代码表(CodeGist)，指定 收藏表(CommonUserFavorite)  的外键是:itemid，关联的代码表(CodeGist)的主键是:id。示例如：
+<code>CommonUserFavorite.where(:model =&gt; 'code').first.gist</code>
+<code>``sql
+SELECT</code>common_user_favorite`.*</p>
+
+<pre><code>    FROM `common_user_favorite`
+    WHERE `common_user_favorite`.`model` = 'code'
+    LIMIT 1;
+</code></pre>
+
+<p>SELECT <code>code_gists</code>.*</p>
+
+<pre><code>    FROM `code_gists`
+    WHERE `code_gists`.`id` = 43 AND (`code_gists`.`deleted_at` IS NULL)
+    LIMIT 1;
+</code></pre>
+
+<p>```</p>
+
+<p>再声明代码表(CodeGist) <code>has_many</code> 收藏表(CommonUserFavorite) ，指定 收藏表(CommonUserFavorite)  的外键是 :itemid，且查询条件是 <code>:conditions =&gt; ["common_user_favorite.model = 'code'"]</code> 。示例如： <code>CodeGist.last.favs</code>
+<code>``sql
+SELECT</code>code_gists`.*</p>
+
+<pre><code>    FROM `code_gists`
+    WHERE (`code_gists`.`deleted_at` IS NULL)
+    ORDER BY `code_gists`.`id` DESC
+    LIMIT 1;
+</code></pre>
+
+<p>SELECT <code>common_user_favorite</code>.*</p>
+
+<pre><code>    FROM `common_user_favorite`
+    WHERE `common_user_favorite`.`itemid` = 107
+            AND (`common_user_favorite`.`is_delete` = 0
+            AND `common_user_favorite`.`model` = 'code');
+</code></pre>
+
+<p>```</p>
+
+<p>最后声明是用户表(CommonMember)对代码表(CodeGist)的has_many 是通过 用户表(CommonMember)对收藏表(CommonUserFavorite)的has_many 和 收藏表(CommonUserFavorite)对代码表(CodeGist)的belongs_to 共同实现的，这两个声明关系分别表述为  <code>:through =&gt; :favs</code> 和  <code>:source =&gt; :gist</code>。各自的示例如：</p>
+
+<p><code>cm = CommonMember.where(:uid =&gt; 470700).first</code>
+<code>``sql
+SELECT</code>common_member`.*</p>
+
+<pre><code>    FROM `common_member`
+    WHERE `common_member`.`uid` = 470700
+    LIMIT 1;
+</code></pre>
+
+<p>```</p>
+
+<p><code>cm.fav_gists</code>
+<code>``sql
+SELECT</code>code_gists`.*</p>
+
+<pre><code>    FROM `code_gists`
+    INNER JOIN `common_user_favorite`
+          ON `code_gists`.`id` = `common_user_favorite`.`itemid`
+    WHERE `common_user_favorite`.`uid` = 470700
+          AND (`code_gists`.`deleted_at` IS NULL)
+          AND (`common_user_favorite`.`is_delete` = 0
+          AND `common_user_favorite`.`model` = 'code')
+    ORDER BY `common_user_favorite`.`create_time` DESC;
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[undefined method to_crc32 for 1:Fixnum]]></title>
+    <link href="http://mvj3.github.io/2012/12/17/undefined-method-to_crc32_for_1_Fixnum/"/>
+    <updated>2012-12-17T11:21:29+08:00</updated>
+    <id>http://mvj3.github.io/2012/12/17/undefined-method-to_crc32_for_1_Fixnum</id>
+    <content type="html"><![CDATA[<h2>预备知识</h2>
+
+<p>如果对条件选择做索引的话，sphinx采用的数据结构均为非字符类型，碰到字符字段，在ThinkingSphinx都被默认经CRC32转换成标识唯一整数。</p>
+
+<h2>解决过程</h2>
+
+<p>ThinkingSphinx需要对表名做一个CRC32转化，具体在 lib/thinking_sphinx/source/sql.rb 的 <code>crc_column</code> 方法。该方法里为了对继承表进行兼容，里面会判断Rails里约定的 <code>inheritance_column</code> 是否也在表字段里（代码为 <code>@model.column_names.include?(@model.inheritance_column)</code> ），如果有就把type字段也作为CRC32的参数。可是如果type为整数类型，那么它没有 <code>to_crc32</code> 方法，所以就报了undefined method `to_crc32' for 1:Fixnum 错误。</p>
+
+<h2>解决方案</h2>
+
+<p>给有整数type字段的model加一句 <code>self.inheritance_column = :_type</code></p>
+]]></content>
+  </entry>
+  
+</feed>

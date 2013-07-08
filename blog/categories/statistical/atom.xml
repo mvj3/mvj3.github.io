@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Statistical | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/statistical/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mongodb删除重复数据]]></title>
+    <link href="http://mvj3.github.io/2011/11/03/mongodb-delete-duplicated-data/"/>
+    <updated>2011-11-03T16:49:38+08:00</updated>
+    <id>http://mvj3.github.io/2011/11/03/mongodb-delete-duplicated-data</id>
+    <content type="html"><![CDATA[<p>统计分析需要跑各个时间粒度的任务，如果异常中断后重新选择某个时间删除后再跑的时候，有时候还是会有重复的统计数据。</p>
+
+<p>在mongodb中建立唯一索引时加上dropDups选项可以解决此问题：</p>
+
+<p>A unique index cannot be created on a key that has pre-existing duplicate values. If you would like to create the index anyway, keeping the first document the database indexes and deleting all subsequent documents that have duplicate values, add the dropDups option</p>
+
+<p><a href="http://www.mongodb.org/display/DOCS/indexes#Indexes-dropDups">http://www.mongodb.org/display/DOCS/indexes#Indexes-dropDups</a></p>
+
+<p>Mongoid对应的参数配置是 , :unique => true, :background => true, :dropDups => true</p>
+]]></content>
+  </entry>
+  
+</feed>

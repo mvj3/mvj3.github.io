@@ -1,0 +1,1339 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>世界的审美！</title>
+    <meta name="author" content="mvj3">
+    
+	<meta name="description" content="Published on: Feb 25th, 2013 Tags: Process, Ruby 比如自动启动faye服务器, from http://stackoverflow.com/questions/6430437/autorun-the-faye-server-when-i-start &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="世界的审美！" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-19059295-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        mvj3
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/mvj3" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/112424697046854998838?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li>
+  <a href="http://www.twitter.com/mvj3" class="twitter" title="Twitter"></a>
+  </li>
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/02/25/start-another-process-in-ruby/">
+		
+			Ruby同时启动另一个进程</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-25T14:33:51+08:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/process/'>Process</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>比如自动启动faye服务器, from <a href="http://stackoverflow.com/questions/6430437/autorun-the-faye-server-when-i-start-the-rails-server">http://stackoverflow.com/questions/6430437/autorun-the-faye-server-when-i-start-the-rails-server</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Thread</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">system</span><span class="p">(</span><span class="s2">&quot;bundle exec rackup faye.ru -s thin -E production&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果是Rails/Rack，加入到项目根目录的config.ru，这样在执行console, rake, migration等其他操作时就不用启动这个进程了。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/02/25/start-another-process-in-ruby//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/02/18/declare-a-Hash-which-default-value-is-blank-array-in-ruby/">
+		
+			Ruby声明默认是空数组的Hash</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-18T12:13:50+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/hash/'>Hash</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>Ruby里声明一个新Hash的方法一般是</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">im_a_new_hash</span> <span class="o">=</span> <span class="p">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果给它设一个为0的默认值，可以</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">im_a_new_hash</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>变成一行语句就是</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">im_a_new_hash</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是这里注意，这里的0其实是个唯一对象，即是每一个默认值的object_id都是一样的，比如</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">im_a_string_hash</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span> <span class="s2">&quot;string&quot;</span> <span class="c1"># =&gt; {}</span>
+</span><span class='line'><span class="n">im_a_string_hash</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span> <span class="c1"># =&gt; &quot;string&quot;</span>
+</span><span class='line'><span class="n">im_a_string_hash</span><span class="o">[</span><span class="mi">3</span><span class="o">].</span><span class="n">object_id</span> <span class="c1"># =&gt; 2168523080</span>
+</span><span class='line'><span class="n">im_a_string_hash</span><span class="o">[</span><span class="mi">4</span><span class="o">].</span><span class="n">object_id</span> <span class="c1"># =&gt; 2168523080</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到取键3和4的默认值的object_id都是2168523080</p>
+
+<p>Ruby里提供了new {|hash, key| block } → new_hash的方法, 因此声明一个默认是空数组的Hash的具体方法应该是</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">im_a_default_array_hash</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span><span class="o">|</span><span class="nb">hash</span><span class="p">,</span> <span class="n">key</span><span class="o">|</span> <span class="nb">hash</span><span class="o">[</span><span class="n">key</span><span class="o">]</span> <span class="o">=</span> <span class="o">[]</span> <span class="p">}</span> <span class="c1"># =&gt; {}</span>
+</span><span class='line'><span class="n">im_a_default_array_hash</span><span class="o">[</span><span class="mi">99</span><span class="o">]</span> <span class="c1"># =&gt; []</span>
+</span><span class='line'><span class="n">im_a_default_array_hash</span><span class="o">[</span><span class="mi">99</span><span class="o">].</span><span class="n">object_id</span> <span class="c1"># =&gt; 160533940</span>
+</span><span class='line'><span class="n">im_a_default_array_hash</span><span class="o">[</span><span class="mi">99</span><span class="o">].</span><span class="n">object_id</span> <span class="c1"># =&gt; 160533940</span>
+</span><span class='line'><span class="n">im_a_default_array_hash</span><span class="o">[</span><span class="mi">100</span><span class="o">].</span><span class="n">object_id</span> <span class="c1"># =&gt; 160571060 </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到键99的值的object_id一直是160533940，而键100的值的object_id则是160571060</p>
+
+<p>具体文档查看 <a href="http://www.ruby-doc.org/core-1.9.3/Hash.html#method-c-new">http://www.ruby-doc.org/core-1.9.3/Hash.html#method-c-new</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/02/18/declare-a-Hash-which-default-value-is-blank-array-in-ruby//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/02/18/Dir-glob-cache-bug-in-ruby/">
+		
+			Ruby的Dir.glob缓存BUG</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-18T10:56:07+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/cache/'>Cache</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>Ruby的Dir.glob(&lsquo;/your/absolute/path/*&rsquo;)有缓存bug，新文件并不会返回，改成FileUtils.chdir后在Dir.glob(pattern)解决</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/02/18/Dir-glob-cache-bug-in-ruby//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/30/some-thoughts-about-of-tool-culture-after-reading-creating-facebook/">
+		
+			关于《打造Facebook》第四章第七节 硅谷盛行的“工具文化”的一些思考</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T20:57:59+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/culture/'>Culture</a>, <a class='category' href='/blog/categories/facebook/'>Facebook</a>, <a class='category' href='/blog/categories/tool/'>Tool</a>
+
+
+</div>
+    </div>
+		<p>牛掰的技术公司在程序员里往往都是推崇的，Google, Facebook，等等，但这里面限于团队和文化因素，并不是所有公司都可以像他们那样，人多，人才多，给于的自由支配时间多。</p>
+
+<h2>该章里提到的两类工具</h2>
+
+<ul>
+<li>平台型：动态分配开发机器资源，Git代码检查和代码规则，灰度发布，数据检测，用户报告和案例审察。</li>
+<li>应用型：TODO list, 用户反馈自动分配，招聘测题，绩效考核（最后因专业难度的问题被替换了），考勤系统。</li>
+</ul>
+
+
+<h2>再来看看Facebook比较有名的开源框架</h2>
+
+<p>Facebook是世界顶级的技术公司之一，做一定规模的云计算等不在话下，比如数据处理框架Hive，BigTable数据库cassandra，php编译框架hiphop，等等。</p>
+
+<h2>工具和开源框架有什么区别？</h2>
+
+<p>从技术难度上，工具难度一般远小于上面提及的开源项目。一家公司贡献开源项目，很大程度上是该公司业务里非核心竞争力技术对技术社区的贡献，比如Taobao。而工具，它像你平时配置的快捷键或常用脚本，个人性的东西比较强。</p>
+
+<h2>看看工具文化推广的现实性</h2>
+
+<p>互联网公司作为商业机构是靠业务盈利的，所以可以看到的情况是，除了做平台的，一般公司很少有精力和能力去开发专门的工具，作者王淮在该节最后也承认了，&#8221;相比面向用户的商品，让工程师去开发内部工具是需要去说服的。如果真正做到如此重视，最优秀的工程师是愿意加入工具团队的。”</p>
+
+<h2>应用型工具文化推广的可能性</h2>
+
+<p>不建议做，除非很多部门的大公司，比如facebook，做好业务最关键。因为已经有一些专业的人去做了，比如evernote，dropbox，等等。如果你是个人兴趣，想做一个开源的完备的，就另当别论了。</p>
+
+<h2>平台型工具文化推广的可能性</h2>
+
+<p>这是真正该做的，而且是鼓励做的。但是做之前先搜搜看是否已经有解决方案，上google，上github，或者code.eoe.cn ;)。如果没有，做完后尽量把它开源出来，让别人不用重新发明轮子，让更多更好的想法参与进来，说不定还能因此交上不错的朋友。目前Github上<a href="https://github.com/languages/Ruby" title="Ruby语言">Ruby</a>里最火的项目是什么呢？是一个叫做Homebrew的专门处理OSX软件库安装的包管理工具，大名鼎鼎的Rails Web框架正跟在它的后面，可见工具对解放人的生产力远大于业务上的。</p>
+
+<p>所以，不用太拘泥于一定要学Facebook，写写<a href="http://blog.eoe.cn/" title="Blog">博客</a>总结自己的小技巧，分享一些不错的<a href="http://code.eoe.cn" title="代码">代码</a>，那样就够了。</p>
+
+<p>本文存放在 <a href="http://code.eoe.cn/198">code.eoe.cn 的gist版本</a> 。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/01/30/some-thoughts-about-of-tool-culture-after-reading-creating-facebook//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/30/recent-visitors-implement/">
+		
+			最近访客实现</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T18:19:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/api/'>API</a>, <a class='category' href='/blog/categories/algorithm/'>Algorithm</a>
+
+
+</div>
+    </div>
+		<h2>问题分两个，一个是后端，一个是前端。</h2>
+
+<p>对后端来说，用户每次blog/index|show访问都生成访问记录，后端需要进行排重和去掉未登陆用户。如果在该次访问里进行，特别是某个博客突然火了，必然每次访问都产生IO(磁盘或网络，因为多进程要共享信息），所以必定是异步的。</p>
+
+<p>前端展示考虑到缓存，一般是页面片段缓存，或者ajax载入。</p>
+
+<p>后端异步如何计算每个blog的最近访客，log.js记录了最近访问，一个后台常驻进程循环对日志表按时间记录来读取blog访问信息，把最近访客信息刷新。相对单次请求全部处理，这里处理次数更少，资源更节约，当然瓶颈也在日志表的索引更新和读取。</p>
+
+<h2>把当前自己的访问也添加上</h2>
+
+<p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/01/30/recent-visitors-implement//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/27/interview-frontend-engineer-can-also-be-so-vivid/">
+		
+			前端工程师的面试也可以如此生动</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-27T22:43:49+08:00" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/frontend/'>Frontend</a>, <a class='category' href='/blog/categories/interview/'>Interview</a>
+
+
+</div>
+    </div>
+		<p>公司下半年因*.eoe.cn项目要开发上线，寻找合适的前端工程师势在必行。过程很坎坷，我翻了下自己的工作日志，招聘过程达三个月之久。来面试的有互联网公司的，培训学校的，同事推荐的，&hellip;，各种基本功薄弱的，薪资漫天要价的，不靠谱啊。最终相中了一个工作两三年的，在偏时尚媒体设计公司待过的女前端工程师。</p>
+
+<p>面试是和其他同事一起进行的，除了对品性和工作方式的考察外，专业方面看的还是基础知识和经验。前端工程师一般分两类，一种是设计+CSS，关键词也就是Dreamweaver+Photoshop，这种人较多，但通常计算机知识薄弱。另一种是JS+CSS，偏重浏览器内的MVC, 这种人比较少，也是业界稀缺的。可能有人会说两者都包的人，那这种人是全才，基本都可以去创业了。我本身是Ruby(Rails）后端背景的，对前端略懂，而浏览器兼容性几乎没接触过。因此面试偏CSS的不太容易问出什么，也就是面试宝典里的绝对定位法，inline和block区别，jQuery选择器优化，等之类的。</p>
+
+<p>一个偶然的机会，在问到一个前来面试的觉得国内有哪些觉得不错的前端产品的时候，有人提到了网易的新闻聚合（见下图news.tags.163.png），它采用了不同大小矩形色块的TreeMap可视化方式展现了新闻资讯集合。从源码上说，它只有不到150行的规整的HTML结构，足够在短时间内把握。让我们边看这个网页边面试：
+1.   点击右上角的刷新按钮后，每个资讯元素重新滑动排列，这里可以考察HTML5的CSS，下面的&#8221;今天, 三天，一周&#8221;的时间范围的切换也是。
+2.   在这里还可以去问这些元素是重新排列，还是从服务器端获取的，可以让对方去源码里找出是哪一行还是引用的文件里调用了ajax。
+3.   打开chrome的调试器，并点击Network标签，在重新加载后，有些请求的Status变成了304，有些Size变成了from cache，这里可以去考察HTTP常识。
+4.   刚才我们翻开了HTML源码，问下css引用链接在上而js引用在下的原因，考察浏览器的渲染顺序。
+5.   接着我们又发现新闻数据并没有在HTML里看到，看对方是否可以知晓js如何调用。
+6.   看过css后，我们发现一个script标签里的type是text/x-micro-template，问下这是干什么的。如果对方回答出模版后，可以再去模版的实现原理，这样就实际就考察了对js闭包的了解。
+7.   js代码里面有些英文单词，可以趁机考考英文水平，很多工程师都没听说过github的。</p>
+
+<p>问到这里的时候，水平自然见分晓了。这种方式虽然系统考察了一个前端该具备的技术能力，但事后证明它会让某些在CSS方面不错的和能实际快速的干活的人才错过了。
+对一般的互联网团队来说，1, CSS命名的规范结构化，2, 严格遵守jQuery链式调用规范，而不是一大堆东抄西补的原生js，3, 和快速的动手能力，前端工程师的这三点才是最重要的。</p>
+
+<p>Android技术招聘可参看@iceskysl 的 <a href="http://my.eoe.cn/iceskysl/archive/21.html">说说我招聘android技术人员的思路</a> ，里面提到的4个点对招聘一般的应用工程师其实都适用。</p>
+
+<p>本文存放在 <a href="http://code.eoe.cn/145">code.eoe.cn 的gist版本</a> 。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/01/27/interview-frontend-engineer-can-also-be-so-vivid//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/26/create-a-code-bang-for-eoecn/">
+		
+			*.eoe.cn制作代码大爆炸！</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-26T16:44:15+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/code/'>Code</a>, <a class='category' href='/blog/categories/git/'>Git</a>, <a class='category' href='/blog/categories/imovie/'>iMovie</a>
+
+
+</div>
+    </div>
+		<p><img src="/images/imovie.png" alt="imovie" /></p>
+
+<p>下载安装code swarm，系统环境预备见<a href="https://github.com/rictic/code_swarm">https://github.com/rictic/code_swarm</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git://github.com/rictic/code_swarm.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>code_swarm <span class="c"># 下载源码</span>
+</span><span class='line'>ant <span class="c"># 编译</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>合并多个git仓库</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir eoecn_codebang <span class="o">&amp;&amp;</span> <span class="nb">cd </span>eoecn_codebang <span class="c"># 创建临时仓库目录，并切换</span>
+</span><span class='line'>git init <span class="o">&amp;&amp;</span> git commit --allow-empty-message -am <span class="s1">&#39;&#39;</span> --allow-empty <span class="c"># 初始化git环境</span>
+</span><span class='line'>git remote add programmingonline git@eoe.git.server:/opt/datas/git/eoe/programming.online.git <span class="c"># 添加多个git仓库</span>
+</span><span class='line'>git remote add eoecn git@eoe.git.server:/opt/datas/git/eoe/eoecn.git
+</span><span class='line'>git pull programmingonline master <span class="c"># 合并多个git仓库</span>
+</span><span class='line'>git pull eoecn master
+</span><span class='line'>git commit -am <span class="s1">&#39;merge programmingonline and eoecn&#39;</span> <span class="c"># 直接合并冲突</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/Users/mvj3/github/rictic/code_swarm/bin:$PATH&quot;</span> <span class="c"># 把code_swarm的bin目录加入到环境变</span>
+</span><span class='line'>量中
+</span><span class='line'>code_swarm <span class="c"># 不用管他出错提示，只要在运行就可以了。它会在当前目录下生成包含git历史记录信息的.code_swarm/log.xml</span>
+</span><span class='line'>ruby -e <span class="s1">&#39;filename = &quot;/Users/mvj3/eoemobile/code/eoecn_codebang/.code_swarm/log.xml&quot;; File.write(filename, File.read(filename).gsub(/@[^&quot;]*\&quot;/,&quot;\&quot;&quot;))&#39;</span> <span class="c"># 在ruby里把无效的email后缀去除。</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成一帧一帧的png文件</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">pwd</span>   <span class="c">#  先切换回code_swarm项目目录，修改defaults/user.config里的InputFile变量到刚才生成的.code_swarm/log.xml的绝对路径</span>
+</span><span class='line'>./run.sh defaults/user.config <span class="c"># 如果没错误的话，你就可以frames目录下不断有png生成了。如果量大的话，你会听到电脑的风扇也在狂转了。</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>用iMovie制作视频</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ffmpeg -f image2 -r 12 -i ./frames/code_swarm-%05d.png -sameq ./out.mov -pass 2 <span class="c"># 用ffmpeg生成视频，直接iMovie导入这么多png太慢</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>iMovie使用总结</h3>
+
+<p>任何视频，音频，字幕操作都是选中后操作，包括时长，大小，变速等。</p>
+
+<h3>参考文档</h3>
+
+<ul>
+<li><a href="http://code.google.com/p/codeswarm/wiki/GeneratingAVideo#Instructions_for_running_Codeswarm_0.1_on_OS_X_10.6_with_a_git_r">http://code.google.com/p/codeswarm/wiki/GeneratingAVideo#Instructions_for_running_Codeswarm_0.1_on_OS_X_10.6_with_a_git_r</a></li>
+<li><a href="http://progressdaily.diandian.com/post/2012-01-20/14242590">http://progressdaily.diandian.com/post/2012-01-20/14242590</a></li>
+</ul>
+
+
+<p>附上配置文件 user.config</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Your personal preferences for code_swarm, applied to every visualization</span>
+</span><span class='line'><span class="c"># you run, unless overridden by the individual visualization&#39;s config</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#DON&#39;T EDIT THIS FILE IN PLACE, FIRST COPY IT TO defaults/user.config</span>
+</span><span class='line'><span class="c">#CHANGES TO THIS FILE WON&#39;T BE SEEN BY code_swarm, ONLY user.config</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#Some common options to customize:</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># It&#39;s much faster if we can use OpenGL, but it still doesn&#39;t work on some</span>
+</span><span class='line'><span class="c"># platforms/configurations</span>
+</span><span class='line'><span class="nv">UseOpenGL</span><span class="o">=</span><span class="nb">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># The size of the visualization window</span>
+</span><span class='line'><span class="nv">Width</span><span class="o">=</span>640
+</span><span class='line'><span class="nv">Height</span><span class="o">=</span>280
+</span><span class='line'>
+</span><span class='line'><span class="nv">Font</span><span class="o">=</span>Helvetica
+</span><span class='line'><span class="nv">FontSize</span><span class="o">=</span>25
+</span><span class='line'><span class="nv">BoldFontSize</span><span class="o">=</span>20
+</span><span class='line'><span class="nv">TakeSnapshots</span><span class="o">=</span><span class="nb">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#Size in pixels of the width and height of avatar images</span>
+</span><span class='line'><span class="nv">AvatarSize</span><span class="o">=</span>64
+</span><span class='line'>
+</span><span class='line'><span class="nv">InputFile</span><span class="o">=</span>/Users/mvj3/eoemobile/code/eoecn_codebang/.code_swarm/log.xml
+</span><span class='line'><span class="nv">SnapshotLocation</span><span class="o">=</span>frames/code_swarm-#####.png
+</span><span class='line'><span class="c">#For more options, see defaults/code_swarm.config</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Draw names (combinatory) :</span>
+</span><span class='line'><span class="c"># Draw sharp names?</span>
+</span><span class='line'><span class="nv">DrawNamesSharp</span><span class="o">=</span><span class="nb">true</span>
+</span><span class='line'><span class="c"># And draw a glow around names? (Runs slower)</span>
+</span><span class='line'><span class="nv">DrawNamesHalos</span><span class="o">=</span><span class="nb">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Draw files (combinatory) :</span>
+</span><span class='line'><span class="c"># Draw sharp files</span>
+</span><span class='line'><span class="nv">DrawFilesSharp</span><span class="o">=</span><span class="nb">false</span>
+</span><span class='line'><span class="c"># Draw fuzzy files</span>
+</span><span class='line'><span class="nv">DrawFilesFuzzy</span><span class="o">=</span><span class="nb">true</span>
+</span><span class='line'><span class="c"># Draw jelly files</span>
+</span><span class='line'><span class="nv">DrawFilesJelly</span><span class="o">=</span><span class="nb">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Show the Legend at start</span>
+</span><span class='line'><span class="nv">ShowLegend</span><span class="o">=</span><span class="nb">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Show the History at start</span>
+</span><span class='line'><span class="nv">ShowHistory</span><span class="o">=</span><span class="nb">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Show the Date at start</span>
+</span><span class='line'><span class="nv">ShowDate</span><span class="o">=</span><span class="nb">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Show edges between authors and files, mostly for debug purpose</span>
+</span><span class='line'><span class="nv">ShowEdges</span><span class="o">=</span><span class="nb">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Turn on Debug counts.</span>
+</span><span class='line'><span class="nv">ShowDebug</span><span class="o">=</span><span class="nb">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Natural distance of files to people</span>
+</span><span class='line'><span class="nv">EdgeLength</span><span class="o">=</span>25
+</span><span class='line'>
+</span><span class='line'><span class="c"># Amount of life to decrement</span>
+</span><span class='line'><span class="nv">EdgeDecrement</span><span class="o">=</span>-2
+</span><span class='line'><span class="nv">FileDecrement</span><span class="o">=</span>-2
+</span><span class='line'><span class="nv">PersonDecrement</span><span class="o">=</span>-1
+</span><span class='line'>
+</span><span class='line'><span class="c">#Speeds.</span>
+</span><span class='line'><span class="c">#Optional: NodeSpeed=7.0, If used, FileSpeed and PersonSpeed need not be set.</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="nv">FileSpeed</span><span class="o">=</span>7.0
+</span><span class='line'><span class="nv">PersonSpeed</span><span class="o">=</span>2.0
+</span><span class='line'>
+</span><span class='line'><span class="c">#Masses</span>
+</span><span class='line'><span class="nv">FileMass</span><span class="o">=</span>1.0
+</span><span class='line'><span class="nv">PersonMass</span><span class="o">=</span>10.0
+</span><span class='line'>
+</span><span class='line'><span class="c"># Life of an Edge</span>
+</span><span class='line'><span class="nv">EdgeLife</span><span class="o">=</span>250
+</span><span class='line'>
+</span><span class='line'><span class="c"># Life of a File</span>
+</span><span class='line'><span class="nv">FileLife</span><span class="o">=</span>200
+</span><span class='line'>
+</span><span class='line'><span class="c"># Life of a Person</span>
+</span><span class='line'><span class="nv">PersonLife</span><span class="o">=</span>255
+</span><span class='line'>
+</span><span class='line'><span class="c"># Highlight percent.</span>
+</span><span class='line'><span class="c"># This is the amount of time that the person or</span>
+</span><span class='line'><span class="c"># file will be highlighted.</span>
+</span><span class='line'><span class="nv">HighlightPct</span><span class="o">=</span>5
+</span><span class='line'>
+</span><span class='line'><span class="c">## Physics engine selection and configuration</span>
+</span><span class='line'><span class="c"># Directory physics engine config files reside in.</span>
+</span><span class='line'><span class="nv">PhysicsEngineConfigDir</span><span class="o">=</span>physics_engine
+</span><span class='line'><span class="c"># Force calculation algorithms (&quot;PhysicsEngineLegacy&quot;, &quot;PhysicsEngineSimple&quot;...) :</span>
+</span><span class='line'><span class="nv">PhysicsEngineSelection</span><span class="o">=</span>PhysicsEngineOrderly
+</span><span class='line'>
+</span><span class='line'><span class="c">#Is the input xml sorted by date?  It&#39;s faster and uses much less memory if it is</span>
+</span><span class='line'><span class="nv">IsInputSorted</span><span class="o">=</span><span class="nb">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># OpenGL is experimental. Use at your own risk.</span>
+</span><span class='line'><span class="nv">UseOpenGL</span><span class="o">=</span><span class="nb">false</span>
+</span><span class='line'><span class="nv">ShowUserName</span><span class="o">=</span><span class="nb">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/01/26/create-a-code-bang-for-eoecn//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/24/define-many-to-many-and-one-to-many-associations-for-informal-database-table-and-field-design-in-activerecord/">
+		
+			ActiveRecord兼容非正规数据库表名和表字段设计的多对多，一对多关系</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-24T16:07:41+08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/activerecord/'>ActiveRecord</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+    </div>
+		<p>Rails里的多对多关系声明极其简单，一句 <code>has_and_belongs_to_many :projects</code> 就可表示当前表通过一个中间表来拥有多个projects，唯一的约定就是复数的表名和_id后缀的外键。</p>
+
+<p>但是如果你接手的数据库是在别的不同约定的语言框架里设计的，这样去套用Rails的 <code>has_and_belongs_to_many</code> 就炕爹了，你得一个一个去声明每一个选项，以下就是本人惨痛的经历，其他人看了就不用重蹈覆辙了。</p>
+
+<p>参考：<a href="http://guides.rubyonrails.org/association_basics.html">http://guides.rubyonrails.org/association_basics.html</a> ，和本地的Rails rdoc文档</p>
+
+<p>需求是查出一个用户收藏的所有代码。</p>
+
+<p> 先来看下表结构。用户，收藏，代码三个表结构主要部分如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">common_member</span><span class="o">`</span> <span class="p">(</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="n">mediumint</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="n">unsigned</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+</span><span class='line'>  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">uid</span><span class="o">`</span><span class="p">),</span>
+</span><span class='line'><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">MyISAM</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">802058</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span> <span class="p">(</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">itemid</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="n">enum</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span><span class="s1">&#39;code&#39;</span><span class="p">,</span><span class="s1">&#39;news&#39;</span><span class="p">,</span><span class="s1">&#39;book&#39;</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">create_time</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">is_delete</span><span class="o">`</span> <span class="n">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;0&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span> <span class="p">(</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">user_id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">created_at</span><span class="o">`</span> <span class="n">datetime</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">updated_at</span><span class="o">`</span> <span class="n">datetime</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span> <span class="n">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">),</span>
+</span><span class='line'>  <span class="k">KEY</span> <span class="o">`</span><span class="n">index_code_gists_on_deleted_at_and_user_id_and_updated_at</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">updated_at</span><span class="o">`</span><span class="p">)</span>
+</span><span class='line'><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">149</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们接下来的代码逻辑就是查找出目标用户，通过收藏表，来找出该用户的所有代码。</p>
+
+<p>先声明三个model如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CommonMember</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">table_name</span> <span class="o">=</span> <span class="ss">:common_member</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">CommonUserFavorite</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">table_name</span> <span class="o">=</span> <span class="ss">:common_user_favorite</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">CodeGist</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接着声明三个model之间的关系</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">CommonUserFavoriteConditions</span> <span class="o">=</span> <span class="s2">&quot;`common_user_favorite`.`is_delete` = 0 AND `common_user_favorite`.`model` = &#39;code&#39;&quot;</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">CommonMember</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:fav_gists</span><span class="p">,</span> <span class="ss">:through</span> <span class="o">=&gt;</span> <span class="ss">:favs</span><span class="p">,</span> <span class="ss">:order</span> <span class="o">=&gt;</span> <span class="s2">&quot;`common_user_favorite`.`create_time` DESC&quot;</span><span class="p">,</span> <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="ss">:gist</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:favs</span><span class="p">,</span> <span class="ss">:class_name</span> <span class="o">=&gt;</span> <span class="no">CommonUserFavorite</span><span class="p">,</span> <span class="ss">:foreign_key</span> <span class="o">=&gt;</span> <span class="ss">:uid</span><span class="p">,</span> <span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="no">CommonUserFavoriteConditions</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">CommonUserFavorite</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:gist</span><span class="p">,</span> <span class="ss">:class_name</span> <span class="o">=&gt;</span> <span class="no">CodeGist</span><span class="p">,</span> <span class="ss">:foreign_key</span> <span class="o">=&gt;</span> <span class="ss">:itemid</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">CodeGist</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:favs</span><span class="p">,</span> <span class="ss">:class_name</span> <span class="o">=&gt;</span> <span class="no">CommonUserFavorite</span><span class="p">,</span> <span class="ss">:foreign_key</span> <span class="o">=&gt;</span> <span class="ss">:itemid</span><span class="p">,</span> <span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="no">CommonUserFavoriteConditions</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下是解释</p>
+
+<p>先声明收藏表(CommonUserFavorite) <code>belongs_to</code> 代码表(CodeGist)，指定 收藏表(CommonUserFavorite)  的外键是:itemid，关联的代码表(CodeGist)的主键是:id。示例如：
+<code>CommonUserFavorite.where(:model =&gt; 'code').first.gist</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
+</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span>
+</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span>
+</span><span class='line'>        <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
+</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
+</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">=</span> <span class="mi">43</span> <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再声明代码表(CodeGist) <code>has_many</code> 收藏表(CommonUserFavorite) ，指定 收藏表(CommonUserFavorite)  的外键是 :itemid，且查询条件是 <code>:conditions =&gt; ["common_user_favorite.model = 'code'"]</code> 。示例如： <code>CodeGist.last.favs</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
+</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
+</span><span class='line'>        <span class="k">WHERE</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">ORDER</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">DESC</span>
+</span><span class='line'>        <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
+</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span>
+</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">itemid</span><span class="o">`</span> <span class="o">=</span> <span class="mi">107</span>
+</span><span class='line'>                <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">is_delete</span><span class="o">`</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>                <span class="k">AND</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后声明是用户表(CommonMember)对代码表(CodeGist)的has_many 是通过 用户表(CommonMember)对收藏表(CommonUserFavorite)的has_many 和 收藏表(CommonUserFavorite)对代码表(CodeGist)的belongs_to 共同实现的，这两个声明关系分别表述为  <code>:through =&gt; :favs</code> 和  <code>:source =&gt; :gist</code>。各自的示例如：</p>
+
+<p><code>cm = CommonMember.where(:uid =&gt; 470700).first</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">common_member</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
+</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">common_member</span><span class="o">`</span>
+</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">common_member</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="o">=</span> <span class="mi">470700</span>
+</span><span class='line'>        <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>cm.fav_gists</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
+</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
+</span><span class='line'>        <span class="k">INNER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span>
+</span><span class='line'>              <span class="k">ON</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">itemid</span><span class="o">`</span>
+</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="o">=</span> <span class="mi">470700</span>
+</span><span class='line'>              <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+</span><span class='line'>              <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">is_delete</span><span class="o">`</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>              <span class="k">AND</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">ORDER</span> <span class="k">BY</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">create_time</span><span class="o">`</span> <span class="k">DESC</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/01/24/define-many-to-many-and-one-to-many-associations-for-informal-database-table-and-field-design-in-activerecord//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/23/individual-domain-regexp/">
+		
+			个性域名正则表达式</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-23T16:35:34+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/regexp/'>Regexp</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>老大提了个用单个正则表达式来匹配个性域名ID的需求，具体是：3-15个字符，可以用[a-z0-9_-]字符，必须用数字或者字母开头，且不能是纯数字</p>
+
+<p>让我们来分步化解
+对于，3-15个字符，可以用[a-z0-9_-]字符，稍微了解点正则表达式的同学马上就可以写出如下正则</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/^[a-z0-9_\-]{3,15}$/i</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>让我们来再加一个条件，必须用数字或者字母开头</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/^[0-9a-z][a-z0-9_\-]{2,14}$/i</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后一个条件是，且不能是纯数字。</p>
+
+<p>最初我大概的想到是用 或(|) 来做，一个是数字开头，另一个是字母开头，剩余的是否纯数字在后面判断。但这剩余里还是会遇到判断在哪个位置里已经出现了字母的问题。所以这里就需要正则表达式里非匹配获取的功能了。</p>
+
+<p>维基百科里给出的是 (?=pattern) ，它表示 匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符「(|)」来组合一个模式的各个部分是很有用。例如「industr(?:y|ies)」就是一个比「industry|industries」更简略的表达式。具体见 <a href="http://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">http://zh.wikipedia.org/wiki/正则表达式</a></p>
+
+<p>stackoverflow里有更通俗的例子 <a href="http://stackoverflow.com/questions/1559751/regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper">http://stackoverflow.com/questions/1559751/regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$
+</span><span class='line'>A short explanation:
+</span><span class='line'>^                  // the start of the string
+</span><span class='line'>(?=.*[a-z])        // use positive look ahead to see if at least one lower case letter exists
+</span><span class='line'>(?=.*[A-Z])        // use positive look ahead to see if at least one upper case letter exists
+</span><span class='line'>(?=.*\d)           // use positive look ahead to see if at least one digit exists
+</span><span class='line'>(?=.*[_\W])        // use positive look ahead to see if at least one underscore or non-word character exists
+</span><span class='line'>.+                 // gobble up the entire string
+</span><span class='line'>$                  // the end of the string
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样我们就在 <code>/^[0-9a-z][a-z0-9_-]{2,14}$/i</code> 里再加上个 <code>(?=.*[a-z_\-])</code> 就可以匹配不是纯数字了</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@regexp</span> <span class="o">=</span> <span class="sr">/^(?=.*[a-z_\-])[0-9a-z][a-z0-9_\-]{2,14}$/i</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;合法测试&quot;</span>
+</span><span class='line'><span class="sx">%w[c11213311 mvj3 123mmmmm iceskysl 3_3]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">str</span><span class="si">}</span><span class="s2">   =&gt;   </span><span class="si">#{</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="vi">@regexp</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;非法测试&quot;</span>
+</span><span class='line'><span class="sx">%w[123 12345 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm _ssssss 你好]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">str</span><span class="si">}</span><span class="s2">   =&gt;   </span><span class="si">#{</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="vi">@regexp</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;没有匹配&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>测试结果如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>合法测试
+</span><span class='line'>c11213311   =&gt;   c11213311
+</span><span class='line'>mvj3   =&gt;   mvj3
+</span><span class='line'>123mmmmm   =&gt;   123mmmmm
+</span><span class='line'>iceskysl   =&gt;   iceskysl
+</span><span class='line'>3_3   =&gt;   3_3
+</span><span class='line'>
+</span><span class='line'>非法测试
+</span><span class='line'>123   =&gt;   没有匹配
+</span><span class='line'>12345   =&gt;   没有匹配
+</span><span class='line'>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm   =&gt;   没有匹配
+</span><span class='line'>_ssssss   =&gt;   没有匹配
+</span><span class='line'>你好   =&gt;   没有匹配
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Ruby-China上的讨论 <a href="http://ruby-china.org/topics/8383">http://ruby-china.org/topics/8383</a></h2>
+
+<p>我景仰的大牛 @luikore 给出了易读版</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/\A</span>
+</span><span class='line'><span class="sr">  (?=.*[a-z_\-])    # 不能全是数字</span>
+</span><span class='line'><span class="sr">  [0-9a-z]          # 必须用数字或者字母开头</span>
+</span><span class='line'><span class="sr">  [a-z0-9_\-]{2,14} # 3-15个字符，可以用[a-z0-9_\-]字符</span>
+</span><span class='line'><span class="sr">\z/xi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/01/23/individual-domain-regexp//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/15/fix-json-cross-domain/">
+		
+			Rails解决JSON数据跨域问题 Access Control Allow Origin Not Allowed By</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-15T15:09:03+08:00" pubdate data-updated="true">Jan 15<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/xmlhttprequest/'>XMLHttpRequest</a>
+
+
+</div>
+    </div>
+		<p>XMLHttpRequest请求在不同域名下会出现&#8221;Access Control Allow Origin not allowed by&#8221;消息，即使是不同子域名，或根域名和子域名，也会出现这种情况。</p>
+
+<p>详情见 <a href="https://developer.mozilla.org/en/http_access_control">https://developer.mozilla.org/en/http_access_control</a></p>
+
+<p>rails控制器的方法加下以下声明即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">header</span><span class="o">[</span><span class="s1">&#39;Access-Control-Allow-Origin&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">header</span><span class="o">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/01/15/fix-json-cross-domain//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="/" class="prev">Prev</a>
+    
+    
+        <a href="/blog/page/3/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2013
+
+    mvj3
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'mvj3';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

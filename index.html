@@ -1,1 +1,1020 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>世界的审美！</title>
+    <meta name="author" content="mvj3">
+    
+	<meta name="description" content="Published on: May 28th, 2013 Tags: Memcached 问题 在添加 用jsbeautifier.org解压缩jing.fm的Web版的js代码 的长达7029行js代码后，后台服务器马上报500错误，对应错误信息是 Memcached::ServerError &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="世界的审美！" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-19059295-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        mvj3
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/mvj3" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/112424697046854998838?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li>
+  <a href="http://www.twitter.com/mvj3" class="twitter" title="Twitter"></a>
+  </li>
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/05/28/solve-Memcached-ServerError-object-too-large-for-cache/">
+		
+			解决 Memcached::ServerError: Object Too Large for Cache 错误</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-28T15:28:32+08:00" pubdate data-updated="true">May 28<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/memcached/'>Memcached</a>
+
+
+</div>
+    </div>
+		<h2>问题</h2>
+
+<p>在添加 <a href="http://code.eoe.cn/1620">用jsbeautifier.org解压缩jing.fm的Web版的js代码
+</a> 的长达7029行js代码后，后台服务器马上报500错误，对应错误信息是 <code>Memcached::ServerError: "object too large for cache". Key {"git_file_html_8741fc1d7923a820e7de64d996125a527792cc89"=&gt;"localhost:11211:8"}</code></p>
+
+<h2>解决方案</h2>
+
+<p>在添加 [用jsbeautifier.org解压缩jing.fm的Web版的js代码
+配置memcached的-I选项以调整每个cache item的最大值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>memcached -I 3m -p 11211 -v -m 512 -d
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/05/28/solve-Memcached-ServerError-object-too-large-for-cache//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs/">
+		
+			从Git的Log里列出今天提交的代码记录信息</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-28T15:28:32+08:00" pubdate data-updated="true">May 28<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/git/'>Git</a>
+
+
+</div>
+    </div>
+		<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">GIT_USERNAME</span><span class="o">=</span><span class="k">$(</span>git config --global --get user.name<span class="k">)</span>;
+</span><span class='line'>git log --author <span class="nv">$GIT_USERNAME</span> --no-merges --after<span class="o">={</span>1.day.ago<span class="o">}</span> |<span class="se">\</span>
+</span><span class='line'>       cat |<span class="se">\</span>
+</span><span class='line'>       grep -v <span class="s1">&#39;^commit &#39;</span> |<span class="se">\</span>
+</span><span class='line'>       grep -v <span class="s1">&#39;^Author: &#39;</span> |<span class="se">\</span>
+</span><span class='line'>       grep -v <span class="s1">&#39;^Date: &#39;</span> |<span class="se">\</span>
+</span><span class='line'>       grep -v <span class="s2">&quot;^$&quot;</span> |<span class="se">\</span>
+</span><span class='line'>       tail -r
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/05/28/fix-backbones-view-duplicated-events-bind/">
+		
+			解决Backbones视图的事件重复绑定</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-28T15:28:32+08:00" pubdate data-updated="true">May 28<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/backbones/'>Backbones</a>
+
+
+</div>
+    </div>
+		<h2>原理</h2>
+
+<p>Backbones的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">QAListTopicView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">events</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s2">&quot;click li&quot;</span><span class="o">:</span> <span class="s1">&#39;topic_show&#39;</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="nx">topic_show</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="nx">template</span><span class="o">:</span> <span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#qa_list_topic_template&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">()),</span>
+</span><span class='line'>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">topics</span> <span class="o">=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">topics</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">template</span><span class="p">());</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">list_topic_view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">QAListTopicView</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#qa ul&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">list_topic_view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果在View.render方法里进行事件绑定，那么就会对多重Backbones.View的多重实例进行重复绑定。</p>
+
+<h2>例子</h2>
+
+<p>详细的一个使用Backbones里的View和Event的例子见: <a href="https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js">https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/05/28/fix-backbones-view-duplicated-events-bind//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/04/17/statlysis-analysis-design-solve-two-problems-lazy-loading-and-scope/">
+		
+			统计分析DSL设计，解决惰性加载 和 作用域 两个问题</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-17T21:42:44+08:00" pubdate data-updated="true">Apr 17<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/lazy-loading/'>Lazy-loading</a>, <a class='category' href='/blog/categories/proc/'>Proc</a>, <a class='category' href='/blog/categories/statlysis/'>Statlysis</a>
+
+
+</div>
+    </div>
+		<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># encoding: UTF-8</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># 统计分析DSL设计</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;singleton&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">module</span> <span class="nn">StatlysisDslDesign</span>
+</span><span class='line'>  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">setup</span> <span class="o">&amp;</span><span class="n">block</span>
+</span><span class='line'>      <span class="k">raise</span> <span class="s2">&quot;必须配置proc&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">block</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;开始配置 StatlysisDslDesign&quot;</span>
+</span><span class='line'>      <span class="c1"># 1, 作用域   使用&amp;block把proc对象传递给其他对象作用域执行</span>
+</span><span class='line'>      <span class="no">StatlysisDslDesign</span><span class="o">.</span><span class="n">time_log</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">push</span> <span class="n">block</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="nb">puts</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">process</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">.</span><span class="n">daily_crons</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">_proc</span><span class="o">|</span>
+</span><span class='line'>        <span class="nb">puts</span> <span class="s2">&quot;开始执行 </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2"> 任务&quot;</span>
+</span><span class='line'>        <span class="no">StatlysisDslDesign</span><span class="o">.</span><span class="n">time_log</span> <span class="k">do</span>
+</span><span class='line'>          <span class="nb">puts</span> <span class="s2">&quot;结果 </span><span class="si">#{</span><span class="n">_proc</span><span class="o">.</span><span class="n">call</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">config</span>
+</span><span class='line'>      <span class="no">Configuration</span><span class="o">.</span><span class="n">instance</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">protected</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">time_log</span>
+</span><span class='line'>      <span class="n">t</span> <span class="o">=</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span>
+</span><span class='line'>      <span class="k">yield</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;时长 </span><span class="si">#{</span><span class="p">(</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">秒&quot;</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">42</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Configuration</span>
+</span><span class='line'>    <span class="kp">include</span> <span class="no">Singleton</span>
+</span><span class='line'>    <span class="kp">attr_accessor</span> <span class="ss">:daily_crons</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">daily_crons</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">push</span> <span class="n">_proc</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">instance_exec</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_proc</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">daily</span> <span class="n">symbol</span>
+</span><span class='line'>      <span class="k">raise</span> <span class="s2">&quot;必须配置一个和symbol对应的proc&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">block_given?</span>
+</span><span class='line'>      <span class="c1"># 2, 惰性加载 实现方法用proc包装block</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">daily_crons</span><span class="o">[</span><span class="n">symbol</span><span class="o">]</span> <span class="o">||=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span> <span class="k">yield</span> <span class="p">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nb">self</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">StatlysisDslDesign</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">daily</span> <span class="ss">:large_count</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">sleep</span> <span class="nb">rand</span>
+</span><span class='line'>    <span class="no">Struct</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:count</span><span class="p">)</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">daily</span> <span class="ss">:slow_count</span> <span class="k">do</span>
+</span><span class='line'>    <span class="nb">sleep</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="no">Struct</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:count</span><span class="p">)</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="no">StatlysisDslDesign</span><span class="o">.</span><span class="n">process</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">__END__</span>
+</span><span class='line'><span class="cp">开始配置 StatlysisDslDesign</span>
+</span><span class='line'><span class="cp">时长 0.0秒</span>
+</span><span class='line'><span class="cp">------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">开始执行 large_count 任务</span>
+</span><span class='line'><span class="cp">结果 #&lt;struct count=10000000000&gt;</span>
+</span><span class='line'><span class="cp">时长 0.57秒</span>
+</span><span class='line'><span class="cp">------------------------------------------</span>
+</span><span class='line'><span class="cp">开始执行 slow_count 任务</span>
+</span><span class='line'><span class="cp">结果 #&lt;struct count=1&gt;</span>
+</span><span class='line'><span class="cp">时长 3.0秒</span>
+</span><span class='line'><span class="cp">------------------------------------------</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/04/17/statlysis-analysis-design-solve-two-problems-lazy-loading-and-scope//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/04/16/escape-html-by-jquery/">
+		
+			jQuery转义HTML</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-16T14:45:54+08:00" pubdate data-updated="true">Apr 16<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/jquery/'>jQuery</a>
+
+
+</div>
+    </div>
+		<p>参考 <a href="http://stackoverflow.com/questions/6020714/escape-html-using-jquery">http://stackoverflow.com/questions/6020714/escape-html-using-jquery</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">escapeHTML</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">text</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">escapeHTML</span><span class="p">(</span><span class="s1">&#39;&lt;div id=&quot;main&quot;&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">// &quot;&amp;lt;div id=&quot;main&quot;&amp;gt;&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/04/16/escape-html-by-jquery//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/04/05/the-difference-between-XSS-and-CSRF/">
+		
+			XSS和CSRF的区别</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-05T20:22:49+08:00" pubdate data-updated="true">Apr 5<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/csrf/'>CSRF</a>, <a class='category' href='/blog/categories/secure/'>Secure</a>, <a class='category' href='/blog/categories/xss/'>XSS</a>
+
+
+</div>
+    </div>
+		<p>XSS 是直接在源网站执行，如常见的如SQL注入和提交JS代码等。解决方法一般为把用户输入都作为不信任数据做转义处理。</p>
+
+<p>CSRF 是破坏者间接利用了用户在源网站登陆情况下，在其他网站诱导用户触发JS请求获取源网站访问授权。Rails里用每次分配随机的 <code>csrf_meta_tag</code> 来解决伪造问题。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/04/05/the-difference-between-XSS-and-CSRF//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/">
+		
+			给xunsearch提供一对多的不重复的数据列表</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-25T14:07:30+08:00" pubdate data-updated="true">Mar 25<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/activerecord/'>ActiveRecord</a>, <a class='category' href='/blog/categories/search/'>Search</a>, <a class='category' href='/blog/categories/sphinx/'>Sphinx</a>
+
+
+</div>
+    </div>
+		<h2>问题概述</h2>
+
+<p>同事采用的xunsearch搜索引擎在搜索一对多表时遇到了重复内容的问题，问题在通过SQL语句来生成的单表有因为一对多而导致的重复信息。简单google下，发现要用group_concat把两个表要用到的文本字段来把每个都合成到一行记录里，但是这样复杂的SQL估计只有大拿才能写的出来。</p>
+
+<h2>解决方案</h2>
+
+<p>于是我想到之前做的thinking-sphinx是支持一对多联合查询的，那就看看thinking-sphinx是如何来生成SQL的。</p>
+
+<p>配置thinking-sphinx，这个参考官网。</p>
+
+<p>code_gists对应多个code_documents，给搜索模块配置索引结构</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CodeGist</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">define_index</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="n">documents</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="n">documents</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="ss">:author</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">where</span> <span class="s2">&quot;(code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行bundle exec rake ts:config后，在config目录就有了config/production.sphinx.conf文件，察看source区块的sql_query为</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">SQL_NO_CACHE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">*</span> <span class="k">CAST</span><span class="p">(</span><span class="mi">3</span> <span class="k">AS</span> <span class="n">SIGNED</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span> <span class="k">AS</span> <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="p">,</span> <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">filename</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">description</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">sphinx_internal_id</span><span class="o">`</span><span class="p">,</span> <span class="mi">0</span> <span class="k">AS</span> <span class="o">`</span><span class="n">sphinx_deleted</span><span class="o">`</span><span class="p">,</span> <span class="mi">1875287073</span> <span class="k">AS</span> <span class="o">`</span><span class="n">class_crc</span><span class="o">`</span><span class="p">,</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">author</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">author</span><span class="o">`</span> <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">gist_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">WHERE</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">&gt;=</span> <span class="err">$</span><span class="k">start</span> <span class="k">AND</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">&lt;=</span> <span class="err">$</span><span class="k">end</span> <span class="k">AND</span> <span class="p">(</span><span class="n">code_gists</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">code_documents</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">))</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">NULL</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>稍微整理后，变成</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">SQL_NO_CACHE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">filename</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">description</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">author</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span>
+</span><span class='line'><span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
+</span><span class='line'><span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">gist_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="p">(</span><span class="n">code_gists</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">code_documents</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行一下，就返回了不重复的数据列表了</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/03/06/render-haml-independently/">
+		
+			独立使用HAML渲染</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-06T14:45:06+08:00" pubdate data-updated="true">Mar 6<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/haml/'>HAML</a>, <a class='category' href='/blog/categories/renderengine/'>RenderEngine</a>
+
+
+</div>
+    </div>
+		<p>对于基本HAML语法可使用下列方法渲染即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">content</span>     <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">your_haml_path</span><span class="p">)</span>
+</span><span class='line'><span class="n">engine</span>      <span class="o">=</span> <span class="ss">Haml</span><span class="p">:</span><span class="ss">:Engine</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">haml_content</span><span class="p">)</span>
+</span><span class='line'><span class="n">engine</span><span class="o">.</span><span class="n">render</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果在content里使用了text_field_tag等view方法，那就需要在给engine指定render的作用域。默认是obj = Object.new，但是这个obj没有text_field_tag方法，所以就需要include ActionPack里对于的View模块，例如</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">HomeController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>   <span class="kp">include</span> <span class="ss">ActionView</span><span class="p">:</span><span class="ss">:Helpers</span><span class="o">::</span><span class="no">AssetTagHelper</span>
+</span><span class='line'>   <span class="kp">include</span> <span class="ss">ActionView</span><span class="p">:</span><span class="ss">:Helpers</span><span class="o">::</span><span class="no">FormTagHelper</span>
+</span><span class='line'>   <span class="kp">include</span> <span class="ss">ActionView</span><span class="p">:</span><span class="ss">:Helpers</span><span class="o">::</span><span class="no">OutputSafetyHelper</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="n">engine</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="no">HomeController</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考文档</h2>
+
+<ul>
+<li><a href="http://haml.info/docs/yardoc/Haml/Engine.html">http://haml.info/docs/yardoc/Haml/Engine.html</a></li>
+<li><a href="http://stackoverflow.com/questions/6125265/using-layouts-in-haml-files-independently-of-rails">http://stackoverflow.com/questions/6125265/using-layouts-in-haml-files-independently-of-rails</a></li>
+</ul>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/03/06/render-haml-independently//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/03/06/rails-general-configuration-problems/">
+		
+			Rails常见配置问题</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-06T10:42:41+08:00" pubdate data-updated="true">Mar 6<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/gemfile/'>Gemfile</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/assets/'>assets</a>
+
+
+</div>
+    </div>
+		<h2>提示已经安装的gem不在Gemfile里</h2>
+
+<p>最近有时遇到明明已经安装了rake，但是却提示我说有些gem没有在Gemfile里引用。比如：
+Could not find rake-0.9.2.2 in any of the sources
+Run &lsquo;bundle install&rsquo; to install missing gems.</p>
+
+<p>我所使用的Ruby版本管理环境是rvm，查看下rvm info，发现ruby路径和gem管理路径不一致，因此rvm reload一下就解决了该问题。</p>
+
+<p>rvm不一致的问题还需要查下，推测可能是开启多个SHELL，导致设置不一致～</p>
+
+<h2>assets没有编译</h2>
+
+<p>需要显示指定路径，在config/environments/production.rb里加入</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">precompile</span> <span class="o">+=</span> <span class="sx">%w[*js *css]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>development模式下刷新后静态资源不变</h2>
+
+<p>删除public/assets目录下的缓存文件，这样就走动态请求了。</p>
+
+<h2>修复rvm info里ruby版本不一致bug</h2>
+
+<p>在/etc/profile里加一行rvm reload</p>
+
+<h2>修复gem,irb等命令里老是提示ree某个版本的environment不存在</h2>
+
+<p>修改该命令里的ruby环境路径到自己指定的版本</p>
+
+<h2>修复默写外部css引用图片等静态资源不以/assets开头</h2>
+
+<p>把资源及其路径直接拷到/public目录下</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/03/06/rails-general-configuration-problems//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/02/26/delete-trailing-blank-in-vim/">
+		
+			Vim删除行末空格</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-26T12:17:53+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/tips/'>Tips</a>, <a class='category' href='/blog/categories/vim/'>Vim</a>
+
+
+</div>
+    </div>
+		<p>在查看(View)模式下输入</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>%<span class="k">s</span><span class="sr">/\s\+$/</span><span class="k">g</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其实也即是删除了整行都是空格字符的。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/02/26/delete-trailing-blank-in-vim//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+    
+        <a href="/blog/page/2/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2013
+
+    mvj3
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'mvj3';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

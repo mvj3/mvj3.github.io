@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: redis | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/redis/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[redis和memcached初始化内存比较]]></title>
+    <link href="http://mvj3.github.io/2011/12/19/compare-memory-usage-after-init-between-redis-and-memcached/"/>
+    <updated>2011-12-19T16:45:09+08:00</updated>
+    <id>http://mvj3.github.io/2011/12/19/compare-memory-usage-after-init-between-redis-and-memcached</id>
+    <content type="html"><![CDATA[<p>```text
+$ redis-stat
+&mdash;&mdash;&mdash;&ndash; data &mdash;&mdash;&mdash; &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash; load &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; &ndash; child &ndash;
+keys       mem      clients blocked requests            connections        <br/>
+3          1.30M    1       0       150000 (+150000)    751       <br/>
+3          1.30M    1       0       150001 (+1)         751       <br/>
+3          1.30M    1       0       150002 (+1)         751</p>
+
+<p>$ ps -ef | grep memc
+  501 28585     1   0   0:00.00 ??         0:00.00 memcached -d
+  501 28596 15675   0   0:00.00 ttys010    0:00.00 grep memc
+$ vmmap 28585 | tail -n 2
+DefaultMallocZone_0x100065000      18.0M        179      1235K      6%
+```</p>
+
+<p>redis默认比memcachd低多了</p>
+]]></content>
+  </entry>
+  
+</feed>

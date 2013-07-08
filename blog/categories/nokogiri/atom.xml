@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: nokogiri | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/nokogiri/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[CentOS本地安装nokogiri]]></title>
+    <link href="http://mvj3.github.io/2011/10/20/install-nokogiri-locally-on-centos/"/>
+    <updated>2011-10-20T16:45:09+08:00</updated>
+    <id>http://mvj3.github.io/2011/10/20/install-nokogiri-locally-on-centos</id>
+    <content type="html"><![CDATA[<p>帮同事在一台centos上安装nokogiri，记载如下：</p>
+
+<p>系统信息：</p>
+
+<p><code>text
+[root@localhost ~]# uname -a
+Linux localhost.localdomain 2.6.18-194.el5 #1 SMP Fri Apr 2 14:58:14 EDT 2010 x86_64 x86_64 x86_64 GNU/Linux
+[root@localhost ~]# cat /proc/version
+Linux version 2.6.18-194.el5 (mockbuild@builder10.centos.org) (gcc version 4.1.2 20080704 (Red Hat 4.1.2-48)) #1 SMP Fri Apr 2 14:58:14 EDT 2010
+</code></p>
+
+<p>卸载并重新安装nokogiri依赖的C库：</p>
+
+<p><code>bash
+sudo yum remove -y libxml2-devel libxslt-devel
+sudo yum install -y libxml2-devel libxslt-devel
+</code></p>
+
+<p>最近rubygems.org的在amazon的代码库索引源访问极慢，无奈只能把本地安装过的gems压缩包全部拷上去
+scp /usr/local/rvm/gems/ree-1.8.7-2011.03/cache/*gem root@host:~/gems/
+然后在服务器上执行 sudo gem i nokogiri-1.5.0.gem  -l 即可</p>
+
+<p>测试代码如下，nokogiri已能正常解析HTML了</p>
+
+<p><code>ruby
+require 'rubygems'
+%w[nokogiri open-uri].map &amp;method(:require)
+resp = open("http://www.douban.com").read
+puts Nokogiri::HTML(resp).css("body .article .content")
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

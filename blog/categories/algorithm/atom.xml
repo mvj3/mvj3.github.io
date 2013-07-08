@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Algorithm | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[最近访客实现]]></title>
+    <link href="http://mvj3.github.io/2013/01/30/recent-visitors-implement/"/>
+    <updated>2013-01-30T18:19:00+08:00</updated>
+    <id>http://mvj3.github.io/2013/01/30/recent-visitors-implement</id>
+    <content type="html"><![CDATA[<h2>问题分两个，一个是后端，一个是前端。</h2>
+
+<p>对后端来说，用户每次blog/index|show访问都生成访问记录，后端需要进行排重和去掉未登陆用户。如果在该次访问里进行，特别是某个博客突然火了，必然每次访问都产生IO(磁盘或网络，因为多进程要共享信息），所以必定是异步的。</p>
+
+<p>前端展示考虑到缓存，一般是页面片段缓存，或者ajax载入。</p>
+
+<p>后端异步如何计算每个blog的最近访客，log.js记录了最近访问，一个后台常驻进程循环对日志表按时间记录来读取blog访问信息，把最近访客信息刷新。相对单次请求全部处理，这里处理次数更少，资源更节约，当然瓶颈也在日志表的索引更新和读取。</p>
+
+<h2>把当前自己的访问也添加上</h2>
+
+<p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Intel面试题解答，算巴拿赫的出生年份]]></title>
+    <link href="http://mvj3.github.io/2013/01/13/compute-banach-birthday-in-ruby/"/>
+    <updated>2013-01-13T13:43:56+08:00</updated>
+    <id>http://mvj3.github.io/2013/01/13/compute-banach-birthday-in-ruby</id>
+    <content type="html"><![CDATA[<h2>摘自soso问问</h2>
+
+<p><a href="http://wenwen.soso.com/z/q148660327.htm">http://wenwen.soso.com/z/q148660327.htm</a>
+巴拿赫病故于1945年8月31日。他的出生年份恰好是他在世时某年年龄的平方，问:他是哪年出生的?这道看似很简单的数学问题，你能不能能快地解答呢?</p>
+
+<p>注意“巴拿赫病故于1945年8月31日”不要忽略后面的月份日期。比如我1989年4月出生的到了1991年3月我还不是二岁是一岁 但不可能比二岁大到了5月我就是一岁。所以在某一年人是有两个年龄的。在世的年龄可能是x或x-1。</p>
+
+<h2>Ruby版本解答</h2>
+
+<p>```ruby
+max_age = 150
+begin_year = 1945-max_age
+possible_birthyears = (0&hellip;max_age).map do |age|
+  age1 = age; age2 = age+1
+  birthyear1 = age1<em>age1; birthyear2 = age1</em>age2
+  [birthyear1, birthyear2].select {|by| (by > begin_year) &amp;&amp; (by &lt; 1945) }
+end.flatten
+possible_birthyears.flatten.each do |by|
+  puts &ldquo;banach born in #{by}, lived #{1945-by} years, and died in 1945.&rdquo;
+end</p>
+
+<h1>banach born in 1806, lived 139 years, and died in 1945.</h1>
+
+<h1>banach born in 1849, lived 96 years, and died in 1945.</h1>
+
+<h1>banach born in 1892, lived 53 years, and died in 1945.</h1>
+
+<h1>banach born in 1936, lived 9 years, and died in 1945.</h1>
+
+<p>```</p>
+
+<h2>关于巴拿赫</h2>
+
+<p>最后维基百科给出的解是：斯特凡·巴拿赫（Stefan Banach，1892年3月30日－1945年8月31日），波兰数学家。</p>
+
+<p><a href="http://zh.wikipedia.org/zh-cn/%E6%96%AF%E7%89%B9%E5%87%A1%C2%B7%E5%B7%B4%E6%8B%BF%E8%B5%AB">http://zh.wikipedia.org/zh-cn/斯特凡·巴拿赫</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[一个简单的姓名拼音匹配]]></title>
+    <link href="http://mvj3.github.io/2011/01/19/a-simple-name-pinyin-matching/"/>
+    <updated>2011-01-19T22:32:00+08:00</updated>
+    <id>http://mvj3.github.io/2011/01/19/a-simple-name-pinyin-matching</id>
+    <content type="html"><![CDATA[<p>一个简单的姓名拼音匹配</p>
+
+<p>姓名一般是由两三个汉字组成，选其顺序且连续的拼音缩略的组合就算匹配成功。</p>
+
+<p>```ruby</p>
+
+<h1>encoding: UTF-8</h1>
+
+<p>require &lsquo;chinese_pinyin&rsquo;
+@name = &ldquo;成吉思汗&rdquo;
+pinyins = Pinyin.t(@name).split</p>
+
+<h1>把姓名生成对应的拼音数组</h1>
+
+<p>array = []
+pinyins.each_with_index do |han, index|
+  array[index] = []
+  han.size.times {|num| array[index] &lt;&lt; han[0..(num &ndash; 1)] }
+end</p>
+
+<p>as = []
+array.size.times do |x|
+  sub_array = []</p>
+
+<p>  # 第一趟生成姓名拼音缩略的所有满足顺序且连续的组合
+  array.each_with_index do |ele, i|</p>
+
+<pre><code>ni = i + x
+sub_array &lt;&lt; array[i..ni] if array[ni]
+</code></pre>
+
+<p>  end</p>
+
+<p>  # 第二趟把每个组合各自归并
+  sub_array.each do |arr|</p>
+
+<pre><code>while arr.size &gt; 1
+  sub_as = []
+  arr[0].each {|a1| arr[1].each {|a2| sub_as &lt;&lt; ( a1 + a2 ) } }
+  arr[0..1] = [sub_as]
+end
+as &lt;&lt; arr
+puts arr.join(' ')
+</code></pre>
+
+<p>  end</p>
+
+<p>end</p>
+
+<p>as.flatten.join(&lsquo;,&rsquo;)
+```</p>
+
+<p>Ruby标准库里的abbr.rb是排除两个英文单词的共同缩略，见<a href="http://ruby-doc.org/stdlib/libdoc/abbrev/rdoc/classes/Abbrev.html">http://ruby-doc.org/stdlib/libdoc/abbrev/rdoc/classes/Abbrev.html</a></p>
+]]></content>
+  </entry>
+  
+</feed>

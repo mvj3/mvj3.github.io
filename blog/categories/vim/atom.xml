@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Vim | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/vim/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Vim删除行末空格]]></title>
+    <link href="http://mvj3.github.io/2013/02/26/delete-trailing-blank-in-vim/"/>
+    <updated>2013-02-26T12:17:53+08:00</updated>
+    <id>http://mvj3.github.io/2013/02/26/delete-trailing-blank-in-vim</id>
+    <content type="html"><![CDATA[<p>在查看(View)模式下输入</p>
+
+<p><code>vim
+:%s/\s\+$/g
+</code></p>
+
+<p>其实也即是删除了整行都是空格字符的。</p>
+]]></content>
+  </entry>
+  
+</feed>

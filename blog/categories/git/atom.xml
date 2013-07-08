@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[从Git的Log里列出今天提交的代码记录信息]]></title>
+    <link href="http://mvj3.github.io/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs/"/>
+    <updated>2013-05-28T15:28:32+08:00</updated>
+    <id>http://mvj3.github.io/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs</id>
+    <content type="html"><![CDATA[<p>```bash
+GIT_USERNAME=$(git config &mdash;global &mdash;get user.name);
+git log &mdash;author $GIT_USERNAME &mdash;no-merges &mdash;after={1.day.ago} |\</p>
+
+<pre><code>   cat |\
+   grep -v '^commit ' |\
+   grep -v '^Author: ' |\
+   grep -v '^Date: ' |\
+   grep -v "^$" |\
+   tail -r
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[*.eoe.cn制作代码大爆炸！]]></title>
+    <link href="http://mvj3.github.io/2013/01/26/create-a-code-bang-for-eoecn/"/>
+    <updated>2013-01-26T16:44:15+08:00</updated>
+    <id>http://mvj3.github.io/2013/01/26/create-a-code-bang-for-eoecn</id>
+    <content type="html"><![CDATA[<p><img src="/images/imovie.png" alt="imovie" /></p>
+
+<p>下载安装code swarm，系统环境预备见<a href="https://github.com/rictic/code_swarm">https://github.com/rictic/code_swarm</a>
+<code>bash
+git clone git://github.com/rictic/code_swarm.git &amp;&amp; cd code_swarm # 下载源码
+ant # 编译
+</code></p>
+
+<p>合并多个git仓库
+<code>bash
+mkdir eoecn_codebang &amp;&amp; cd eoecn_codebang # 创建临时仓库目录，并切换
+git init &amp;&amp; git commit --allow-empty-message -am '' --allow-empty # 初始化git环境
+git remote add programmingonline git@eoe.git.server:/opt/datas/git/eoe/programming.online.git # 添加多个git仓库
+git remote add eoecn git@eoe.git.server:/opt/datas/git/eoe/eoecn.git
+git pull programmingonline master # 合并多个git仓库
+git pull eoecn master
+git commit -am 'merge programmingonline and eoecn' # 直接合并冲突
+export PATH="/Users/mvj3/github/rictic/code_swarm/bin:$PATH" # 把code_swarm的bin目录加入到环境变
+量中
+code_swarm # 不用管他出错提示，只要在运行就可以了。它会在当前目录下生成包含git历史记录信息的.code_swarm/log.xml
+ruby -e 'filename = "/Users/mvj3/eoemobile/code/eoecn_codebang/.code_swarm/log.xml"; File.write(filename, File.read(filename).gsub(/@[^"]*\"/,"\""))' # 在ruby里把无效的email后缀去除。
+</code></p>
+
+<p>生成一帧一帧的png文件
+<code>bash
+pwd   #  先切换回code_swarm项目目录，修改defaults/user.config里的InputFile变量到刚才生成的.code_swarm/log.xml的绝对路径
+./run.sh defaults/user.config # 如果没错误的话，你就可以frames目录下不断有png生成了。如果量大的话，你会听到电脑的风扇也在狂转了。
+</code></p>
+
+<p>用iMovie制作视频
+<code>bash
+ffmpeg -f image2 -r 12 -i ./frames/code_swarm-%05d.png -sameq ./out.mov -pass 2 # 用ffmpeg生成视频，直接iMovie导入这么多png太慢
+</code></p>
+
+<h3>iMovie使用总结</h3>
+
+<p>任何视频，音频，字幕操作都是选中后操作，包括时长，大小，变速等。</p>
+
+<h3>参考文档</h3>
+
+<ul>
+<li><a href="http://code.google.com/p/codeswarm/wiki/GeneratingAVideo#Instructions_for_running_Codeswarm_0.1_on_OS_X_10.6_with_a_git_r">http://code.google.com/p/codeswarm/wiki/GeneratingAVideo#Instructions_for_running_Codeswarm_0.1_on_OS_X_10.6_with_a_git_r</a></li>
+<li><a href="http://progressdaily.diandian.com/post/2012-01-20/14242590">http://progressdaily.diandian.com/post/2012-01-20/14242590</a></li>
+</ul>
+
+
+<p>附上配置文件 user.config
+```bash</p>
+
+<h1>Your personal preferences for code_swarm, applied to every visualization</h1>
+
+<h1>you run, unless overridden by the individual visualization&rsquo;s config</h1>
+
+<h1>DON&rsquo;T EDIT THIS FILE IN PLACE, FIRST COPY IT TO defaults/user.config</h1>
+
+<h1>CHANGES TO THIS FILE WON&rsquo;T BE SEEN BY code_swarm, ONLY user.config</h1>
+
+<h1>Some common options to customize:</h1>
+
+<h1>It&rsquo;s much faster if we can use OpenGL, but it still doesn&rsquo;t work on some</h1>
+
+<h1>platforms/configurations</h1>
+
+<p>UseOpenGL=true</p>
+
+<h1>The size of the visualization window</h1>
+
+<p>Width=640
+Height=280</p>
+
+<p>Font=Helvetica
+FontSize=25
+BoldFontSize=20
+TakeSnapshots=true</p>
+
+<h1>Size in pixels of the width and height of avatar images</h1>
+
+<p>AvatarSize=64</p>
+
+<p>InputFile=/Users/mvj3/eoemobile/code/eoecn_codebang/.code_swarm/log.xml
+SnapshotLocation=frames/code_swarm-#####.png</p>
+
+<h1>For more options, see defaults/code_swarm.config</h1>
+
+<h1>Draw names (combinatory) :</h1>
+
+<h1>Draw sharp names?</h1>
+
+<p>DrawNamesSharp=true</p>
+
+<h1>And draw a glow around names? (Runs slower)</h1>
+
+<p>DrawNamesHalos=false</p>
+
+<h1>Draw files (combinatory) :</h1>
+
+<h1>Draw sharp files</h1>
+
+<p>DrawFilesSharp=false</p>
+
+<h1>Draw fuzzy files</h1>
+
+<p>DrawFilesFuzzy=true</p>
+
+<h1>Draw jelly files</h1>
+
+<p>DrawFilesJelly=false</p>
+
+<h1>Show the Legend at start</h1>
+
+<p>ShowLegend=false</p>
+
+<h1>Show the History at start</h1>
+
+<p>ShowHistory=true</p>
+
+<h1>Show the Date at start</h1>
+
+<p>ShowDate=true</p>
+
+<h1>Show edges between authors and files, mostly for debug purpose</h1>
+
+<p>ShowEdges=false</p>
+
+<h1>Turn on Debug counts.</h1>
+
+<p>ShowDebug=false</p>
+
+<h1>Natural distance of files to people</h1>
+
+<p>EdgeLength=25</p>
+
+<h1>Amount of life to decrement</h1>
+
+<p>EdgeDecrement=-2
+FileDecrement=-2
+PersonDecrement=-1</p>
+
+<h1>Speeds.</h1>
+
+<h1>Optional: NodeSpeed=7.0, If used, FileSpeed and PersonSpeed need not be set.</h1>
+
+<p>#
+FileSpeed=7.0
+PersonSpeed=2.0</p>
+
+<h1>Masses</h1>
+
+<p>FileMass=1.0
+PersonMass=10.0</p>
+
+<h1>Life of an Edge</h1>
+
+<p>EdgeLife=250</p>
+
+<h1>Life of a File</h1>
+
+<p>FileLife=200</p>
+
+<h1>Life of a Person</h1>
+
+<p>PersonLife=255</p>
+
+<h1>Highlight percent.</h1>
+
+<h1>This is the amount of time that the person or</h1>
+
+<h1>file will be highlighted.</h1>
+
+<p>HighlightPct=5</p>
+
+<h2>Physics engine selection and configuration</h2>
+
+<h1>Directory physics engine config files reside in.</h1>
+
+<p>PhysicsEngineConfigDir=physics_engine</p>
+
+<h1>Force calculation algorithms (&ldquo;PhysicsEngineLegacy&rdquo;, &ldquo;PhysicsEngineSimple&rdquo;&hellip;) :</h1>
+
+<p>PhysicsEngineSelection=PhysicsEngineOrderly</p>
+
+<h1>Is the input xml sorted by date?  It&rsquo;s faster and uses much less memory if it is</h1>
+
+<p>IsInputSorted=true</p>
+
+<h1>OpenGL is experimental. Use at your own risk.</h1>
+
+<p>UseOpenGL=false
+ShowUserName=true
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[如何查看git历史记录里的已删除文件的历史]]></title>
+    <link href="http://mvj3.github.io/2013/01/09/how-to-view-the-history-of-deleted-files-in-git-history/"/>
+    <updated>2013-01-09T11:42:25+08:00</updated>
+    <id>http://mvj3.github.io/2013/01/09/how-to-view-the-history-of-deleted-files-in-git-history</id>
+    <content type="html"><![CDATA[<p><a href="http://stackoverflow.com/questions/3197416/why-doesnt-git-log-foo-work-for-deleted-file-foo">http://stackoverflow.com/questions/3197416/why-doesnt-git-log-foo-work-for-deleted-file-foo</a>
+<code>bash
+git log --follow -- foo
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[通过CURL在bitbucket上创建代码仓库]]></title>
+    <link href="http://mvj3.github.io/2013/01/08/create-code-repository-in-bitbucket-via-curl/"/>
+    <updated>2013-01-08T17:12:06+08:00</updated>
+    <id>http://mvj3.github.io/2013/01/08/create-code-repository-in-bitbucket-via-curl</id>
+    <content type="html"><![CDATA[<p>```bash
+curl -k -X POST -d &lsquo;name=hello1&rsquo;\</p>
+
+<pre><code> --user your@email.com:password
+ https://api.bitbucket.org/1.0/repositories -v
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

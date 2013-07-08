@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Index | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/index/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mongodb删除重复数据]]></title>
+    <link href="http://mvj3.github.io/2011/11/03/mongodb-delete-duplicated-data/"/>
+    <updated>2011-11-03T16:49:38+08:00</updated>
+    <id>http://mvj3.github.io/2011/11/03/mongodb-delete-duplicated-data</id>
+    <content type="html"><![CDATA[<p>统计分析需要跑各个时间粒度的任务，如果异常中断后重新选择某个时间删除后再跑的时候，有时候还是会有重复的统计数据。</p>
+
+<p>在mongodb中建立唯一索引时加上dropDups选项可以解决此问题：</p>
+
+<p>A unique index cannot be created on a key that has pre-existing duplicate values. If you would like to create the index anyway, keeping the first document the database indexes and deleting all subsequent documents that have duplicate values, add the dropDups option</p>
+
+<p><a href="http://www.mongodb.org/display/DOCS/indexes#Indexes-dropDups">http://www.mongodb.org/display/DOCS/indexes#Indexes-dropDups</a></p>
+
+<p>Mongoid对应的参数配置是 , :unique => true, :background => true, :dropDups => true</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[sphinx覆盖旧索引]]></title>
+    <link href="http://mvj3.github.io/2011/02/01/overwrite-old-indexes-in-sphinx/"/>
+    <updated>2011-02-01T16:45:09+08:00</updated>
+    <id>http://mvj3.github.io/2011/02/01/overwrite-old-indexes-in-sphinx</id>
+    <content type="html"><![CDATA[<p>换用sphinx后，产品同事发现旧的数据也能搜索出新数据来，查了下官方文档 <a href="http://sphinxsearch.com/docs/manual-0.9.9.html#index-merging%EF%BC%8C">http://sphinxsearch.com/docs/manual-0.9.9.html#index-merging%EF%BC%8C</a> 发现更新索引时thinking-sphinx没有把它自定义的sphinx_deleted属性同时更新上去，导致在执行增量索引时用的&mdash;merge-dst-range选项无效。现解决方案如下：</p>
+
+<ol>
+<li><p>在config/production.sphinx.conf的searchd部分加上 attr_flush_period = 5 ，让sphinx在更新sphinx_deleted属性后写入到磁盘里。</p></li>
+<li><p>因为sphinx要部署在另外一台独立的机子上，为了方便运维部署和维护，不用安装其他的类似rmagick之类和sphinx无关的软件，就写了一个ruby脚本，用bundler配置安装下gem包，放在cron里定时跑，部分代码如下：</p></li>
+</ol>
+
+
+<p>```ruby</p>
+
+<h1>!/usr/bin/env ruby -rubygems</h1>
+
+<p>RAILS_ROOT = File.expand_path(File.dirname(<strong>FILE</strong>)) unless defined?(RAILS_ROOT)<br/>
+sphinx_config_yml = RAILS_ROOT + &lsquo;/config/sphinx.yml'<br/>
+mysql_config_yml = RAILS_ROOT + &rsquo;/config/database.yml'<br/>
+production_sphinx_conf = RAILS_ROOT + &lsquo;/config/production.sphinx.conf'<br/>
+gem 'rails&rsquo;, &lsquo;2.3.4'<br/>
+require 'initializer'<br/>
+%w[active_record active_support action_view action_controller action_mailer].map {|act| require act}<br/>
+gem &ldquo;thinking-sphinx&rdquo;, &ldquo;1.3.18&rdquo;, :lib => &ldquo;thinking_sphinx"<br/>
+%w[yaml riddle thinking_sphinx].map {|lib| require lib}</p>
+
+<p>class Hash<br/>
+  def symbolize_keys</p>
+
+<pre><code>inject({}) do |options, (key, value)|  
+  options[(key.to_sym rescue key) || key] = value  
+  options  
+end  
+</code></pre>
+
+<p>  end<br/>
+end</p>
+
+<p>sphinx_config = YAML.load_file(sphinx_config_yml)[&lsquo;production&rsquo;].symbolize_keys<br/>
+ActiveRecord::Base.establish_connection(YAML.load_file(mysql_config_yml)[&lsquo;production&rsquo;].symbolize_keys)</p>
+
+<p>class ActiveRecord::Base<br/>
+  def self.has_attached_file(a, b = {}); end<br/>
+  def self.validates_attachment_content_type(a, b = {} ); end<br/>
+end</p>
+
+<p>files = Dir.glob(RAILS_ROOT + &ldquo;/app/models/<em>/</em>.rb&rdquo;) + Dir.glob(RAILS_ROOT + &ldquo;/app/models/<em>/</em>/<em>.rb&rdquo;)<br/>
+model_strs = files.map {|path| path.scan(/app\/models\/(.</em>).rb/)[0][0].split(&lsquo;/&rsquo;).map(&amp;:camelize).join(&lsquo;::&rsquo;) }</p>
+
+<p>model_strs.each do |str|<br/>
+  arr = str.split(&ldquo;::&rdquo;)<br/>
+  arr.size.times do |x|</p>
+
+<pre><code>begin  
+  eval("class #{arr[0..x].join('::')} &lt; ActiveRecord::Base; end")  
+rescue TypeError  
+  # FIX superclass mismatch for class Data (TypeError)  
+end  
+</code></pre>
+
+<p>  end<br/>
+end</p>
+
+<p>files.each do |x|<br/>
+  begin</p>
+
+<pre><code>load x  
+</code></pre>
+
+<p>  rescue TypeError<br/>
+  end<br/>
+end</p>
+
+<p>client = Riddle::Client.new(sphinx_config[:address], sphinx_config[:port])<br/>
+indexes = []</p>
+
+<p>models = ThinkingSphinx.context.indexed_models.each do |str|<br/>
+  prefix = str.split(&lsquo;::&rsquo;).map {|s| s.downcase }.join(&lsquo;<em>&rsquo;)<br/>
+  indexes &lt;&lt; ( index = [&ldquo;#{prefix}</em>core&rdquo;, &ldquo;#{prefix}_delta&rdquo;] )<br/>
+  attrs = {}<br/>
+  str.constantize.all(:select => &ldquo;id&rdquo;, :conditions => [&ldquo;updated_at > ?&rdquo;, Time.now &ndash; 3650]).each do |item|</p>
+
+<pre><code>attrs[item.id * 5] = [1]  
+</code></pre>
+
+<p>  end</p>
+
+<p>  unless attrs.blank?</p>
+
+<pre><code>puts attrs.inspect  
+puts "Updating #{client.update(index[0], ['sphinx_deleted'], attrs )} docs"  
+</code></pre>
+
+<p>  end<br/>
+end<br/>
+sleep 10 # 等待写入到磁盘里</p>
+
+<h1>只允许0出现在最终索引里</h1>
+
+<p>system &ldquo;/usr/local/bin/indexer &mdash;rotate &mdash;config #{RAILS_ROOT}/config/production.sphinx.conf #{indexes.map {|x| x[1] }.join(&lsquo; &rsquo;)}"<br/>
+sleep 2 # 马上执行以下会导致delta没有更新到main索引里<br/>
+indexes.each do |index|<br/>
+  system &rdquo;/usr/local/bin/indexer &mdash;rotate &mdash;config #{RAILS_ROOT}/config/production.sphinx.conf &mdash;merge #{index.join(&lsquo; &rsquo;)} &mdash;merge-dst-range sphinx_deleted 0 0"<br/>
+end<br/>
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

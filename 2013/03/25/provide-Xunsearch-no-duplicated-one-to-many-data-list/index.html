@@ -1,0 +1,258 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>给xunsearch提供一对多的不重复的数据列表 - 世界的审美！</title>
+    <meta name="author" content="mvj3">
+    
+	<meta name="description" content="问题概述 同事采用的xunsearch搜索引擎在搜索一对多表时遇到了重复内容的问题，问题在通过SQL语句来生成的单表有因为一对多而导致的重复信息。简单google下，发现要用group_concat把两个表要用到的文本字段来把每个都合成到一行记录里，但是这样复杂的SQL估计只有大拿才能写的出来。 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="世界的审美！" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-19059295-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        mvj3
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/mvj3" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/112424697046854998838?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li>
+  <a href="http://www.twitter.com/mvj3" class="twitter" title="Twitter"></a>
+  </li>
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">给xunsearch提供一对多的不重复的数据列表</h2>
+	<div class="entry-content"><h2>问题概述</h2>
+
+<p>同事采用的xunsearch搜索引擎在搜索一对多表时遇到了重复内容的问题，问题在通过SQL语句来生成的单表有因为一对多而导致的重复信息。简单google下，发现要用group_concat把两个表要用到的文本字段来把每个都合成到一行记录里，但是这样复杂的SQL估计只有大拿才能写的出来。</p>
+
+<h2>解决方案</h2>
+
+<p>于是我想到之前做的thinking-sphinx是支持一对多联合查询的，那就看看thinking-sphinx是如何来生成SQL的。</p>
+
+<p>配置thinking-sphinx，这个参考官网。</p>
+
+<p>code_gists对应多个code_documents，给搜索模块配置索引结构</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CodeGist</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">define_index</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="n">documents</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="n">documents</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="ss">:author</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">where</span> <span class="s2">&quot;(code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行bundle exec rake ts:config后，在config目录就有了config/production.sphinx.conf文件，察看source区块的sql_query为</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">SQL_NO_CACHE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">*</span> <span class="k">CAST</span><span class="p">(</span><span class="mi">3</span> <span class="k">AS</span> <span class="n">SIGNED</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span> <span class="k">AS</span> <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="p">,</span> <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">filename</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">description</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">sphinx_internal_id</span><span class="o">`</span><span class="p">,</span> <span class="mi">0</span> <span class="k">AS</span> <span class="o">`</span><span class="n">sphinx_deleted</span><span class="o">`</span><span class="p">,</span> <span class="mi">1875287073</span> <span class="k">AS</span> <span class="o">`</span><span class="n">class_crc</span><span class="o">`</span><span class="p">,</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">author</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">author</span><span class="o">`</span> <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">gist_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">WHERE</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">&gt;=</span> <span class="err">$</span><span class="k">start</span> <span class="k">AND</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">&lt;=</span> <span class="err">$</span><span class="k">end</span> <span class="k">AND</span> <span class="p">(</span><span class="n">code_gists</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">code_documents</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">))</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">NULL</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>稍微整理后，变成</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">SQL_NO_CACHE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">filename</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">description</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">author</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span>
+</span><span class='line'><span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
+</span><span class='line'><span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">gist_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="p">(</span><span class="n">code_gists</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">code_documents</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行一下，就返回了不重复的数据列表了</p>
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2013
+
+    mvj3
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'mvj3';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mvj3.github.io/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/';
+        var disqus_url = 'http://mvj3.github.io/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

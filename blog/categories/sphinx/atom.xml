@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Sphinx | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/sphinx/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[给xunsearch提供一对多的不重复的数据列表]]></title>
+    <link href="http://mvj3.github.io/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/"/>
+    <updated>2013-03-25T14:07:30+08:00</updated>
+    <id>http://mvj3.github.io/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list</id>
+    <content type="html"><![CDATA[<h2>问题概述</h2>
+
+<p>同事采用的xunsearch搜索引擎在搜索一对多表时遇到了重复内容的问题，问题在通过SQL语句来生成的单表有因为一对多而导致的重复信息。简单google下，发现要用group_concat把两个表要用到的文本字段来把每个都合成到一行记录里，但是这样复杂的SQL估计只有大拿才能写的出来。</p>
+
+<h2>解决方案</h2>
+
+<p>于是我想到之前做的thinking-sphinx是支持一对多联合查询的，那就看看thinking-sphinx是如何来生成SQL的。</p>
+
+<p>配置thinking-sphinx，这个参考官网。</p>
+
+<p>code_gists对应多个code_documents，给搜索模块配置索引结构</p>
+
+<p>```ruby
+class CodeGist &lt; ActiveRecord::Base
+  define_index do</p>
+
+<pre><code>indexes documents.filename, :as =&gt; :content
+indexes documents.content, :as =&gt; :content
+indexes :description, :as =&gt; :content
+indexes :author, :as =&gt; :content
+
+where "(code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)"
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>运行bundle exec rake ts:config后，在config目录就有了config/production.sphinx.conf文件，察看source区块的sql_query为</p>
+
+<p><code>sql
+SELECT SQL_NO_CACHE `code_gists`.`id` * CAST(3 AS SIGNED) + 0 AS `id` , GROUP_CONCAT(DISTINCT IFNULL(`code_documents`.`filename`, '0') SEPARATOR ' ') AS `content`, GROUP_CONCAT(DISTINCT IFNULL(`code_documents`.`content`, '0') SEPARATOR ' ') AS `content`, `code_gists`.`description` AS `content`, `code_gists`.`id` AS `sphinx_internal_id`, 0 AS `sphinx_deleted`, 1875287073 AS `class_crc`, IFNULL(`code_gists`.`author`, '') AS `author` FROM `code_gists` LEFT OUTER JOIN `code_documents` ON `code_documents`.`gist_id` = `code_gists`.`id` WHERE (`code_gists`.`id` &gt;= $start AND `code_gists`.`id` &lt;= $end AND (code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)) GROUP BY `code_gists`.`id` ORDER BY NULL;
+</code></p>
+
+<p>稍微整理后，变成</p>
+
+<p><code>``sql
+SELECT SQL_NO_CACHE</code>code_gists<code>.</code>id`,</p>
+
+<pre><code>                GROUP_CONCAT(DISTINCT IFNULL(`code_documents`.`filename`, '0') SEPARATOR ' ') AS `content`,
+                GROUP_CONCAT(DISTINCT IFNULL(`code_documents`.`content`, '0') SEPARATOR ' ') AS `content`,
+                `code_gists`.`description` AS `content`,
+                IFNULL(`code_gists`.`author`, '') AS `content`
+</code></pre>
+
+<p>FROM <code>code_gists</code>
+LEFT OUTER JOIN <code>code_documents</code> ON <code>code_documents</code>.<code>gist_id</code> = <code>code_gists</code>.<code>id</code>
+WHERE (code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)
+GROUP BY <code>code_gists</code>.<code>id</code>;
+```</p>
+
+<p>运行一下，就返回了不重复的数据列表了</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[undefined method to_crc32 for 1:Fixnum]]></title>
+    <link href="http://mvj3.github.io/2012/12/17/undefined-method-to_crc32_for_1_Fixnum/"/>
+    <updated>2012-12-17T11:21:29+08:00</updated>
+    <id>http://mvj3.github.io/2012/12/17/undefined-method-to_crc32_for_1_Fixnum</id>
+    <content type="html"><![CDATA[<h2>预备知识</h2>
+
+<p>如果对条件选择做索引的话，sphinx采用的数据结构均为非字符类型，碰到字符字段，在ThinkingSphinx都被默认经CRC32转换成标识唯一整数。</p>
+
+<h2>解决过程</h2>
+
+<p>ThinkingSphinx需要对表名做一个CRC32转化，具体在 lib/thinking_sphinx/source/sql.rb 的 <code>crc_column</code> 方法。该方法里为了对继承表进行兼容，里面会判断Rails里约定的 <code>inheritance_column</code> 是否也在表字段里（代码为 <code>@model.column_names.include?(@model.inheritance_column)</code> ），如果有就把type字段也作为CRC32的参数。可是如果type为整数类型，那么它没有 <code>to_crc32</code> 方法，所以就报了undefined method `to_crc32' for 1:Fixnum 错误。</p>
+
+<h2>解决方案</h2>
+
+<p>给有整数type字段的model加一句 <code>self.inheritance_column = :_type</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[sphinx覆盖旧索引]]></title>
+    <link href="http://mvj3.github.io/2011/02/01/overwrite-old-indexes-in-sphinx/"/>
+    <updated>2011-02-01T16:45:09+08:00</updated>
+    <id>http://mvj3.github.io/2011/02/01/overwrite-old-indexes-in-sphinx</id>
+    <content type="html"><![CDATA[<p>换用sphinx后，产品同事发现旧的数据也能搜索出新数据来，查了下官方文档 <a href="http://sphinxsearch.com/docs/manual-0.9.9.html#index-merging%EF%BC%8C">http://sphinxsearch.com/docs/manual-0.9.9.html#index-merging%EF%BC%8C</a> 发现更新索引时thinking-sphinx没有把它自定义的sphinx_deleted属性同时更新上去，导致在执行增量索引时用的&mdash;merge-dst-range选项无效。现解决方案如下：</p>
+
+<ol>
+<li><p>在config/production.sphinx.conf的searchd部分加上 attr_flush_period = 5 ，让sphinx在更新sphinx_deleted属性后写入到磁盘里。</p></li>
+<li><p>因为sphinx要部署在另外一台独立的机子上，为了方便运维部署和维护，不用安装其他的类似rmagick之类和sphinx无关的软件，就写了一个ruby脚本，用bundler配置安装下gem包，放在cron里定时跑，部分代码如下：</p></li>
+</ol>
+
+
+<p>```ruby</p>
+
+<h1>!/usr/bin/env ruby -rubygems</h1>
+
+<p>RAILS_ROOT = File.expand_path(File.dirname(<strong>FILE</strong>)) unless defined?(RAILS_ROOT)<br/>
+sphinx_config_yml = RAILS_ROOT + &lsquo;/config/sphinx.yml'<br/>
+mysql_config_yml = RAILS_ROOT + &rsquo;/config/database.yml'<br/>
+production_sphinx_conf = RAILS_ROOT + &lsquo;/config/production.sphinx.conf'<br/>
+gem 'rails&rsquo;, &lsquo;2.3.4'<br/>
+require 'initializer'<br/>
+%w[active_record active_support action_view action_controller action_mailer].map {|act| require act}<br/>
+gem &ldquo;thinking-sphinx&rdquo;, &ldquo;1.3.18&rdquo;, :lib => &ldquo;thinking_sphinx"<br/>
+%w[yaml riddle thinking_sphinx].map {|lib| require lib}</p>
+
+<p>class Hash<br/>
+  def symbolize_keys</p>
+
+<pre><code>inject({}) do |options, (key, value)|  
+  options[(key.to_sym rescue key) || key] = value  
+  options  
+end  
+</code></pre>
+
+<p>  end<br/>
+end</p>
+
+<p>sphinx_config = YAML.load_file(sphinx_config_yml)[&lsquo;production&rsquo;].symbolize_keys<br/>
+ActiveRecord::Base.establish_connection(YAML.load_file(mysql_config_yml)[&lsquo;production&rsquo;].symbolize_keys)</p>
+
+<p>class ActiveRecord::Base<br/>
+  def self.has_attached_file(a, b = {}); end<br/>
+  def self.validates_attachment_content_type(a, b = {} ); end<br/>
+end</p>
+
+<p>files = Dir.glob(RAILS_ROOT + &ldquo;/app/models/<em>/</em>.rb&rdquo;) + Dir.glob(RAILS_ROOT + &ldquo;/app/models/<em>/</em>/<em>.rb&rdquo;)<br/>
+model_strs = files.map {|path| path.scan(/app\/models\/(.</em>).rb/)[0][0].split(&lsquo;/&rsquo;).map(&amp;:camelize).join(&lsquo;::&rsquo;) }</p>
+
+<p>model_strs.each do |str|<br/>
+  arr = str.split(&ldquo;::&rdquo;)<br/>
+  arr.size.times do |x|</p>
+
+<pre><code>begin  
+  eval("class #{arr[0..x].join('::')} &lt; ActiveRecord::Base; end")  
+rescue TypeError  
+  # FIX superclass mismatch for class Data (TypeError)  
+end  
+</code></pre>
+
+<p>  end<br/>
+end</p>
+
+<p>files.each do |x|<br/>
+  begin</p>
+
+<pre><code>load x  
+</code></pre>
+
+<p>  rescue TypeError<br/>
+  end<br/>
+end</p>
+
+<p>client = Riddle::Client.new(sphinx_config[:address], sphinx_config[:port])<br/>
+indexes = []</p>
+
+<p>models = ThinkingSphinx.context.indexed_models.each do |str|<br/>
+  prefix = str.split(&lsquo;::&rsquo;).map {|s| s.downcase }.join(&lsquo;<em>&rsquo;)<br/>
+  indexes &lt;&lt; ( index = [&ldquo;#{prefix}</em>core&rdquo;, &ldquo;#{prefix}_delta&rdquo;] )<br/>
+  attrs = {}<br/>
+  str.constantize.all(:select => &ldquo;id&rdquo;, :conditions => [&ldquo;updated_at > ?&rdquo;, Time.now &ndash; 3650]).each do |item|</p>
+
+<pre><code>attrs[item.id * 5] = [1]  
+</code></pre>
+
+<p>  end</p>
+
+<p>  unless attrs.blank?</p>
+
+<pre><code>puts attrs.inspect  
+puts "Updating #{client.update(index[0], ['sphinx_deleted'], attrs )} docs"  
+</code></pre>
+
+<p>  end<br/>
+end<br/>
+sleep 10 # 等待写入到磁盘里</p>
+
+<h1>只允许0出现在最终索引里</h1>
+
+<p>system &ldquo;/usr/local/bin/indexer &mdash;rotate &mdash;config #{RAILS_ROOT}/config/production.sphinx.conf #{indexes.map {|x| x[1] }.join(&lsquo; &rsquo;)}"<br/>
+sleep 2 # 马上执行以下会导致delta没有更新到main索引里<br/>
+indexes.each do |index|<br/>
+  system &rdquo;/usr/local/bin/indexer &mdash;rotate &mdash;config #{RAILS_ROOT}/config/production.sphinx.conf &mdash;merge #{index.join(&lsquo; &rsquo;)} &mdash;merge-dst-range sphinx_deleted 0 0"<br/>
+end<br/>
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

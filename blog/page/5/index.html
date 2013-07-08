@@ -1,0 +1,800 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>世界的审美！</title>
+    <meta name="author" content="mvj3">
+    
+	<meta name="description" content="Published on: Aug 27th, 2011 Tags: Ruby 项目因为一个隐藏的BUG要删除掉重复的评论，如果所有评论挨个比对的话，程序的开销为O(N²)，因此可以采用Hash来把开销降低到O(N)。为避免原始数据作为Hash键导致内存占用过多的问题， &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="世界的审美！" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <script src="/javascripts/ajaxify.js"></script>
+   
+    
+    
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-19059295-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        mvj3
+    </div>
+</h1>
+<br>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/mvj3" class="github" title="Github"></a>
+  </li>
+  
+  
+  <!-- Google Plus -->
+  <li>
+  <a href="http://plus.google.com/112424697046854998838?rel=author" class="google" title="Google+"></a>
+  </li>
+  
+  
+  
+  <!-- Twitter -->
+  <li>
+  <a href="http://www.twitter.com/mvj3" class="twitter" title="Twitter"></a>
+  </li>
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/08/27/delete_duplicated_records/">
+		
+			删除重复记录</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-27T16:36:16+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2011</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>项目因为一个隐藏的BUG要删除掉重复的评论，如果所有评论挨个比对的话，程序的开销为O(N²)，因此可以采用Hash来把开销降低到O(N)。为避免原始数据作为Hash键导致内存占用过多的问题，可以把Hash键改为原始数据内容生成的Hash码。为了避免误删，删除之前还可对疑为重复数据的记录进行比对。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;action_pack&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;action_view/helpers/number_helper.rb&#39;</span>
+</span><span class='line'><span class="kp">include</span> <span class="ss">ActionView</span><span class="p">:</span><span class="ss">:Helpers</span><span class="o">::</span><span class="no">NumberHelper</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">current_vm_size</span>
+</span><span class='line'>  <span class="sb">`vmmap </span><span class="si">#{</span><span class="vg">$PID</span><span class="si">}</span><span class="sb">`</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">[-</span><span class="mi">1</span><span class="o">].</span><span class="n">split</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">to_f</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">object_size</span>
+</span><span class='line'> <span class="n">prev_size</span> <span class="o">=</span> <span class="n">current_vm_size</span>
+</span><span class='line'> <span class="k">yield</span>
+</span><span class='line'> <span class="n">number_to_human_size</span><span class="p">(</span><span class="n">current_vm_size</span> <span class="o">-</span> <span class="n">prev_size</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;digest/sha1&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">columns</span> <span class="o">=</span> <span class="sx">%w[account_id target_id section_id rating comment status client_id channel_id device_id locale_id]</span>
+</span><span class='line'><span class="vi">@hash</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># avoid to be released in local scope</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">object_size</span> <span class="k">do</span>
+</span><span class='line'>  <span class="no">Comment</span><span class="o">.</span><span class="n">find_each</span><span class="p">(</span><span class="ss">:batch_size</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">k</span> <span class="o">=</span> <span class="ss">Digest</span><span class="p">:</span><span class="ss">:SHA1</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(</span><span class="n">columns</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">column</span><span class="o">|</span> <span class="n">c</span><span class="o">.</span><span class="n">attributes</span><span class="o">[</span><span class="n">column</span><span class="o">].</span><span class="n">to_s</span> <span class="p">}</span><span class="o">.</span><span class="n">join</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@hash</span><span class="o">[</span><span class="n">k</span><span class="o">]</span>
+</span><span class='line'>      <span class="n">o</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="vi">@hash</span><span class="o">[</span><span class="n">k</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">c</span><span class="o">.</span><span class="n">destroy</span> <span class="k">if</span> <span class="n">columns</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span><span class="o">|</span><span class="n">column</span><span class="o">|</span> <span class="n">o</span><span class="o">.</span><span class="n">attributes</span><span class="o">[</span><span class="n">column</span><span class="o">]</span> <span class="o">==</span> <span class="n">c</span><span class="o">.</span><span class="n">attributes</span><span class="o">[</span><span class="n">column</span><span class="o">]</span> <span class="p">}</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">columns</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="vi">@hash</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">id</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在我本机测试，全部载入十万多条原始数据会占用263MB内存，而采用以上hash压缩的方式则降低到13.3MB。如果表里有大文本字段的话，会更有效果。</p>
+
+<p>如果能停掉对数据库表做插入访问，那么也可以直接用SELECT DISTINCT*的SQL语句导入到临时表中，将原始表清空后再重新导入。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2011/08/27/delete_duplicated_records//blog/page/5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/07/27/extract-text-from-html-simply-by-Nokogiri/">
+		
+			使用Nokogiri简单抽取HTML文本</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-27T10:33:00+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2011</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/html/'>HTML</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>使用Nokogiri一句就可以搞定！</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;nokogiri&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="p">(</span><span class="n">html</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2011/07/27/extract-text-from-html-simply-by-Nokogiri//blog/page/5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/07/25/cannnot-find-static-assets-in-Rails-3.1/">
+		
+			Rails 3.1找不到静态资源</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-25T14:41:00+08:00" pubdate data-updated="true">Jul 25<span>th</span>, 2011</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/assets/'>Assets</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>
+
+
+</div>
+    </div>
+		<p>发现一个诡异的现象，Rails在production模式下启动后找不到资源，报如下错误：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Started GET &quot;/images/people.jpg&quot; for 127.0.0.1 at Mon Jul 25 14:21:35 +0800 2011
+</span><span class='line'>
+</span><span class='line'>ActionController::RoutingError (No route matches [GET] &quot;/images/people.jpg&quot;):
+</span><span class='line'>
+</span><span class='line'>Rendered /usr/local/rvm/gems/ree-1.8.7-2011.03/gems/actionpack-3.1.0.rc4/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.8ms)
+</span><span class='line'>cache: [GET /images/down_logo.jpg] miss
+</span><span class='line'>
+</span><span class='line'>Started GET &quot;/images/down_logo.jpg&quot; for 127.0.0.1 at Mon Jul 25 14:21:35 +0800 2011
+</span><span class='line'>
+</span><span class='line'>ActionController::RoutingError (No route matches [GET] &quot;/images/down_logo.jpg&quot;):
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>用Thin, Mongrel, Webrick启动都是一样的结果。</p>
+
+<h2>解决方案</h2>
+
+<p>在Gemfile里注释掉其他Ruby的Webserver，只留一个，比如Thin。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2011/07/25/cannnot-find-static-assets-in-Rails-3.1//blog/page/5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/06/17/require-a-gem-which-has-no-gemspec-in-Gemfile/">
+		
+			Gemfile里引用没有gemspec的gem</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-17T11:10:00+08:00" pubdate data-updated="true">Jun 17<span>th</span>, 2011</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/gemfile/'>Gemfile</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>在Gemfile里引用一个没有gemspec的gem时，运行bundle install的时候会提示</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>Could not find gem &#39;mechanize (&gt;= 0)&#39; in git://github.com/mvj3/mechanize.git (at master).
+</span><span class='line'>Source does not contain any versions of &#39;mechanize (&gt;= 0)&#39;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决方案: 指定gem的版本即可，如</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;mechanize&#39;</span><span class="p">,</span> <span class="s1">&#39;2.0&#39;</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s1">&#39;git://github.com/mvj3/mechanize.git&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考：<a href="http://stackoverflow.com/questions/4971074/attemping-to-vendorize-a-gem-into-bundler-with-rails-3-but-gem-has-no-gemspec">http://stackoverflow.com/questions/4971074/attemping-to-vendorize-a-gem-into-bundler-with-rails-3-but-gem-has-no-gemspec</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>I forgot to leave the version out on my Gem! Super important :
+</span><span class='line'>
+</span><span class='line'>gem &quot;spree_easy_contact&quot;, &#39;1.0.2&#39;, :path =&gt; &quot;#{File.expand_path(__FILE__)}/../vendor/gems/spree_easy_contact-1.0.2&quot;
+</span><span class='line'>Also it was strange..this Gem also require honeypot-captcha, so I had to include that in my Gemfile. All is well.
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2011/06/17/require-a-gem-which-has-no-gemspec-in-Gemfile//blog/page/5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/02/01/overwrite-old-indexes-in-sphinx/">
+		
+			Sphinx覆盖旧索引</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-01T16:45:09+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2011</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/index/'>Index</a>, <a class='category' href='/blog/categories/sphinx/'>Sphinx</a>
+
+
+</div>
+    </div>
+		<p>换用sphinx后，产品同事发现旧的数据也能搜索出新数据来，查了下官方文档 <a href="http://sphinxsearch.com/docs/manual-0.9.9.html#index-merging%EF%BC%8C">http://sphinxsearch.com/docs/manual-0.9.9.html#index-merging%EF%BC%8C</a> 发现更新索引时thinking-sphinx没有把它自定义的sphinx_deleted属性同时更新上去，导致在执行增量索引时用的&mdash;merge-dst-range选项无效。现解决方案如下：</p>
+
+<ol>
+<li><p>在config/production.sphinx.conf的searchd部分加上 attr_flush_period = 5 ，让sphinx在更新sphinx_deleted属性后写入到磁盘里。</p></li>
+<li><p>因为sphinx要部署在另外一台独立的机子上，为了方便运维部署和维护，不用安装其他的类似rmagick之类和sphinx无关的软件，就写了一个ruby脚本，用bundler配置安装下gem包，放在cron里定时跑，部分代码如下：</p></li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby -rubygems  </span>
+</span><span class='line'><span class="no">RAILS_ROOT</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">))</span> <span class="k">unless</span> <span class="n">defined?</span><span class="p">(</span><span class="no">RAILS_ROOT</span><span class="p">)</span>
+</span><span class='line'><span class="n">sphinx_config_yml</span> <span class="o">=</span> <span class="no">RAILS_ROOT</span> <span class="o">+</span> <span class="s1">&#39;/config/sphinx.yml&#39;</span>
+</span><span class='line'><span class="n">mysql_config_yml</span> <span class="o">=</span> <span class="no">RAILS_ROOT</span> <span class="o">+</span> <span class="s1">&#39;/config/database.yml&#39;</span>
+</span><span class='line'><span class="n">production_sphinx_conf</span> <span class="o">=</span> <span class="no">RAILS_ROOT</span> <span class="o">+</span> <span class="s1">&#39;/config/production.sphinx.conf&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;rails&#39;</span><span class="p">,</span> <span class="s1">&#39;2.3.4&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;initializer&#39;</span>
+</span><span class='line'><span class="sx">%w[active_record active_support action_view action_controller action_mailer]</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">act</span><span class="o">|</span> <span class="nb">require</span> <span class="n">act</span><span class="p">}</span>
+</span><span class='line'><span class="n">gem</span> <span class="s2">&quot;thinking-sphinx&quot;</span><span class="p">,</span> <span class="s2">&quot;1.3.18&quot;</span><span class="p">,</span> <span class="ss">:lib</span> <span class="o">=&gt;</span> <span class="s2">&quot;thinking_sphinx&quot;</span>
+</span><span class='line'><span class="sx">%w[yaml riddle thinking_sphinx]</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">lib</span><span class="o">|</span> <span class="nb">require</span> <span class="n">lib</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Hash</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">symbolize_keys</span>
+</span><span class='line'>    <span class="n">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">options</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">options</span><span class="o">[</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">to_sym</span> <span class="k">rescue</span> <span class="n">key</span><span class="p">)</span> <span class="o">||</span> <span class="n">key</span><span class="o">]</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class='line'>      <span class="n">options</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">sphinx_config</span> <span class="o">=</span> <span class="no">YAML</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">sphinx_config_yml</span><span class="p">)</span><span class="o">[</span><span class="s1">&#39;production&#39;</span><span class="o">].</span><span class="n">symbolize_keys</span>
+</span><span class='line'><span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">establish_connection</span><span class="p">(</span><span class="no">YAML</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">mysql_config_yml</span><span class="p">)</span><span class="o">[</span><span class="s1">&#39;production&#39;</span><span class="o">].</span><span class="n">symbolize_keys</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">has_attached_file</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{});</span> <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">validates_attachment_content_type</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{}</span> <span class="p">);</span> <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">files</span> <span class="o">=</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="no">RAILS_ROOT</span> <span class="o">+</span> <span class="s2">&quot;/app/models/*/*.rb&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="no">RAILS_ROOT</span> <span class="o">+</span> <span class="s2">&quot;/app/models/*/*/*.rb&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">model_strs</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">path</span><span class="o">|</span> <span class="n">path</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="sr">/app\/models\/(.*)\.rb/</span><span class="p">)</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">0</span><span class="o">].</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:camelize</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">model_strs</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">arr</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">arr</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">begin</span>
+</span><span class='line'>      <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;class </span><span class="si">#{</span><span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.x</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> &lt; ActiveRecord::Base; end&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">rescue</span> <span class="no">TypeError</span>
+</span><span class='line'>      <span class="c1"># FIX superclass mismatch for class Data (TypeError)  </span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">files</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="k">begin</span>
+</span><span class='line'>    <span class="nb">load</span> <span class="n">x</span>
+</span><span class='line'>  <span class="k">rescue</span> <span class="no">TypeError</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">client</span> <span class="o">=</span> <span class="ss">Riddle</span><span class="p">:</span><span class="ss">:Client</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">sphinx_config</span><span class="o">[</span><span class="ss">:address</span><span class="o">]</span><span class="p">,</span> <span class="n">sphinx_config</span><span class="o">[</span><span class="ss">:port</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="n">indexes</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">models</span> <span class="o">=</span> <span class="no">ThinkingSphinx</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">indexed_models</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">prefix</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">s</span><span class="o">|</span> <span class="n">s</span><span class="o">.</span><span class="n">downcase</span> <span class="p">}</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">indexes</span> <span class="o">&lt;&lt;</span> <span class="p">(</span> <span class="n">index</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_core&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_delta&quot;</span><span class="o">]</span> <span class="p">)</span>
+</span><span class='line'>  <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>  <span class="n">str</span><span class="o">.</span><span class="n">constantize</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:select</span> <span class="o">=&gt;</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;updated_at &gt; ?&quot;</span><span class="p">,</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">-</span> <span class="mi">3650</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">attrs</span><span class="o">[</span><span class="n">item</span><span class="o">.</span><span class="n">id</span> <span class="o">*</span> <span class="mi">5</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="o">]</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">unless</span> <span class="n">attrs</span><span class="o">.</span><span class="n">blank?</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">attrs</span><span class="o">.</span><span class="n">inspect</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Updating </span><span class="si">#{</span><span class="n">client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">index</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="s1">&#39;sphinx_deleted&#39;</span><span class="o">]</span><span class="p">,</span> <span class="n">attrs</span> <span class="p">)</span><span class="si">}</span><span class="s2"> docs&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">10</span> <span class="c1"># 等待写入到磁盘里  </span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># 只允许0出现在最终索引里  </span>
+</span><span class='line'><span class="nb">system</span> <span class="s2">&quot;/usr/local/bin/indexer --rotate --config </span><span class="si">#{</span><span class="no">RAILS_ROOT</span><span class="si">}</span><span class="s2">/config/production.sphinx.conf </span><span class="si">#{</span><span class="n">indexes</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="si">}</span><span class="s2">.join(&#39; &#39;)}&quot;</span>
+</span><span class='line'><span class="nb">sleep</span> <span class="mi">2</span> <span class="c1"># 马上执行以下会导致delta没有更新到main索引里  </span>
+</span><span class='line'><span class="n">indexes</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">index</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">system</span> <span class="s2">&quot;/usr/local/bin/indexer --rotate --config </span><span class="si">#{</span><span class="no">RAILS_ROOT</span><span class="si">}</span><span class="s2">/config/production.sphinx.conf --merge </span><span class="si">#{</span><span class="n">index</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> --merge-dst-range sphinx_deleted 0 0&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2011/02/01/overwrite-old-indexes-in-sphinx//blog/page/5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/01/19/a-simple-name-pinyin-matching/">
+		
+			一个简单的姓名拼音匹配</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-19T22:32:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2011</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/algorithm/'>Algorithm</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>一个简单的姓名拼音匹配</p>
+
+<p>姓名一般是由两三个汉字组成，选其顺序且连续的拼音缩略的组合就算匹配成功。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># encoding: UTF-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;chinese_pinyin&#39;</span>
+</span><span class='line'><span class="vi">@name</span> <span class="o">=</span> <span class="s2">&quot;成吉思汗&quot;</span>
+</span><span class='line'><span class="n">pinyins</span> <span class="o">=</span> <span class="no">Pinyin</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span><span class="o">.</span><span class="n">split</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># 把姓名生成对应的拼音数组</span>
+</span><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'><span class="n">pinyins</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">han</span><span class="p">,</span> <span class="n">index</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">array</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>  <span class="n">han</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span><span class="o">|</span><span class="n">num</span><span class="o">|</span> <span class="n">array</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">han</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">]</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">as</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">sub_array</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># 第一趟生成姓名拼音缩略的所有满足顺序且连续的组合</span>
+</span><span class='line'>  <span class="n">array</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">ele</span><span class="p">,</span> <span class="n">i</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">ni</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">x</span>
+</span><span class='line'>    <span class="n">sub_array</span> <span class="o">&lt;&lt;</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">.</span><span class="n">.ni</span><span class="o">]</span> <span class="k">if</span> <span class="n">array</span><span class="o">[</span><span class="n">ni</span><span class="o">]</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># 第二趟把每个组合各自归并</span>
+</span><span class='line'>  <span class="n">sub_array</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arr</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">arr</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="n">sub_as</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>      <span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">a1</span><span class="o">|</span> <span class="n">arr</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">a2</span><span class="o">|</span> <span class="n">sub_as</span> <span class="o">&lt;&lt;</span> <span class="p">(</span> <span class="n">a1</span> <span class="o">+</span> <span class="n">a2</span> <span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+</span><span class='line'>      <span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="n">sub_as</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>    <span class="n">as</span> <span class="o">&lt;&lt;</span> <span class="n">arr</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="n">arr</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">as</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ruby标准库里的abbr.rb是排除两个英文单词的共同缩略，见<a href="http://ruby-doc.org/stdlib/libdoc/abbrev/rdoc/classes/Abbrev.html">http://ruby-doc.org/stdlib/libdoc/abbrev/rdoc/classes/Abbrev.html</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2011/01/19/a-simple-name-pinyin-matching//blog/page/5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="/blog/page/4/" class="prev">Prev</a>
+    
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2013
+
+    mvj3
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'mvj3';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

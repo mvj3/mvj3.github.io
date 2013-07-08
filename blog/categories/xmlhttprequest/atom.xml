@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: XMLHttpRequest | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/xmlhttprequest/atom.xml" rel="self"/>
+  <link href="http://mvj3.github.io/"/>
+  <updated>2013-07-08T20:51:32+08:00</updated>
+  <id>http://mvj3.github.io/</id>
+  <author>
+    <name><![CDATA[mvj3]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rails解决JSON数据跨域问题 Access Control Allow Origin not allowed by]]></title>
+    <link href="http://mvj3.github.io/2013/01/15/fix-json-cross-domain/"/>
+    <updated>2013-01-15T15:09:03+08:00</updated>
+    <id>http://mvj3.github.io/2013/01/15/fix-json-cross-domain</id>
+    <content type="html"><![CDATA[<p>XMLHttpRequest请求在不同域名下会出现"Access Control Allow Origin not allowed by"消息，即使是不同子域名，或根域名和子域名，也会出现这种情况。</p>
+
+<p>详情见 <a href="https://developer.mozilla.org/en/http_access_control">https://developer.mozilla.org/en/http_access_control</a></p>
+
+<p>rails控制器的方法加下以下声明即可
+<code>ruby
+response.header['Access-Control-Allow-Origin'] = '*'
+response.header['Content-Type'] = 'text/javascript'
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>
