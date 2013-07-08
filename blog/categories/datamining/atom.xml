@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DataMining | 世界的审美！]]></title>
   <link href="http://mvj3.github.io/blog/categories/datamining/atom.xml" rel="self"/>
   <link href="http://mvj3.github.io/"/>
-  <updated>2013-07-08T21:36:57+08:00</updated>
+  <updated>2013-07-08T21:40:13+08:00</updated>
   <id>http://mvj3.github.io/</id>
   <author>
     <name><![CDATA[mvj3]]></name>
@@ -36,7 +36,7 @@
 </ul>
 
 
-<h2>相关技巧</h2>
+<p>相关技巧</p>
 
 <ul>
 <li>采用批量入库大大节约了带宽开销，入库速度，以及数据库索引优化，入库速度平均达到2万+条日志每分钟。</li>
