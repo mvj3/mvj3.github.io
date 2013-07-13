@@ -6,7 +6,8 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Feb 25th, 2013 Tags: Process, Ruby 比如自动启动faye服务器, from http://stackoverflow.com/questions/6430437/autorun-the-faye-server-when-i-start &hellip;">
+	<meta name="description" content=" Published on: Feb 26th, 2013 Tags: Tips, Vim 在查看(View)模式下输入 1
+:%s/\s\+$/g 其实也即是删除了整行都是空格字符的。 Comments ">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,6 +85,8 @@
 <!-- use full url including 'index.html' for navigation bar if you are using ajax -->
 <ul id="nav">
 	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/about.html">About</a></li>
+	<li id="ajax"><a href="/project.html">Project</a></li>
 	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
     <li><a href="/atom.xml">RSS</a></li>
     
@@ -106,6 +109,57 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/02/26/delete-trailing-blank-in-vim/">
+		
+			Vim删除行末空格</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-26T12:17:53+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/tips/'>Tips</a>, <a class='category' href='/blog/categories/vim/'>Vim</a>
+
+
+</div>
+    </div>
+		<p>在查看(View)模式下输入</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>%<span class="k">s</span><span class="sr">/\s\+$/</span><span class="k">g</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其实也即是删除了整行都是空格字符的。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/02/26/delete-trailing-blank-in-vim//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1221,63 +1275,6 @@
 <div class="meta">
 	
 		<span class="comments"><a href="/2013/01/23/individual-domain-regexp//blog/page/2/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/01/15/fix-json-cross-domain/">
-		
-			Rails解决JSON数据跨域问题 Access Control Allow Origin Not Allowed By</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-15T15:09:03+08:00" pubdate data-updated="true">Jan 15<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/xmlhttprequest/'>XMLHttpRequest</a>
-
-
-</div>
-    </div>
-		<p>XMLHttpRequest请求在不同域名下会出现&#8221;Access Control Allow Origin not allowed by&#8221;消息，即使是不同子域名，或根域名和子域名，也会出现这种情况。</p>
-
-<p>详情见 <a href="https://developer.mozilla.org/en/http_access_control">https://developer.mozilla.org/en/http_access_control</a></p>
-
-<p>rails控制器的方法加下以下声明即可</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">header</span><span class="o">[</span><span class="s1">&#39;Access-Control-Allow-Origin&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
-</span><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">header</span><span class="o">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2013/01/15/fix-json-cross-domain//blog/page/2/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>

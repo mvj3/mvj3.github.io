@@ -6,7 +6,7 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: May 28th, 2013 Tags: Memcached 问题 在添加 用jsbeautifier.org解压缩jing.fm的Web版的js代码 的长达7029行js代码后，后台服务器马上报500错误，对应错误信息是 Memcached::ServerError &hellip;">
+	<meta name="description" content="Published on: Jul 13th, 2013 Tags: Algorithm, Rails, Rake A few months ago, I was writing a single page application about learning mobile &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,6 +84,8 @@
 <!-- use full url including 'index.html' for navigation bar if you are using ajax -->
 <ul id="nav">
 	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/about.html">About</a></li>
+	<li id="ajax"><a href="/project.html">Project</a></li>
 	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
     <li><a href="/atom.xml">RSS</a></li>
     
@@ -106,6 +108,58 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/07/13/how-i-create-stepstepstep-gem/">
+		
+			How I Create Stepstepstep Gem</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-13T16:41:00+08:00" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/algorithm/'>Algorithm</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/rake/'>Rake</a>
+
+
+</div>
+    </div>
+		<p>A few months ago, I was writing a single page application about learning mobile development technology at <a href="http://learn.eoe.cn.">http://learn.eoe.cn.</a> This page contains lessons, a video, classes, teachers, students, reference material, question-to-answers, exams, chat messages, and their current all learning statuses and dependencies. In brief, there are fifteen steps to load this page, including privileges to judge, fourteen illegal <code>redirect_to</code> , etc. So I need to write a step dependencies management tool, like rake tasks.</p>
+
+<p>At first, I thought maybe I could define several <code>proc</code>s in a single before_filter, but the execution context is really complicated. Then one day, I found action_jackson.gem, which was written by <a href="https://github.com/blakefrost/action_jackson">Blake Taylor</a> two years ago. The core implementation of this gem is to define each action as a method, and at last call a class method <code>register_filters</code> to register all these methods as <code>before_filter</code> independently. Of course, they&rsquo;re ordered by the earlier declarations. This implementation is not elegant, but the idea is really awesome, it doesn&rsquo;t break Rails&rsquo;s rules.</p>
+
+<p>Then I got a deep understanding of the Rails controllers filters&rsquo;s implementation mechanism. Maybe <code>skip_before_filter</code> helped. In each <code>step</code>, I insert it first, extract all the inserted steps by <code>skip_before_filter</code>, then sort them by TSort(a topological sorting algorithm provided by Ruby standard library), and at last append them again to before_filters. It works, and all rspecs are passed.</p>
+
+<p>I renamed it from action_jackson to stepstepstep, because the DSL is only a <code>step</code> class method, which handles all the details. Most of the implementations were rewritten, and I added rspecs . Thanks Blake Taylor :)</p>
+
+<p>The project homepage is <a href="http://github.com/eoecn/stepstepstep">http://github.com/eoecn/stepstepstep</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/07/13/how-i-create-stepstepstep-gem//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -906,57 +960,6 @@ Run &lsquo;bundle install&rsquo; to install missing gems.</p>
 <div class="meta">
 	
 		<span class="comments"><a href="/2013/03/06/rails-general-configuration-problems//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/02/26/delete-trailing-blank-in-vim/">
-		
-			Vim删除行末空格</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-26T12:17:53+08:00" pubdate data-updated="true">Feb 26<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/tips/'>Tips</a>, <a class='category' href='/blog/categories/vim/'>Vim</a>
-
-
-</div>
-    </div>
-		<p>在查看(View)模式下输入</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">:</span>%<span class="k">s</span><span class="sr">/\s\+$/</span><span class="k">g</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>其实也即是删除了整行都是空格字符的。</p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2013/02/26/delete-trailing-blank-in-vim//index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>

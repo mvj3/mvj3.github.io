@@ -3,11 +3,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>about - 世界的审美！</title>
+	<title>project - 世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="陈大伟(David Chen), 88年, 09年开始一直在北京从事Ruby( on Rails)开发至今。 技能 (实际项目或半年以上工作使用) 程序语言: Ruby, JavaScript
-框架: Rails, jQuery, Backbones, Bootstrap, RailsAdmin| &hellip;">
+	<meta name="description" content="Open Source Ruby &amp; Javascipt statlysis statistical analysis in ruby dsl
+faye-online Faye online user list and time count
+logpos Use binary search &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -85,6 +86,8 @@
 <!-- use full url including 'index.html' for navigation bar if you are using ajax -->
 <ul id="nav">
 	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/about.html">About</a></li>
+	<li id="ajax"><a href="/project.html">Project</a></li>
 	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
     <li><a href="/atom.xml">RSS</a></li>
     
@@ -108,29 +111,36 @@
     <div id="content" class="inner">
         <article class="page">
     
-    <h1 class="title">About</h1>
+    <h1 class="title">Project</h1>
     
-    <div class="entry-content"><p>陈大伟(David Chen), 88年, 09年开始一直在北京从事Ruby( on Rails)开发至今。</p>
+    <div class="entry-content"><h2>Open Source</h2>
 
-<h2>技能 (实际项目或半年以上工作使用)</h2>
+<h4>Ruby &amp; Javascipt</h4>
 
-<p>程序语言: Ruby, JavaScript
-框架: Rails, jQuery, Backbones, Bootstrap, RailsAdmin|ActiveAdmin, Sinatra
-软件: 常用Shell命令, Git, Nginx, Unicorn, Memcached, Sphinx, Subversion
-数据库: Mongodb, MySQL, Redis
-编辑器: MacVim
-操作系统: OS X, Linux(CentOS, Ubuntu, Gentoo)
-项目经验: 单页应用, API, 爬虫, CMS, 日志分析, 等</p>
+<ul>
+<li><a href="http://github.com/eoecn/statlysis">statlysis</a> statistical analysis in ruby dsl</li>
+<li><a href="http://github.com/eoecn/faye-online">faye-online</a> Faye online user list and time count</li>
+<li><a href="http://github.com/mvj3/logpos">logpos</a> Use binary search to seek a position in logs.</li>
+<li><a href="http://github.com/eoecn/videojs_user_track">videojs_user_track</a> monitoring users playing videos.</li>
+<li><a href="http://github.com/eoecn/qa-rails">qa-rails</a> Rails Engine. a mini forum provided by only a simple helper, written in Backbones.js.</li>
+<li><a href="http://github.com/eoecn/stepstepstep">stepstepstep</a> DSL for defining before_filters&rsquo;s dependencies like rake tasks.</li>
+<li><a href="http://github.com/mvj3/activerecord_idnamecache">activerecord_idnamecache</a> Use Mysql AUTO_INCREMENT to support key value cache.</li>
+<li><a href="http://github.com/mvj3/only_one_rake">only_one_rake</a> ensure only one rake is running at a time.</li>
+<li><a href="http://github.com/eoecn/rack_image_assets_cache_control">rack_image_assets_cache_control</a> Cache Control Image Assets in rails development.</li>
+<li><a href="http://github.com/eoecn/cross_time_calculation">cross_time_calculation</a> calculate the time of duplication and coverage.</li>
+<li><a href="http://github.com/eoecn/acts_as_time_racing">acts_as_time_racing</a> ActiveRecord plugin which record one item&rsquo;s start and finish time.</li>
+</ul>
 
-<h2>开源项目</h2>
 
-<h2>人生观</h2>
+<h4>Contributed</h4>
 
-<p>物质的奴隶，时尚的仆人，内在的国王，艺术的上帝。</p>
+<ul>
+<li><a href="https://github.com/mvj3/rails3_acts_as_paranoid">acts_as_paranoid_boolean_column</a> Active Record plugin which allows you to hide and restore records without actually deleting them.</li>
+<li><a href="http://github.com/eoecn/markdown-ruby-china">markdown-ruby-china</a> Markdown render API, enhance identification the suffix.</li>
+<li><a href="http://github.com/eoecn/ucenter_authcode">ucenter_authcode</a> decode ucenter user info auth.</li>
+<li><a href="http://github.com/eoecn/rake_notifier">rake_notifier</a> Notify of Rake exceptions via email.</li>
+</ul>
 
-<h2>梦想</h2>
-
-<p>最满意的部分是自己的品味，梦想是创造一个在这世界上最梦幻的公司！</p>
 </div>
 </article>
 
@@ -149,12 +159,6 @@
 </div>
 
 
-
-<section id="comment">
-    <h1 class="title">Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-</section>
 
 
     </div>
@@ -177,22 +181,6 @@
 })(jQuery);
 </script> <!-- Delete or comment this line to disable Fancybox -->
 
-
-<script type="text/javascript">
-      var disqus_shortname = 'mvj3';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://mvj3.github.io/about/index.html';
-        var disqus_url = 'http://mvj3.github.io/about/index.html';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 
 
 
