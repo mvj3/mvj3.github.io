@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | 世界的审美！]]></title>
   <link href="http://mvj3.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://mvj3.github.io/"/>
-  <updated>2013-07-13T23:14:57+08:00</updated>
+  <updated>2013-07-14T10:35:45+08:00</updated>
   <id>http://mvj3.github.io/</id>
   <author>
     <name><![CDATA[mvj3]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[How i create stepstepstep gem]]></title>
-    <link href="http://mvj3.github.io/2013/07/13/how-i-create-stepstepstep-gem/"/>
+    <title type="html"><![CDATA[How do i create stepstepstep gem]]></title>
+    <link href="http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem/"/>
     <updated>2013-07-13T16:41:00+08:00</updated>
-    <id>http://mvj3.github.io/2013/07/13/how-i-create-stepstepstep-gem</id>
+    <id>http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem</id>
     <content type="html"><![CDATA[<p>A few months ago, I was writing a single page application about learning mobile development technology at <a href="http://learn.eoe.cn.">http://learn.eoe.cn.</a> This page contains lessons, a video, classes, teachers, students, reference material, question-to-answers, exams, chat messages, and their current all learning statuses and dependencies. In brief, there are fifteen steps to load this page, including privileges to judge, fourteen illegal <code>redirect_to</code> , etc. So I need to write a step dependencies management tool, like rake tasks.</p>
 
 <p>At first, I thought maybe I could define several <code>proc</code>s in a single before_filter, but the execution context is really complicated. Then one day, I found action_jackson.gem, which was written by <a href="https://github.com/blakefrost/action_jackson">Blake Taylor</a> two years ago. The core implementation of this gem is to define each action as a method, and at last call a class method <code>register_filters</code> to register all these methods as <code>before_filter</code> independently. Of course, they&rsquo;re ordered by the earlier declarations. This implementation is not elegant, but the idea is really awesome, it doesn&rsquo;t break Rails&rsquo;s rules.</p>

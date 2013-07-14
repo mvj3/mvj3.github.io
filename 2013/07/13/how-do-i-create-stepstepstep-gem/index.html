@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>How i create stepstepstep gem - 世界的审美！</title>
+	<title>How do i create stepstepstep gem - 世界的审美！</title>
     <meta name="author" content="mvj3">
     
 	<meta name="description" content="A few months ago, I was writing a single page application about learning mobile development technology at http://learn.eoe.cn. This page contains &hellip;">
@@ -108,7 +108,7 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         <article class="post">
-	<h2 class="title">How I Create Stepstepstep Gem</h2>
+	<h2 class="title">How Do I Create Stepstepstep Gem</h2>
 	<div class="entry-content"><p>A few months ago, I was writing a single page application about learning mobile development technology at <a href="http://learn.eoe.cn.">http://learn.eoe.cn.</a> This page contains lessons, a video, classes, teachers, students, reference material, question-to-answers, exams, chat messages, and their current all learning statuses and dependencies. In brief, there are fifteen steps to load this page, including privileges to judge, fourteen illegal <code>redirect_to</code> , etc. So I need to write a step dependencies management tool, like rake tasks.</p>
 
 <p>At first, I thought maybe I could define several <code>proc</code>s in a single before_filter, but the execution context is really complicated. Then one day, I found action_jackson.gem, which was written by <a href="https://github.com/blakefrost/action_jackson">Blake Taylor</a> two years ago. The core implementation of this gem is to define each action as a method, and at last call a class method <code>register_filters</code> to register all these methods as <code>before_filter</code> independently. Of course, they&rsquo;re ordered by the earlier declarations. This implementation is not elegant, but the idea is really awesome, it doesn&rsquo;t break Rails&rsquo;s rules.</p>
@@ -122,7 +122,7 @@
 
 <div class="meta">
 	
-		<span class="comments"><a href="/2013/07/13/how-i-create-stepstepstep-gem/#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/2013/07/13/how-do-i-create-stepstepstep-gem/#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -175,8 +175,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://mvj3.github.io/2013/07/13/how-i-create-stepstepstep-gem/';
-        var disqus_url = 'http://mvj3.github.io/2013/07/13/how-i-create-stepstepstep-gem/';
+        var disqus_identifier = 'http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem/';
+        var disqus_url = 'http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem/';
         var disqus_script = 'embed.js';
       
     (function () {
