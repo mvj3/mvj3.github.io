@@ -6,7 +6,8 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Sep 13th, 2011 Tags: Rails, Ruby 时兴的用Rails做的Web2.0项目一般由桌面浏览器访问的网站，移动客户端的API接口，后台管理，和统计分析等构成。为了项目开发及维护的相对独立性，不可避免地想要拆分成多个子项目， &hellip;">
+	<meta name="description" content="Published on: Sep 17th, 2011 Tags: Rails, Ruby 对网站作统计分析时，经常需要对各种文本日志定时进行解析抽取数据，因此有必要确定上次结束解析的位置。logpos使用二分法进行查找，具体用法如： 1
+pos = Logpos. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -108,6 +109,74 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/09/17/use-binary-search-to-seek-a-position-in-rails-logs/">
+		
+			二分查找定位Rails文本日志</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-17T15:21:54+08:00" pubdate data-updated="true">Sep 17<span>th</span>, 2011</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>对网站作统计分析时，经常需要对各种文本日志定时进行解析抽取数据，因此有必要确定上次结束解析的位置。<a href="http://github.com/mvj3/logpos">logpos</a>使用<a href="http://en.wikipedia.org/wiki/Binary_search_algorithm">二分法</a>进行查找，具体用法如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pos</span> <span class="o">=</span> <span class="no">Logpos</span><span class="o">.</span><span class="n">seek_pos_before</span> <span class="n">log_path</span><span class="p">,</span> <span class="p">(</span><span class="no">RptVerbPathParams</span><span class="o">.</span><span class="n">desc</span><span class="p">(</span><span class="ss">:time</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">try</span><span class="p">(</span><span class="ss">:time</span><span class="p">)</span> <span class="o">||</span> <span class="no">Time</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>logpos是以Rails默认的日志格式来解析的，但是也可以自己定义一个时间解析器：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">lg</span> <span class="o">=</span> <span class="no">Logpos</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'><span class="n">lg</span><span class="o">.</span><span class="n">time_parser</span> <span class="o">=</span> <span class="nb">proc</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">line</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/^Started/</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="no">TIME_PARSER_CLASS</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/for [0-9\.]* at /</span><span class="p">)</span><span class="o">[-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="n">pos</span> <span class="o">=</span> <span class="n">lg</span><span class="o">.</span><span class="n">seek_pos_before</span> <span class="n">log_path</span><span class="p">,</span> <span class="n">time</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Logpos接受的time_parser要求是一个Proc，返回是一个Time实例或nil，以便之后的比较。</p>
+
+<p>我这边测试一个4G多的正常的Rails日志文件，对不同的时间点做测试，日志记录时间范围内的一般在10毫秒以下，范围外的在80毫秒以下。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2011/09/17/use-binary-search-to-seek-a-position-in-rails-logs//blog/page/5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">

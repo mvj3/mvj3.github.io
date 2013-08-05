@@ -6,7 +6,8 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Jan 15th, 2013 Tags: Rails, XMLHttpRequest XMLHttpRequest请求在不同域名下会出现&#8221;Access Control Allow Origin not allowed by&#8221;消息， &hellip;">
+	<meta name="description" content="Published on: Jan 23rd, 2013 Tags: Regexp, Ruby 老大提了个用单个正则表达式来匹配个性域名ID的需求，具体是：3-15个字符，可以用[a-z0-9_-]字符，必须用数字或者字母开头，且不能是纯数字 让我们来分步化解
+对于，3-15个字符，可以用[a- &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -108,6 +109,173 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/23/individual-domain-regexp/">
+		
+			个性域名正则表达式</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-23T16:35:34+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/regexp/'>Regexp</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
+
+
+</div>
+    </div>
+		<p>老大提了个用单个正则表达式来匹配个性域名ID的需求，具体是：3-15个字符，可以用[a-z0-9_-]字符，必须用数字或者字母开头，且不能是纯数字</p>
+
+<p>让我们来分步化解
+对于，3-15个字符，可以用[a-z0-9_-]字符，稍微了解点正则表达式的同学马上就可以写出如下正则</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/^[a-z0-9_\-]{3,15}$/i</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>让我们来再加一个条件，必须用数字或者字母开头</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/^[0-9a-z][a-z0-9_\-]{2,14}$/i</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后一个条件是，且不能是纯数字。</p>
+
+<p>最初我大概的想到是用 或(|) 来做，一个是数字开头，另一个是字母开头，剩余的是否纯数字在后面判断。但这剩余里还是会遇到判断在哪个位置里已经出现了字母的问题。所以这里就需要正则表达式里非匹配获取的功能了。</p>
+
+<p>维基百科里给出的是 (?=pattern) ，它表示 匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符「(|)」来组合一个模式的各个部分是很有用。例如「industr(?:y|ies)」就是一个比「industry|industries」更简略的表达式。具体见 <a href="http://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">http://zh.wikipedia.org/wiki/正则表达式</a></p>
+
+<p>stackoverflow里有更通俗的例子 <a href="http://stackoverflow.com/questions/1559751/regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper">http://stackoverflow.com/questions/1559751/regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$
+</span><span class='line'>A short explanation:
+</span><span class='line'>^                  // the start of the string
+</span><span class='line'>(?=.*[a-z])        // use positive look ahead to see if at least one lower case letter exists
+</span><span class='line'>(?=.*[A-Z])        // use positive look ahead to see if at least one upper case letter exists
+</span><span class='line'>(?=.*\d)           // use positive look ahead to see if at least one digit exists
+</span><span class='line'>(?=.*[_\W])        // use positive look ahead to see if at least one underscore or non-word character exists
+</span><span class='line'>.+                 // gobble up the entire string
+</span><span class='line'>$                  // the end of the string
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样我们就在 <code>/^[0-9a-z][a-z0-9_-]{2,14}$/i</code> 里再加上个 <code>(?=.*[a-z_\-])</code> 就可以匹配不是纯数字了</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@regexp</span> <span class="o">=</span> <span class="sr">/^(?=.*[a-z_\-])[0-9a-z][a-z0-9_\-]{2,14}$/i</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;合法测试&quot;</span>
+</span><span class='line'><span class="sx">%w[c11213311 mvj3 123mmmmm iceskysl 3_3]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">str</span><span class="si">}</span><span class="s2">   =&gt;   </span><span class="si">#{</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="vi">@regexp</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;非法测试&quot;</span>
+</span><span class='line'><span class="sx">%w[123 12345 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm _ssssss 你好]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">str</span><span class="si">}</span><span class="s2">   =&gt;   </span><span class="si">#{</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="vi">@regexp</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;没有匹配&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>测试结果如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>合法测试
+</span><span class='line'>c11213311   =&gt;   c11213311
+</span><span class='line'>mvj3   =&gt;   mvj3
+</span><span class='line'>123mmmmm   =&gt;   123mmmmm
+</span><span class='line'>iceskysl   =&gt;   iceskysl
+</span><span class='line'>3_3   =&gt;   3_3
+</span><span class='line'>
+</span><span class='line'>非法测试
+</span><span class='line'>123   =&gt;   没有匹配
+</span><span class='line'>12345   =&gt;   没有匹配
+</span><span class='line'>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm   =&gt;   没有匹配
+</span><span class='line'>_ssssss   =&gt;   没有匹配
+</span><span class='line'>你好   =&gt;   没有匹配
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Ruby-China上的讨论 <a href="http://ruby-china.org/topics/8383">http://ruby-china.org/topics/8383</a></h2>
+
+<p>我景仰的大牛 @luikore 给出了易读版</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/\A</span>
+</span><span class='line'><span class="sr">  (?=.*[a-z_\-])    # 不能全是数字</span>
+</span><span class='line'><span class="sr">  [0-9a-z]          # 必须用数字或者字母开头</span>
+</span><span class='line'><span class="sr">  [a-z0-9_\-]{2,14} # 3-15个字符，可以用[a-z0-9_\-]字符</span>
+</span><span class='line'><span class="sr">\z/xi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/01/23/individual-domain-regexp//blog/page/3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -799,55 +967,6 @@
 <div class="meta">
 	
 		<span class="comments"><a href="/2012/12/13/compare-the-performance-of-parsing-nginx-log-via-c-sscanf-and-ruby-regexp//blog/page/3/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/12/13/require-html5shiv-js-in-haml/">
-		
-			HAML引用html5shiv.js</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-13T12:14:55+08:00" pubdate data-updated="true">Dec 13<span>th</span>, 2012</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/haml/'>HAML</a>, <a class='category' href='/blog/categories/html5/'>HTML5</a>, <a class='category' href='/blog/categories/javascript/'>Javascript</a>
-
-
-</div>
-    </div>
-		<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='haml'><span class='line'><span class="c">/</span><span class="cs">[if lt IE 9]</span><span class="c"></span>
-</span><span class='line'>  <span class="nt">%script</span><span class="p">{</span><span class="ss">:src</span><span class="o">=&gt;</span><span class="s2">&quot;html5shiv/dist/html5shiv.js&quot;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2012/12/13/require-html5shiv-js-in-haml//blog/page/3/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>

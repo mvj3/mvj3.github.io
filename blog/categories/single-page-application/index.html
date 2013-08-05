@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>最近访客实现 - 世界的审美！</title>
+	<title>Category: Single Page Application - 世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="问题分两个，一个是后端，一个是前端。 对后端来说，用户每次blog/index|show访问都生成访问记录，后端需要进行排重和去掉未登陆用户。如果在该次访问里进行，特别是某个博客突然火了，必然每次访问都产生IO(磁盘或网络，因为多进程要共享信息），所以必定是异步的。 前端展示考虑到缓存， &hellip;">
+	<meta name="description" content="Category: Single Page Application">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -107,49 +107,32 @@
 <div id="toload">
 <!-- begin toload --> 
     <div id="content" class="inner">
-        <article class="post">
-	<h2 class="title">最近访客实现</h2>
-	<div class="entry-content"><h2>问题分两个，一个是后端，一个是前端。</h2>
-
-<p>对后端来说，用户每次blog/index|show访问都生成访问记录，后端需要进行排重和去掉未登陆用户。如果在该次访问里进行，特别是某个博客突然火了，必然每次访问都产生IO(磁盘或网络，因为多进程要共享信息），所以必定是异步的。</p>
-
-<p>前端展示考虑到缓存，一般是页面片段缓存，或者ajax载入。</p>
-
-<p>后端异步如何计算每个blog的最近访客，log.js记录了最近访问，一个后台常驻进程循环对日志表按时间记录来读取blog访问信息，把最近访客信息刷新。相对单次请求全部处理，这里处理次数更少，资源更节约，当然瓶颈也在日志表的索引更新和读取。</p>
-
-<h2>把当前自己的访问也添加上</h2>
-
-<p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
-</div>
-
-<div class="meta">
+        
 	
-		<span class="comments"><a href="/2013/01/30/recent-visitors-implement/#disqus_thread">Comments</a></span>
+
+
 	
-</div>
+	
+	<section class="archives"><h1 class="year">2013</h1>
+
+<article>
+  <h2 class="title"><a href="/2013/08/04/a-man-github/">一个人的"github"</a></h2>
+	<div class="meta">
+		<span class="date">Aug  4</span>
+		<span class="tags">
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/single-page-application/'>Single Page Application</a>
+
+
+</span>
+	    
+	    <span class="comments"><a href="/2013/08/04/a-man-github/#disqus_thread">Comments</a></span>
+	    
+	</div>
 </article>
 
-	<div class="share">
-	<div class="addthis_toolbox addthis_default_style ">
-	
-	<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-	
-	
-	<a class="addthis_button_tweet"></a>
-	
-	
-	<a class="addthis_counter addthis_pill_style"></a>
-	</div>
-  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
-</div>
 
-
-
-<section id="comment">
-    <h2 class="title">Comments</h2>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-</section>
 
     </div>
     <footer id="footer">
@@ -176,10 +159,7 @@
       var disqus_shortname = 'mvj3';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://mvj3.github.io/2013/01/30/recent-visitors-implement/';
-        var disqus_url = 'http://mvj3.github.io/2013/01/30/recent-visitors-implement/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

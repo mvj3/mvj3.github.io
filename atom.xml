@@ -4,7 +4,7 @@
   <title><![CDATA[世界的审美！]]></title>
   <link href="http://mvj3.github.io/atom.xml" rel="self"/>
   <link href="http://mvj3.github.io/"/>
-  <updated>2013-07-14T10:35:33+08:00</updated>
+  <updated>2013-08-05T22:11:35+08:00</updated>
   <id>http://mvj3.github.io/</id>
   <author>
     <name><![CDATA[mvj3]]></name>
@@ -12,6 +12,188 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[一个人的"github"]]></title>
+    <link href="http://mvj3.github.io/2013/08/04/a-man-github/"/>
+    <updated>2013-08-04T09:20:00+08:00</updated>
+    <id>http://mvj3.github.io/2013/08/04/a-man-github</id>
+    <content type="html"><![CDATA[<p>Github不是一个人做的，三个核心创始人在创业时都是写代码的，其中两个人作为程序员也十分有名，是不少有名开源项目的作者。对比这个星球上其他伟大的IT公司，Github网站的代码是能开源就尽量开源的，包括操作Git的grit，用作消息队列的resque，等。Github自然不是我做的，但作为一个自诩有好品味的程序员，我在努力向Github学习和实践它的精神和有益的工作方式，我要构建一个自己的&#8221;github&#8221;，在此也感谢我所处的公司 eoe 能给我自己去选择技术架构和工作进度这样相对灵活的工作方式的机会。</p>
+
+<h2>缘起</h2>
+
+<p>今年上半年我的主要工作内容是负责一个专注在线学习编程的单页面应用网站的技术部分。从缘起来说，eoe本身主要是做以Android为主的移动开发者服务的，应用市场，移动应用SDK统计，开发者大会活动等都有涉猎，正式的尝试进入IT培训从去年2012年中就开始了（当然想法会更早些）。</p>
+
+<p>当时CEO @靳岩 让我调研公司进入类似 codecademy.com 在线编程领域方案的可能性，这对于当时刚做完<a href="http://mvj3.github.io/2012/11/01/android_eoemarket_data_collect_and_analysis_system_summary">优亿市场应用海量下载统计分析</a> 的算法与数据挖掘工程师无疑是一个很刺激的技术点。codecademy, codeschool 等这些国外在线编程网站毫无意外的展示了他们的创新性，codecademy 既支持JavaScript, HTML, CSS这些浏览器本身就提供编程环境的技术，也提供相对初级的Ruby, Python等后端语言在浏览器的模拟实现，他们用的相关技术包括用LLVM把代码编译成JavaScript执行的编译器Emscripten。codeschool里有个 <a href="http://code.eoe.cn/67">很有意思的地方</a> 就是，它支持在浏览器里按照他们的规则去用Objective-C写iOS程序，编译是在服务器进行的，并通过base64编码不断传回截图，然后模拟成仿佛浏览器真的成了完美的IDE一样，包括编译信息和出错栈。 对于我们要实现在浏览器里用Java编写Android程序，一般方案是采用传送到服务器编译执行，但是这样涉及到复杂的沙盒模型，且对服务器端资源消耗过大。我知道有一家真的实现了，他们前端用的是flash技术，但是这个只能针对简单快速编译的项目，而且我觉得这个脱离了要教会对方学习的本质，因为以后的实际演练肯定是在Eclipse等IDE里进行的，而你的浏览器在现有技术情况下肯定无法全部模拟。后来我也想到了可以以IDE插件的形式解决把线下教学搬到线上的基本构思，技术难度降低一半，这是后话。在教学中三环节 <code>教问练</code> 中，真正把教和练做好的公司大概就这几家了，问的话去是程序员都上的stackoverflow等网站就好了。</p>
+
+<p>去年下半年做了偏前端的 <a href="http://skill.eoe.cn">技能测评</a>，和偏后端的 <a href="http://code.eoe.cn">gist.github.com 克隆网站</a> 。前者算基本没用过，后者不温不火，这让我明白了一个道理，如果我仅仅沉迷于技术实现，自己却无法分身去从事数种自己不熟悉或不太愿意实际执行的工作，那么它的命运就完全取决于组织的决定，因为一个真实产品的成长它需要不同职责的人的参与。前段时间听 @teahour 的一期 <a href="http://teahour.fm/2013/07/15/lean-startup-with-knewone.html">和knewone的李路聊聊技术和精益创业</a> 也聊到类似的情况，很有共鸣。</p>
+
+<p>而公司在这半年也陆续做了些小规模的Android培训。今年2013春节后，正式开启线上教育项目，产品设计由 @iceskysl 主导和驱动，我开始做聊天技术的预演，内容运营部门则调动内外部资源继续制作教程内容。</p>
+
+<h2>研发</h2>
+
+<p>单页面学习应用 learn.eoe.cn 和 报名支付宣传 xuexie.eoe.cn 及后台管理的整体开发上线共历时大概三四个月，我负责的是 learn.eoe.cn（一位前端同事负责写CSS），其他的都是php项目组负责实施。</p>
+
+<p>当 @iceskysl 设计好产品基本原型后，确认学习过程中为单页面应用，因为里面的聊天，问答，考试等的一些操作应该是尽量避免重载页面的。我自告奋勇去设计了学习系统的数据库设计，基本思想上按模块做命名空间切分，课程大纲设计为一个课程包含多个课时，一个课时包含多个小节，小节可以为视频，资料，测评等多种类型，这是内容部分。对应的学生数据则是一个学习数据表绑定一个课程，并关联观看视频监控记录，考试记录，和计时等。这期间，项目组内关于数据结构，或者说课程具体的产品设计需求，经过多次讨论，终于达成思路上的一致。</p>
+
+<p>以下是现在上线后测试服务器里学习页面的多个模块的截图。
+<img src="http://mvj3.github.io/images/one-man-github/learn_video.png" alt="learn_video" />
+<img src="http://mvj3.github.io/images/one-man-github/learn_qa.png" alt="learn_qa" />
+<img src="http://mvj3.github.io/images/one-man-github/learn_exam.png" alt="learn_exam" /></p>
+
+<p>我对架构设计的原则是技术模块化，业务流程化，两者互相解耦。</p>
+
+<h3>业务流程化</h3>
+
+<p>对于一个学生来说，TA面对的主体是课程和TA的学习数据，其他都是依附于其之上。</p>
+
+<p>对于内容管理人员来说，课程是标准的层级关联，视频和其他也只是依附于其之上。</p>
+
+<p>对于我作为学习页面的技术负责人来说，用户是否付款和加入某个班级只是一个是非状态。用户的学习状态依赖于业务需求，可能需要结合多个数据源做操作判断，比如是否可以测评要保证你起码观看过教学视频及教学资料，是否学习完成也依赖于你对该课程所有课时的学习状态。</p>
+
+<h3>技术模块化</h3>
+
+<p>想清楚好以上清晰的业务流程骨架后，我开始本人4年技术生涯里最彻底的模块拆解，并开源出十多个模块。</p>
+
+<p><strong>跨子域名用户登陆</strong>，用的是PHP写的单点登陆解决方案UCenter，我整理了 @iceskysl 从PHP改写的Ruby代码，并<a href="https://github.com/eoecn/ucenter_authcode">开源</a>出来。在应用时，有次遇到误把对方一个每次都变的cookies作为这边的唯一身份认证，这个在单域名操作体现不出来，而访问多个子域名后这边session就失效了。</p>
+
+<p><strong>视频播放</strong>用的 <a href="http://www.videojs.com">VIDEO.JS</a> 框架，不需要太多配置代码。另外我想了个开源的<a href="https://github.com/eoecn/videojs_user_track">视频监控的方案</a>，就是把用户对不同时间段的观看频次对应的以秒为单位的数组里，播放一次是1, 最大是9，以此观察视频具体效果，和单个学生的学习疑点。从最近遇到的一个BUG来看，浏览器缓存了视频，但是网络是随时可断的，导致某些网络不太稳定的用户的监控数据可能是部分缺失的。所以监控数据还是得与业务逻辑彻底分开的，前者只应该作为业务判断参考之一。（有人可能会提到放在cookie里，但是其最大长度是4K，那么一个小时的视频 <code>1*2*3600=7200</code> 就放不下了）。</p>
+
+<p><strong>参考资料</strong>用的是markdown编辑和渲染，我抽取了ruby-china的markdown渲染代码，并 <a href="https://github.com/eoecn/markdown-ruby-china">自动识别程序语言，文件名，别名等多种格式</a>。</p>
+
+<p><strong>问答讨论</strong>是个太标准的CRUD应用，一个论坛无非是主题和回复，里面显示的用户名和头像其实都是可以在前端用JavaScript去组装的， <a href="http://mvj3.github.io/2013/05/28/fix-backbones-view-duplicated-events-bind/">用Backbones这个Javascript MVC框架实现模版和事件绑定</a>  ，添加完数据表后，直接用一个Rails Helper配置下即可，我把它取名为 <a href="https://github.com/eoecn/qa-rails">qa-rails</a> 。</p>
+
+<p><strong>测评</strong>是个相对独立的业务，鉴于去年做过差不多的，这次实现更加精炼了些，JavaScript 239行，HAML两个模版60行。这块限于业务特殊无法作到开源。</p>
+
+<p><strong>班级讨论</strong>是基于 <a href="https://github.com/faye/faye">Faye消息订阅发布系统</a> 做的，并实现了 <a href="https://github.com/eoecn/faye-online">在线用户显示和计时</a>，原理是绑定了Faye提供用户登入和登出的事件接口。 这里要特别感谢我们的一个女产品(条理清晰的黑盒测试)，是她用心的测试出了有这个用户的电脑非正常关闭浏览器造成服务器端一直在计时的错误。Faye 检测用户退出有两种方法，一种是服务器端的EventMachine定期检测client是否失去连接；另一种是客户端在浏览器关闭前发送disconnect请求(对应的配置选项是autodisconnect)，如果正常关闭那是ok的，但是如果用户取消关闭，那么这个faye client就死掉了，也就无法聊天，更新在线用户和计时。然后我想到了一种方案是，就是关闭autodisconnect，把这个事件改为发送让服务器三秒后才去检测这个client是否继续存活的请求，这样无论浏览器是否关掉，服务器 都照样主动检测。聊天室的弊端在于它的特点是需要中央服务器，无法支持过大的聊天室，这里暗示的一个信息是系统架构是可以按聊天室拆分做负载均衡的。</p>
+
+<p>上面说的大部分都是从前端角度分析的，现在来说说后端。</p>
+
+<p>随着项目不断迭代，我发现几乎大部分操作都直接绑定到用户学习状态表 LearnIssue 了，关联的课时和学习状态，每门课时对应的视频观看数据和考试信息都是代理过去，这样逻辑相对还是很清晰的。</p>
+
+<p>在写单页面应用时，虽然像问答和聊天都独立出去用JavaScript载入了，但是还是需要同时载入几十个变量。<a href="http://ruby-china.org/topics/12477">一般人都会反应为什么不整合到Model里去呢</a> ，原因是我还把十多个数据合法验证加入到Controller里去了，这里包括后台人员录入的数据不规范和用户访问权限等，出错方式是给出带参数说明的 <code>redirect_to</code> URL ，比如 <code>?reason=course_invalid</code> ，这样后台可以随时调整并在前端验证。在调整业务的时候，我经常要去调整变量位置，所以就写了类似rake步骤依赖的 <a href="http://github.com/eoecn/stepstepstep">stepstepstep.gem</a> 去生成自动排序执行的14个before_filters，里面涉及一个图论算法。</p>
+
+<p>这个项目一个很大的特色之一对JSON的运用，比如学习状态，课程信息等。大部分是直接用 <a href="https://github.com/bdurand/json_record/">json_record</a> 配置的，效果等同于Mongodb文档存储（当然副作用是不能直接用SQL做字段本身的操作了），但是运维只需面对MySQL即可。我把项目设计成基本都是单表操作，现在一个学习页面的载入包含着近50条SQL查询，而响应时间却都还在300ms左右。</p>
+
+<p>最后为了给大家一个相对直观的项目复杂度的理解，我运行 <code>bundle exec rake stats</code> 对Ruby源码情况做了简单统计，并对比由牛人 @huacnlee 主导开发的 Ruby China专业社区论坛。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>learn.eoe.cn
+</span><span class='line'>+----------------------+-------+-------+---------+---------+-----+-------+
+</span><span class='line'>| Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
+</span><span class='line'>+----------------------+-------+-------+---------+---------+-----+-------+
+</span><span class='line'>| Controllers          |   558 |   356 |       9 |      24 |   2 |    12 |
+</span><span class='line'>| Helpers              |    26 |    19 |       0 |       4 |   0 |     2 |
+</span><span class='line'>| Models               |   690 |   529 |      17 |      54 |   3 |     7 |
+</span><span class='line'>| Libraries            |   114 |    86 |       1 |       2 |   2 |    41 |
+</span><span class='line'>| Integration tests    |     0 |     0 |       0 |       0 |   0 |     0 |
+</span><span class='line'>| Functional tests     |    11 |     6 |       2 |       0 |   0 |     0 |
+</span><span class='line'>| Unit tests           |     8 |     6 |       2 |       0 |   0 |     0 |
+</span><span class='line'>+----------------------+-------+-------+---------+---------+-----+-------+
+</span><span class='line'>| Total                |  1407 |  1002 |      31 |      84 |   2 |     9 |
+</span><span class='line'>+----------------------+-------+-------+---------+---------+-----+-------+
+</span><span class='line'>  Code LOC: 990     Test LOC: 12     Code to Test Ratio: 1:0.0
+</span><span class='line'>
+</span><span class='line'>ruby-china
+</span><span class='line'>+----------------------+-------+-------+---------+---------+-----+-------+
+</span><span class='line'>| Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
+</span><span class='line'>+----------------------+-------+-------+---------+---------+-----+-------+
+</span><span class='line'>| Controllers          |  1587 |  1251 |      32 |     182 |   5 |     4 |
+</span><span class='line'>| Helpers              |   365 |   301 |       0 |      41 |   0 |     5 |
+</span><span class='line'>| Models               |  1542 |  1166 |      24 |     106 |   4 |     9 |
+</span><span class='line'>| Mailers              |    18 |    15 |       2 |       1 |   0 |    13 |
+</span><span class='line'>| Javascripts          |  6908 |  5006 |       1 |     546 | 546 |     7 |
+</span><span class='line'>| Libraries            |   552 |   411 |       6 |      41 |   6 |     8 |
+</span><span class='line'>| Api specs            |   171 |   148 |       0 |       2 |   0 |    72 |
+</span><span class='line'>| Cell specs           |   127 |   106 |       0 |       0 |   0 |     0 |
+</span><span class='line'>| Controller specs     |   678 |   572 |       0 |       0 |   0 |     0 |
+</span><span class='line'>| Helper specs         |   364 |   290 |       0 |       0 |   0 |     0 |
+</span><span class='line'>| Lib specs            |   229 |   173 |       0 |       0 |   0 |     0 |
+</span><span class='line'>| Model specs          |  1034 |   859 |       3 |       0 |   0 |     0 |
+</span><span class='line'>| Request specs        |    40 |    33 |       0 |       0 |   0 |     0 |
+</span><span class='line'>| Routing specs        |    58 |    43 |       0 |       0 |   0 |     0 |
+</span><span class='line'>| View specs           |    34 |    26 |       0 |       0 |   0 |     0 |
+</span><span class='line'>+----------------------+-------+-------+---------+---------+-----+-------+
+</span><span class='line'>| Total                | 13707 | 10400 |      68 |     919 |  13 |     9 |
+</span><span class='line'>+----------------------+-------+-------+---------+---------+-----+-------+
+</span><span class='line'>  Code LOC: 8150     Test LOC: 2250     Code to Test Ratio: 1:0.3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>假设代码质量和风格差不多的话，从代码量来说 learn.eoe.cn 主体Ruby部分的复杂度是 ruby-china.org 的三分之一 （从Models和Controllers占比来说也是差不多的），对于一个单页应用来说这差不多了。唯一的区别是learn.eoe.cn的控制器方法行数比ruby-china.org大三倍，这和业务逻辑更加复杂有关。（Ruby China得排除基本都是外部静态js的这6908行统计数据。）</p>
+
+<p>另外上午我写了一段Ruby脚本来统计 <a href="https://gist.github.com/mvj3/6149713">learn.eoe.cn Rails项目及其开源项目源码行数</a> ，结果为：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>[rails_engine_eoe]  Ruby:884 | JavaScript:15 | HAML:0
+</span><span class='line'>[ucenter_authcode]  Ruby:78 | JavaScript:0 | HAML:0
+</span><span class='line'>[rack_image_assets_cache_control]  Ruby:28 | JavaScript:0 | HAML:0
+</span><span class='line'>[faye-online]  Ruby:678 | JavaScript:52 | HAML:0
+</span><span class='line'>[qa-rails]  Ruby:259 | JavaScript:280 | HAML:183
+</span><span class='line'>[videojs_user_track]  Ruby:140 | JavaScript:84 | HAML:0
+</span><span class='line'>[stepstepstep]  Ruby:271 | JavaScript:0 | HAML:0
+</span><span class='line'>[cross_time_calculation]  Ruby:143 | JavaScript:0 | HAML:0
+</span><span class='line'>[/Users/mvj3/eoemobile/code/learn]  Ruby:4113 | JavaScript:1108 | HAML:517
+</span><span class='line'>
+</span><span class='line'>[total] Ruby:6721 | JavaScript:1539 | HAML:700
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到Ruby和JavaScript有三分之一左右是开源的，Ruby更多些。另外一个数据是git提交日志,  <code>1,347 commits / 21,477 ++ / 12,354 --</code> 。</p>
+
+<p>这项目最大的遗憾就是没有测试，和互联网创业产品风格及资源配备等都很有关系，不过抽取的外部库比较重要或重逻辑的地方都写了必要的测试了。</p>
+
+<p>注明: 本文仅代表个人观点，与实际所涉公司无关。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How do i create stepstepstep gem]]></title>
@@ -681,7 +863,7 @@ Run &lsquo;bundle install&rsquo; to install missing gems.</p>
 
 <h2>把当前自己的访问也添加上</h2>
 
-<p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
+<p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
 ]]></content>
   </entry>
   
@@ -1200,138 +1382,6 @@ Run &lsquo;bundle install&rsquo; to install missing gems.</p>
 </span><span class='line'>              <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">is_delete</span><span class="o">`</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span class='line'>              <span class="k">AND</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span><span class="p">)</span>
 </span><span class='line'>        <span class="k">ORDER</span> <span class="k">BY</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">create_time</span><span class="o">`</span> <span class="k">DESC</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[个性域名正则表达式]]></title>
-    <link href="http://mvj3.github.io/2013/01/23/individual-domain-regexp/"/>
-    <updated>2013-01-23T16:35:34+08:00</updated>
-    <id>http://mvj3.github.io/2013/01/23/individual-domain-regexp</id>
-    <content type="html"><![CDATA[<p>老大提了个用单个正则表达式来匹配个性域名ID的需求，具体是：3-15个字符，可以用[a-z0-9_-]字符，必须用数字或者字母开头，且不能是纯数字</p>
-
-<p>让我们来分步化解
-对于，3-15个字符，可以用[a-z0-9_-]字符，稍微了解点正则表达式的同学马上就可以写出如下正则</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/^[a-z0-9_\-]{3,15}$/i</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>让我们来再加一个条件，必须用数字或者字母开头</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/^[0-9a-z][a-z0-9_\-]{2,14}$/i</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最后一个条件是，且不能是纯数字。</p>
-
-<p>最初我大概的想到是用 或(|) 来做，一个是数字开头，另一个是字母开头，剩余的是否纯数字在后面判断。但这剩余里还是会遇到判断在哪个位置里已经出现了字母的问题。所以这里就需要正则表达式里非匹配获取的功能了。</p>
-
-<p>维基百科里给出的是 (?=pattern) ，它表示 匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符「(|)」来组合一个模式的各个部分是很有用。例如「industr(?:y|ies)」就是一个比「industry|industries」更简略的表达式。具体见 <a href="http://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">http://zh.wikipedia.org/wiki/正则表达式</a></p>
-
-<p>stackoverflow里有更通俗的例子 <a href="http://stackoverflow.com/questions/1559751/regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper">http://stackoverflow.com/questions/1559751/regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$
-</span><span class='line'>A short explanation:
-</span><span class='line'>^                  // the start of the string
-</span><span class='line'>(?=.*[a-z])        // use positive look ahead to see if at least one lower case letter exists
-</span><span class='line'>(?=.*[A-Z])        // use positive look ahead to see if at least one upper case letter exists
-</span><span class='line'>(?=.*\d)           // use positive look ahead to see if at least one digit exists
-</span><span class='line'>(?=.*[_\W])        // use positive look ahead to see if at least one underscore or non-word character exists
-</span><span class='line'>.+                 // gobble up the entire string
-</span><span class='line'>$                  // the end of the string
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这样我们就在 <code>/^[0-9a-z][a-z0-9_-]{2,14}$/i</code> 里再加上个 <code>(?=.*[a-z_\-])</code> 就可以匹配不是纯数字了</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@regexp</span> <span class="o">=</span> <span class="sr">/^(?=.*[a-z_\-])[0-9a-z][a-z0-9_\-]{2,14}$/i</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;合法测试&quot;</span>
-</span><span class='line'><span class="sx">%w[c11213311 mvj3 123mmmmm iceskysl 3_3]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">str</span><span class="si">}</span><span class="s2">   =&gt;   </span><span class="si">#{</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="vi">@regexp</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;非法测试&quot;</span>
-</span><span class='line'><span class="sx">%w[123 12345 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm _ssssss 你好]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">str</span><span class="si">}</span><span class="s2">   =&gt;   </span><span class="si">#{</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="vi">@regexp</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;没有匹配&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>测试结果如下</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>合法测试
-</span><span class='line'>c11213311   =&gt;   c11213311
-</span><span class='line'>mvj3   =&gt;   mvj3
-</span><span class='line'>123mmmmm   =&gt;   123mmmmm
-</span><span class='line'>iceskysl   =&gt;   iceskysl
-</span><span class='line'>3_3   =&gt;   3_3
-</span><span class='line'>
-</span><span class='line'>非法测试
-</span><span class='line'>123   =&gt;   没有匹配
-</span><span class='line'>12345   =&gt;   没有匹配
-</span><span class='line'>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm   =&gt;   没有匹配
-</span><span class='line'>_ssssss   =&gt;   没有匹配
-</span><span class='line'>你好   =&gt;   没有匹配
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Ruby-China上的讨论 <a href="http://ruby-china.org/topics/8383">http://ruby-china.org/topics/8383</a></h2>
-
-<p>我景仰的大牛 @luikore 给出了易读版</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/\A</span>
-</span><span class='line'><span class="sr">  (?=.*[a-z_\-])    # 不能全是数字</span>
-</span><span class='line'><span class="sr">  [0-9a-z]          # 必须用数字或者字母开头</span>
-</span><span class='line'><span class="sr">  [a-z0-9_\-]{2,14} # 3-15个字符，可以用[a-z0-9_\-]字符</span>
-</span><span class='line'><span class="sr">\z/xi</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>

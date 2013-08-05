@@ -6,7 +6,9 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Nov 1st, 2012 Tags: Analysis, Android, DSL, DataMining, Mongodb 目标 满足公司管理和运营人员，以及外部合作公司的数据需求，业务包括优亿市场应用下载，搜索等。 难点 数据量大，实时，多维， &hellip;">
+	<meta name="description" content=" Published on: Dec 13th, 2012 Tags: HAML, HTML5, Javascript 1
+2
+/[if lt IE 9] %script{:src=&gt;&quot;html5shiv/dist/html5shiv.js&quot;} Comments ">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -108,6 +110,55 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/12/13/require-html5shiv-js-in-haml/">
+		
+			HAML引用html5shiv.js</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-13T12:14:55+08:00" pubdate data-updated="true">Dec 13<span>th</span>, 2012</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/haml/'>HAML</a>, <a class='category' href='/blog/categories/html5/'>HTML5</a>, <a class='category' href='/blog/categories/javascript/'>Javascript</a>
+
+
+</div>
+    </div>
+		<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haml'><span class='line'><span class="c">/</span><span class="cs">[if lt IE 9]</span><span class="c"></span>
+</span><span class='line'>  <span class="nt">%script</span><span class="p">{</span><span class="ss">:src</span><span class="o">=&gt;</span><span class="s2">&quot;html5shiv/dist/html5shiv.js&quot;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2012/12/13/require-html5shiv-js-in-haml//blog/page/4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -688,74 +739,6 @@ sqlite-devel-3.3.6-5</p>
 <div class="meta">
 	
 		<span class="comments"><a href="/2011/10/09/use-bundle-install-local-to-speed-up-your-gem-install//blog/page/4/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/09/17/use-binary-search-to-seek-a-position-in-rails-logs/">
-		
-			二分查找定位Rails文本日志</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-17T15:21:54+08:00" pubdate data-updated="true">Sep 17<span>th</span>, 2011</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-    </div>
-		<p>对网站作统计分析时，经常需要对各种文本日志定时进行解析抽取数据，因此有必要确定上次结束解析的位置。<a href="http://github.com/mvj3/logpos">logpos</a>使用<a href="http://en.wikipedia.org/wiki/Binary_search_algorithm">二分法</a>进行查找，具体用法如：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">pos</span> <span class="o">=</span> <span class="no">Logpos</span><span class="o">.</span><span class="n">seek_pos_before</span> <span class="n">log_path</span><span class="p">,</span> <span class="p">(</span><span class="no">RptVerbPathParams</span><span class="o">.</span><span class="n">desc</span><span class="p">(</span><span class="ss">:time</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">try</span><span class="p">(</span><span class="ss">:time</span><span class="p">)</span> <span class="o">||</span> <span class="no">Time</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>logpos是以Rails默认的日志格式来解析的，但是也可以自己定义一个时间解析器：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">lg</span> <span class="o">=</span> <span class="no">Logpos</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'><span class="n">lg</span><span class="o">.</span><span class="n">time_parser</span> <span class="o">=</span> <span class="nb">proc</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">line</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/^Started/</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="no">TIME_PARSER_CLASS</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/for [0-9\.]* at /</span><span class="p">)</span><span class="o">[-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'><span class="n">pos</span> <span class="o">=</span> <span class="n">lg</span><span class="o">.</span><span class="n">seek_pos_before</span> <span class="n">log_path</span><span class="p">,</span> <span class="n">time</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Logpos接受的time_parser要求是一个Proc，返回是一个Time实例或nil，以便之后的比较。</p>
-
-<p>我这边测试一个4G多的正常的Rails日志文件，对不同的时间点做测试，日志记录时间范围内的一般在10毫秒以下，范围外的在80毫秒以下。</p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2011/09/17/use-binary-search-to-seek-a-position-in-rails-logs//blog/page/4/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>

@@ -6,8 +6,8 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content=" Published on: Feb 26th, 2013 Tags: Tips, Vim 在查看(View)模式下输入 1
-:%s/\s\+$/g 其实也即是删除了整行都是空格字符的。 Comments ">
+	<meta name="description" content="Published on: Mar 6th, 2013 Tags: Gemfile, Rails, assets 提示已经安装的gem不在Gemfile里 最近有时遇到明明已经安装了rake，但是却提示我说有些gem没有在Gemfile里引用。比如：
+Could not find rake-0. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -109,6 +109,83 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/03/06/rails-general-configuration-problems/">
+		
+			Rails常见配置问题</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-06T10:42:41+08:00" pubdate data-updated="true">Mar 6<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/gemfile/'>Gemfile</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/assets/'>assets</a>
+
+
+</div>
+    </div>
+		<h2>提示已经安装的gem不在Gemfile里</h2>
+
+<p>最近有时遇到明明已经安装了rake，但是却提示我说有些gem没有在Gemfile里引用。比如：
+Could not find rake-0.9.2.2 in any of the sources
+Run &lsquo;bundle install&rsquo; to install missing gems.</p>
+
+<p>我所使用的Ruby版本管理环境是rvm，查看下rvm info，发现ruby路径和gem管理路径不一致，因此rvm reload一下就解决了该问题。</p>
+
+<p>rvm不一致的问题还需要查下，推测可能是开启多个SHELL，导致设置不一致～</p>
+
+<h2>assets没有编译</h2>
+
+<p>需要显示指定路径，在config/environments/production.rb里加入</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">precompile</span> <span class="o">+=</span> <span class="sx">%w[*js *css]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>development模式下刷新后静态资源不变</h2>
+
+<p>删除public/assets目录下的缓存文件，这样就走动态请求了。</p>
+
+<h2>修复rvm info里ruby版本不一致bug</h2>
+
+<p>在/etc/profile里加一行rvm reload</p>
+
+<h2>修复gem,irb等命令里老是提示ree某个版本的environment不存在</h2>
+
+<p>修改该命令里的ruby环境路径到自己指定的版本</p>
+
+<h2>修复默写外部css引用图片等静态资源不以/assets开头</h2>
+
+<p>把资源及其路径直接拷到/public目录下</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/03/06/rails-general-configuration-problems//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -474,7 +551,7 @@
 
 <h2>把当前自己的访问也添加上</h2>
 
-<p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
+<p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
 
 		
 		
@@ -1108,173 +1185,6 @@
 <div class="meta">
 	
 		<span class="comments"><a href="/2013/01/24/define-many-to-many-and-one-to-many-associations-for-informal-database-table-and-field-design-in-activerecord//blog/page/2/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/01/23/individual-domain-regexp/">
-		
-			个性域名正则表达式</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-23T16:35:34+08:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/regexp/'>Regexp</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-    </div>
-		<p>老大提了个用单个正则表达式来匹配个性域名ID的需求，具体是：3-15个字符，可以用[a-z0-9_-]字符，必须用数字或者字母开头，且不能是纯数字</p>
-
-<p>让我们来分步化解
-对于，3-15个字符，可以用[a-z0-9_-]字符，稍微了解点正则表达式的同学马上就可以写出如下正则</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/^[a-z0-9_\-]{3,15}$/i</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>让我们来再加一个条件，必须用数字或者字母开头</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/^[0-9a-z][a-z0-9_\-]{2,14}$/i</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最后一个条件是，且不能是纯数字。</p>
-
-<p>最初我大概的想到是用 或(|) 来做，一个是数字开头，另一个是字母开头，剩余的是否纯数字在后面判断。但这剩余里还是会遇到判断在哪个位置里已经出现了字母的问题。所以这里就需要正则表达式里非匹配获取的功能了。</p>
-
-<p>维基百科里给出的是 (?=pattern) ，它表示 匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符「(|)」来组合一个模式的各个部分是很有用。例如「industr(?:y|ies)」就是一个比「industry|industries」更简略的表达式。具体见 <a href="http://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">http://zh.wikipedia.org/wiki/正则表达式</a></p>
-
-<p>stackoverflow里有更通俗的例子 <a href="http://stackoverflow.com/questions/1559751/regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper">http://stackoverflow.com/questions/1559751/regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$
-</span><span class='line'>A short explanation:
-</span><span class='line'>^                  // the start of the string
-</span><span class='line'>(?=.*[a-z])        // use positive look ahead to see if at least one lower case letter exists
-</span><span class='line'>(?=.*[A-Z])        // use positive look ahead to see if at least one upper case letter exists
-</span><span class='line'>(?=.*\d)           // use positive look ahead to see if at least one digit exists
-</span><span class='line'>(?=.*[_\W])        // use positive look ahead to see if at least one underscore or non-word character exists
-</span><span class='line'>.+                 // gobble up the entire string
-</span><span class='line'>$                  // the end of the string
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这样我们就在 <code>/^[0-9a-z][a-z0-9_-]{2,14}$/i</code> 里再加上个 <code>(?=.*[a-z_\-])</code> 就可以匹配不是纯数字了</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@regexp</span> <span class="o">=</span> <span class="sr">/^(?=.*[a-z_\-])[0-9a-z][a-z0-9_\-]{2,14}$/i</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;合法测试&quot;</span>
-</span><span class='line'><span class="sx">%w[c11213311 mvj3 123mmmmm iceskysl 3_3]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">str</span><span class="si">}</span><span class="s2">   =&gt;   </span><span class="si">#{</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="vi">@regexp</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;非法测试&quot;</span>
-</span><span class='line'><span class="sx">%w[123 12345 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm _ssssss 你好]</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">str</span><span class="si">}</span><span class="s2">   =&gt;   </span><span class="si">#{</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="vi">@regexp</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;没有匹配&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>测试结果如下</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>合法测试
-</span><span class='line'>c11213311   =&gt;   c11213311
-</span><span class='line'>mvj3   =&gt;   mvj3
-</span><span class='line'>123mmmmm   =&gt;   123mmmmm
-</span><span class='line'>iceskysl   =&gt;   iceskysl
-</span><span class='line'>3_3   =&gt;   3_3
-</span><span class='line'>
-</span><span class='line'>非法测试
-</span><span class='line'>123   =&gt;   没有匹配
-</span><span class='line'>12345   =&gt;   没有匹配
-</span><span class='line'>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm   =&gt;   没有匹配
-</span><span class='line'>_ssssss   =&gt;   没有匹配
-</span><span class='line'>你好   =&gt;   没有匹配
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Ruby-China上的讨论 <a href="http://ruby-china.org/topics/8383">http://ruby-china.org/topics/8383</a></h2>
-
-<p>我景仰的大牛 @luikore 给出了易读版</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/\A</span>
-</span><span class='line'><span class="sr">  (?=.*[a-z_\-])    # 不能全是数字</span>
-</span><span class='line'><span class="sr">  [0-9a-z]          # 必须用数字或者字母开头</span>
-</span><span class='line'><span class="sr">  [a-z0-9_\-]{2,14} # 3-15个字符，可以用[a-z0-9_\-]字符</span>
-</span><span class='line'><span class="sr">\z/xi</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2013/01/23/individual-domain-regexp//blog/page/2/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
