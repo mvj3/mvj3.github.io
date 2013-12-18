@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Backbones | 世界的审美！]]></title>
-  <link href="http://mvj3.github.io/blog/categories/backbones/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Backbone | 世界的审美！]]></title>
+  <link href="http://mvj3.github.io/blog/categories/backbone/atom.xml" rel="self"/>
   <link href="http://mvj3.github.io/"/>
-  <updated>2013-08-05T22:11:45+08:00</updated>
+  <updated>2013-12-18T15:54:03+08:00</updated>
   <id>http://mvj3.github.io/</id>
   <author>
     <name><![CDATA[mvj3]]></name>
@@ -14,13 +14,13 @@
 
   
   <entry>
-    <title type="html"><![CDATA[解决Backbones视图的事件重复绑定]]></title>
-    <link href="http://mvj3.github.io/2013/05/28/fix-backbones-view-duplicated-events-bind/"/>
+    <title type="html"><![CDATA[解决Backbone视图的事件重复绑定]]></title>
+    <link href="http://mvj3.github.io/2013/05/28/fix-backbone-view-duplicated-events-bind/"/>
     <updated>2013-05-28T15:28:32+08:00</updated>
-    <id>http://mvj3.github.io/2013/05/28/fix-backbones-view-duplicated-events-bind</id>
+    <id>http://mvj3.github.io/2013/05/28/fix-backbone-view-duplicated-events-bind</id>
     <content type="html"><![CDATA[<h2>原理</h2>
 
-<p>Backbones的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。</p>
+<p>Backbone的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。</p>
 
 <p>```javascript
 var QAListTopicView = Backbone.View.extend({
@@ -53,11 +53,11 @@ return this;
 $(&ldquo;#qa ul&rdquo;).html(list_topic_view.render().el);
 ```</p>
 
-<p>如果在View.render方法里进行事件绑定，那么就会对多重Backbones.View的多重实例进行重复绑定。</p>
+<p>如果在View.render方法里进行事件绑定，那么就会对多重Backbone.View的多重实例进行重复绑定。</p>
 
 <h2>例子</h2>
 
-<p>详细的一个使用Backbones里的View和Event的例子见: <a href="https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js">https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js</a></p>
+<p>详细的一个使用Backbone里的View和Event的例子见: <a href="https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js">https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js</a></p>
 ]]></content>
   </entry>
   

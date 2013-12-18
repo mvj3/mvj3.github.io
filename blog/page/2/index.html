@@ -6,8 +6,11 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Mar 6th, 2013 Tags: Gemfile, Rails, assets 提示已经安装的gem不在Gemfile里 最近有时遇到明明已经安装了rake，但是却提示我说有些gem没有在Gemfile里引用。比如：
-Could not find rake-0. &hellip;">
+	<meta name="description" content="Published on: Mar 6th, 2013 Tags: HAML, RenderEngine 对于基本HAML语法可使用下列方法渲染即可 1
+2
+3
+content = File.read(your_haml_path)
+engine = Haml::Engine.new( &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -109,6 +112,84 @@ Could not find rake-0. &hellip;">
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/03/06/render-haml-independently/">
+		
+			独立使用HAML渲染</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-06T14:45:06+08:00" pubdate data-updated="true">Mar 6<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/haml/'>HAML</a>, <a class='category' href='/blog/categories/renderengine/'>RenderEngine</a>
+
+
+</div>
+    </div>
+		<p>对于基本HAML语法可使用下列方法渲染即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">content</span>     <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">your_haml_path</span><span class="p">)</span>
+</span><span class='line'><span class="n">engine</span>      <span class="o">=</span> <span class="ss">Haml</span><span class="p">:</span><span class="ss">:Engine</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">haml_content</span><span class="p">)</span>
+</span><span class='line'><span class="n">engine</span><span class="o">.</span><span class="n">render</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果在content里使用了text_field_tag等view方法，那就需要在给engine指定render的作用域。默认是obj = Object.new，但是这个obj没有text_field_tag方法，所以就需要include ActionPack里对于的View模块，例如</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">HomeController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>   <span class="kp">include</span> <span class="ss">ActionView</span><span class="p">:</span><span class="ss">:Helpers</span><span class="o">::</span><span class="no">AssetTagHelper</span>
+</span><span class='line'>   <span class="kp">include</span> <span class="ss">ActionView</span><span class="p">:</span><span class="ss">:Helpers</span><span class="o">::</span><span class="no">FormTagHelper</span>
+</span><span class='line'>   <span class="kp">include</span> <span class="ss">ActionView</span><span class="p">:</span><span class="ss">:Helpers</span><span class="o">::</span><span class="no">OutputSafetyHelper</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="n">engine</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="no">HomeController</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考文档</h2>
+
+<ul>
+<li><a href="http://haml.info/docs/yardoc/Haml/Engine.html">http://haml.info/docs/yardoc/Haml/Engine.html</a></li>
+<li><a href="http://stackoverflow.com/questions/6125265/using-layouts-in-haml-files-independently-of-rails">http://stackoverflow.com/questions/6125265/using-layouts-in-haml-files-independently-of-rails</a></li>
+</ul>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/03/06/render-haml-independently//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -945,246 +1026,6 @@ Run &lsquo;bundle install&rsquo; to install missing gems.</p>
 <div class="meta">
 	
 		<span class="comments"><a href="/2013/01/26/create-a-code-bang-for-eoecn//blog/page/2/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/01/24/define-many-to-many-and-one-to-many-associations-for-informal-database-table-and-field-design-in-activerecord/">
-		
-			ActiveRecord兼容非正规数据库表名和表字段设计的多对多，一对多关系</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-24T16:07:41+08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/activerecord/'>ActiveRecord</a>, <a class='category' href='/blog/categories/rails/'>Rails</a>
-
-
-</div>
-    </div>
-		<p>Rails里的多对多关系声明极其简单，一句 <code>has_and_belongs_to_many :projects</code> 就可表示当前表通过一个中间表来拥有多个projects，唯一的约定就是复数的表名和_id后缀的外键。</p>
-
-<p>但是如果你接手的数据库是在别的不同约定的语言框架里设计的，这样去套用Rails的 <code>has_and_belongs_to_many</code> 就炕爹了，你得一个一个去声明每一个选项，以下就是本人惨痛的经历，其他人看了就不用重蹈覆辙了。</p>
-
-<p>参考：<a href="http://guides.rubyonrails.org/association_basics.html">http://guides.rubyonrails.org/association_basics.html</a> ，和本地的Rails rdoc文档</p>
-
-<p>需求是查出一个用户收藏的所有代码。</p>
-
-<p> 先来看下表结构。用户，收藏，代码三个表结构主要部分如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">common_member</span><span class="o">`</span> <span class="p">(</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="n">mediumint</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="n">unsigned</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-</span><span class='line'>  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">uid</span><span class="o">`</span><span class="p">),</span>
-</span><span class='line'><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">MyISAM</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">802058</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span> <span class="p">(</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">itemid</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="n">enum</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span><span class="s1">&#39;code&#39;</span><span class="p">,</span><span class="s1">&#39;news&#39;</span><span class="p">,</span><span class="s1">&#39;book&#39;</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">create_time</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">is_delete</span><span class="o">`</span> <span class="n">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;0&#39;</span>
-</span><span class='line'><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span> <span class="p">(</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">user_id</span><span class="o">`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">created_at</span><span class="o">`</span> <span class="n">datetime</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">updated_at</span><span class="o">`</span> <span class="n">datetime</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span> <span class="n">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
-</span><span class='line'>  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">),</span>
-</span><span class='line'>  <span class="k">KEY</span> <span class="o">`</span><span class="n">index_code_gists_on_deleted_at_and_user_id_and_updated_at</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">updated_at</span><span class="o">`</span><span class="p">)</span>
-</span><span class='line'><span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="n">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">149</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们接下来的代码逻辑就是查找出目标用户，通过收藏表，来找出该用户的所有代码。</p>
-
-<p>先声明三个model如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CommonMember</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">table_name</span> <span class="o">=</span> <span class="ss">:common_member</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">CommonUserFavorite</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">table_name</span> <span class="o">=</span> <span class="ss">:common_user_favorite</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">CodeGist</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>接着声明三个model之间的关系</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">CommonUserFavoriteConditions</span> <span class="o">=</span> <span class="s2">&quot;`common_user_favorite`.`is_delete` = 0 AND `common_user_favorite`.`model` = &#39;code&#39;&quot;</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">CommonMember</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:fav_gists</span><span class="p">,</span> <span class="ss">:through</span> <span class="o">=&gt;</span> <span class="ss">:favs</span><span class="p">,</span> <span class="ss">:order</span> <span class="o">=&gt;</span> <span class="s2">&quot;`common_user_favorite`.`create_time` DESC&quot;</span><span class="p">,</span> <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="ss">:gist</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:favs</span><span class="p">,</span> <span class="ss">:class_name</span> <span class="o">=&gt;</span> <span class="no">CommonUserFavorite</span><span class="p">,</span> <span class="ss">:foreign_key</span> <span class="o">=&gt;</span> <span class="ss">:uid</span><span class="p">,</span> <span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="no">CommonUserFavoriteConditions</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">CommonUserFavorite</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:gist</span><span class="p">,</span> <span class="ss">:class_name</span> <span class="o">=&gt;</span> <span class="no">CodeGist</span><span class="p">,</span> <span class="ss">:foreign_key</span> <span class="o">=&gt;</span> <span class="ss">:itemid</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'><span class="k">class</span> <span class="nc">CodeGist</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:favs</span><span class="p">,</span> <span class="ss">:class_name</span> <span class="o">=&gt;</span> <span class="no">CommonUserFavorite</span><span class="p">,</span> <span class="ss">:foreign_key</span> <span class="o">=&gt;</span> <span class="ss">:itemid</span><span class="p">,</span> <span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="no">CommonUserFavoriteConditions</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>以下是解释</p>
-
-<p>先声明收藏表(CommonUserFavorite) <code>belongs_to</code> 代码表(CodeGist)，指定 收藏表(CommonUserFavorite)  的外键是:itemid，关联的代码表(CodeGist)的主键是:id。示例如：
-<code>CommonUserFavorite.where(:model =&gt; 'code').first.gist</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
-</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span>
-</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span>
-</span><span class='line'>        <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
-</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
-</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">=</span> <span class="mi">43</span> <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>再声明代码表(CodeGist) <code>has_many</code> 收藏表(CommonUserFavorite) ，指定 收藏表(CommonUserFavorite)  的外键是 :itemid，且查询条件是 <code>:conditions =&gt; ["common_user_favorite.model = 'code'"]</code> 。示例如： <code>CodeGist.last.favs</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
-</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
-</span><span class='line'>        <span class="k">WHERE</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">ORDER</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">DESC</span>
-</span><span class='line'>        <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
-</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span>
-</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">itemid</span><span class="o">`</span> <span class="o">=</span> <span class="mi">107</span>
-</span><span class='line'>                <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">is_delete</span><span class="o">`</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>                <span class="k">AND</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最后声明是用户表(CommonMember)对代码表(CodeGist)的has_many 是通过 用户表(CommonMember)对收藏表(CommonUserFavorite)的has_many 和 收藏表(CommonUserFavorite)对代码表(CodeGist)的belongs_to 共同实现的，这两个声明关系分别表述为  <code>:through =&gt; :favs</code> 和  <code>:source =&gt; :gist</code>。各自的示例如：</p>
-
-<p><code>cm = CommonMember.where(:uid =&gt; 470700).first</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">common_member</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
-</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">common_member</span><span class="o">`</span>
-</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">common_member</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="o">=</span> <span class="mi">470700</span>
-</span><span class='line'>        <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>cm.fav_gists</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">*</span>
-</span><span class='line'>        <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
-</span><span class='line'>        <span class="k">INNER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span>
-</span><span class='line'>              <span class="k">ON</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">itemid</span><span class="o">`</span>
-</span><span class='line'>        <span class="k">WHERE</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">uid</span><span class="o">`</span> <span class="o">=</span> <span class="mi">470700</span>
-</span><span class='line'>              <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">deleted_at</span><span class="o">`</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
-</span><span class='line'>              <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">is_delete</span><span class="o">`</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>              <span class="k">AND</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">ORDER</span> <span class="k">BY</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">create_time</span><span class="o">`</span> <span class="k">DESC</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2013/01/24/define-many-to-many-and-one-to-many-associations-for-informal-database-table-and-field-design-in-activerecord//blog/page/2/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>

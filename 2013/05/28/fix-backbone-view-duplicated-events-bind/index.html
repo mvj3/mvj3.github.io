@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>解决Backbones视图的事件重复绑定 - 世界的审美！</title>
+	<title>解决Backbone视图的事件重复绑定 - 世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="原理 Backbones的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。 1
+	<meta name="description" content="原理 Backbone的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。 1
 2
 3
 4
@@ -25,7 +25,7 @@
 17
 18
 19
-var QAListTopicView = Backbone.View &hellip;">
+var QAListTopicView = Backbone.View. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -127,10 +127,10 @@ var QAListTopicView = Backbone.View &hellip;">
 <!-- begin toload --> 
     <div id="content" class="inner">
         <article class="post">
-	<h2 class="title">解决Backbones视图的事件重复绑定</h2>
+	<h2 class="title">解决Backbone视图的事件重复绑定</h2>
 	<div class="entry-content"><h2>原理</h2>
 
-<p>Backbones的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。</p>
+<p>Backbone的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -173,16 +173,16 @@ var QAListTopicView = Backbone.View &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>如果在View.render方法里进行事件绑定，那么就会对多重Backbones.View的多重实例进行重复绑定。</p>
+<p>如果在View.render方法里进行事件绑定，那么就会对多重Backbone.View的多重实例进行重复绑定。</p>
 
 <h2>例子</h2>
 
-<p>详细的一个使用Backbones里的View和Event的例子见: <a href="https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js">https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js</a></p>
+<p>详细的一个使用Backbone里的View和Event的例子见: <a href="https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js">https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js</a></p>
 </div>
 
 <div class="meta">
 	
-		<span class="comments"><a href="/2013/05/28/fix-backbones-view-duplicated-events-bind/#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/2013/05/28/fix-backbone-view-duplicated-events-bind/#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -235,8 +235,8 @@ var QAListTopicView = Backbone.View &hellip;">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://mvj3.github.io/2013/05/28/fix-backbones-view-duplicated-events-bind/';
-        var disqus_url = 'http://mvj3.github.io/2013/05/28/fix-backbones-view-duplicated-events-bind/';
+        var disqus_identifier = 'http://mvj3.github.io/2013/05/28/fix-backbone-view-duplicated-events-bind/';
+        var disqus_url = 'http://mvj3.github.io/2013/05/28/fix-backbone-view-duplicated-events-bind/';
         var disqus_script = 'embed.js';
       
     (function () {
