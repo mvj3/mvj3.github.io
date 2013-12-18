@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Software Development | 世界的审美！]]></title>
   <link href="http://mvj3.github.io/blog/categories/software-development/atom.xml" rel="self"/>
   <link href="http://mvj3.github.io/"/>
-  <updated>2013-12-18T15:54:03+08:00</updated>
+  <updated>2013-12-18T19:05:55+08:00</updated>
   <id>http://mvj3.github.io/</id>
   <author>
     <name><![CDATA[mvj3]]></name>
@@ -125,11 +125,11 @@
 
 <p>机械的本质就是齿轮之间的咬合，而相互驱动的齿轮绝对不能像混乱的意大利面条一样到处都是死结。</p>
 
-<h2>得墨忒耳定律</h2>
+<h2>Law of Demeter (得墨忒耳定律)</h2>
 
-<p>前段时间同事和我分享了一篇 <a href="http://pragprog.com/articles/tell-dont-ask">Tell, Don&rsquo;t Ask</a> 的文章，讲述了模块调用之间松耦合的原则，所谓"不在其位，不谋其政"，此观点也可以被归纳为 <a href="http://zh.wikipedia.org/wiki/%E5%BE%97%E5%A2%A8%E5%BF%92%E8%80%B3%E5%AE%9A%E5%BE%8B">得墨忒耳定律</a> 。</p>
+<p>前段时间同事和我分享了一篇 <a href="http://pragprog.com/articles/tell-dont-ask">Tell, Don&rsquo;t Ask</a> 的文章，讲述了模块调用之间松耦合的原则，所谓"不在其位，不谋其政"，此观点也可以被归纳为 <a href="http://zh.wikipedia.org/wiki/%E5%BE%97%E5%A2%A8%E5%BF%92%E8%80%B3%E5%AE%9A%E5%BE%8B">Law of Demeter</a> 。</p>
 
-<p>得墨忒耳定律处理的是已经划分好模块后如何相互之间通讯和单一职责的事情，而人类同时只能处理有限数量的相似对象的原则指明了什么时候应该适当重构的这条界限。</p>
+<p>Law of Demeter处理的是已经划分好模块后如何相互之间通讯和单一职责的事情，而人类同时只能处理有限数量的相似对象的原则指明了什么时候应该适当重构的这条界限。</p>
 
 <h2>别人说的一些话</h2>
 
