@@ -6,11 +6,7 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Mar 6th, 2013 Tags: HAML, RenderEngine 对于基本HAML语法可使用下列方法渲染即可 1
-2
-3
-content = File.read(your_haml_path)
-engine = Haml::Engine.new( &hellip;">
+	<meta name="description" content="Published on: Mar 25th, 2013 Tags: ActiveRecord, Search, Sphinx 问题概述 同事采用的xunsearch搜索引擎在搜索一对多表时遇到了重复内容的问题，问题在通过SQL语句来生成的单表有因为一对多而导致的重复信息。简单google下， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -112,6 +108,115 @@ engine = Haml::Engine.new( &hellip;">
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/">
+		
+			给xunsearch提供一对多的不重复的数据列表</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-25T14:07:30+08:00" pubdate data-updated="true">Mar 25<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/activerecord/'>ActiveRecord</a>, <a class='category' href='/blog/categories/search/'>Search</a>, <a class='category' href='/blog/categories/sphinx/'>Sphinx</a>
+
+
+</div>
+    </div>
+		<h2>问题概述</h2>
+
+<p>同事采用的xunsearch搜索引擎在搜索一对多表时遇到了重复内容的问题，问题在通过SQL语句来生成的单表有因为一对多而导致的重复信息。简单google下，发现要用group_concat把两个表要用到的文本字段来把每个都合成到一行记录里，但是这样复杂的SQL估计只有大拿才能写的出来。</p>
+
+<h2>解决方案</h2>
+
+<p>于是我想到之前做的thinking-sphinx是支持一对多联合查询的，那就看看thinking-sphinx是如何来生成SQL的。</p>
+
+<p>配置thinking-sphinx，这个参考官网。</p>
+
+<p>code_gists对应多个code_documents，给搜索模块配置索引结构</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CodeGist</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">define_index</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="n">documents</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="n">documents</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>    <span class="n">indexes</span> <span class="ss">:author</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">where</span> <span class="s2">&quot;(code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行bundle exec rake ts:config后，在config目录就有了config/production.sphinx.conf文件，察看source区块的sql_query为</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">SQL_NO_CACHE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">*</span> <span class="k">CAST</span><span class="p">(</span><span class="mi">3</span> <span class="k">AS</span> <span class="n">SIGNED</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span> <span class="k">AS</span> <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="p">,</span> <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">filename</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">description</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">sphinx_internal_id</span><span class="o">`</span><span class="p">,</span> <span class="mi">0</span> <span class="k">AS</span> <span class="o">`</span><span class="n">sphinx_deleted</span><span class="o">`</span><span class="p">,</span> <span class="mi">1875287073</span> <span class="k">AS</span> <span class="o">`</span><span class="n">class_crc</span><span class="o">`</span><span class="p">,</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">author</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">author</span><span class="o">`</span> <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">gist_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">WHERE</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">&gt;=</span> <span class="err">$</span><span class="k">start</span> <span class="k">AND</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">&lt;=</span> <span class="err">$</span><span class="k">end</span> <span class="k">AND</span> <span class="p">(</span><span class="n">code_gists</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">code_documents</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">))</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">NULL</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>稍微整理后，变成</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">SQL_NO_CACHE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">filename</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">description</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
+</span><span class='line'>                    <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">author</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span>
+</span><span class='line'><span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
+</span><span class='line'><span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">gist_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="p">(</span><span class="n">code_gists</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">code_documents</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>运行一下，就返回了不重复的数据列表了</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -707,325 +812,6 @@ Run &lsquo;bundle install&rsquo; to install missing gems.</p>
 <div class="meta">
 	
 		<span class="comments"><a href="/2013/01/27/interview-frontend-engineer-can-also-be-so-vivid//blog/page/2/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/01/26/create-a-code-bang-for-eoecn/">
-		
-			*.eoe.cn制作代码大爆炸！</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-26T16:44:15+08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/code/'>Code</a>, <a class='category' href='/blog/categories/git/'>Git</a>, <a class='category' href='/blog/categories/imovie/'>iMovie</a>
-
-
-</div>
-    </div>
-		<p><img src="/images/imovie.png" alt="imovie" /></p>
-
-<p>下载安装code swarm，系统环境预备见<a href="https://github.com/rictic/code_swarm">https://github.com/rictic/code_swarm</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git clone git://github.com/rictic/code_swarm.git <span class="o">&amp;&amp;</span> <span class="nb">cd </span>code_swarm <span class="c"># 下载源码</span>
-</span><span class='line'>ant <span class="c"># 编译</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>合并多个git仓库</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir eoecn_codebang <span class="o">&amp;&amp;</span> <span class="nb">cd </span>eoecn_codebang <span class="c"># 创建临时仓库目录，并切换</span>
-</span><span class='line'>git init <span class="o">&amp;&amp;</span> git commit --allow-empty-message -am <span class="s1">&#39;&#39;</span> --allow-empty <span class="c"># 初始化git环境</span>
-</span><span class='line'>git remote add programmingonline git@eoe.git.server:/opt/datas/git/eoe/programming.online.git <span class="c"># 添加多个git仓库</span>
-</span><span class='line'>git remote add eoecn git@eoe.git.server:/opt/datas/git/eoe/eoecn.git
-</span><span class='line'>git pull programmingonline master <span class="c"># 合并多个git仓库</span>
-</span><span class='line'>git pull eoecn master
-</span><span class='line'>git commit -am <span class="s1">&#39;merge programmingonline and eoecn&#39;</span> <span class="c"># 直接合并冲突</span>
-</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/Users/mvj3/github/rictic/code_swarm/bin:$PATH&quot;</span> <span class="c"># 把code_swarm的bin目录加入到环境变</span>
-</span><span class='line'>量中
-</span><span class='line'>code_swarm <span class="c"># 不用管他出错提示，只要在运行就可以了。它会在当前目录下生成包含git历史记录信息的.code_swarm/log.xml</span>
-</span><span class='line'>ruby -e <span class="s1">&#39;filename = &quot;/Users/mvj3/eoemobile/code/eoecn_codebang/.code_swarm/log.xml&quot;; File.write(filename, File.read(filename).gsub(/@[^&quot;]*\&quot;/,&quot;\&quot;&quot;))&#39;</span> <span class="c"># 在ruby里把无效的email后缀去除。</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>生成一帧一帧的png文件</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">pwd</span>   <span class="c">#  先切换回code_swarm项目目录，修改defaults/user.config里的InputFile变量到刚才生成的.code_swarm/log.xml的绝对路径</span>
-</span><span class='line'>./run.sh defaults/user.config <span class="c"># 如果没错误的话，你就可以frames目录下不断有png生成了。如果量大的话，你会听到电脑的风扇也在狂转了。</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>用iMovie制作视频</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ffmpeg -f image2 -r 12 -i ./frames/code_swarm-%05d.png -sameq ./out.mov -pass 2 <span class="c"># 用ffmpeg生成视频，直接iMovie导入这么多png太慢</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>iMovie使用总结</h3>
-
-<p>任何视频，音频，字幕操作都是选中后操作，包括时长，大小，变速等。</p>
-
-<h3>参考文档</h3>
-
-<ul>
-<li><a href="http://code.google.com/p/codeswarm/wiki/GeneratingAVideo#Instructions_for_running_Codeswarm_0.1_on_OS_X_10.6_with_a_git_r">http://code.google.com/p/codeswarm/wiki/GeneratingAVideo#Instructions_for_running_Codeswarm_0.1_on_OS_X_10.6_with_a_git_r</a></li>
-<li><a href="http://progressdaily.diandian.com/post/2012-01-20/14242590">http://progressdaily.diandian.com/post/2012-01-20/14242590</a></li>
-</ul>
-
-
-<p>附上配置文件 user.config</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Your personal preferences for code_swarm, applied to every visualization</span>
-</span><span class='line'><span class="c"># you run, unless overridden by the individual visualization&#39;s config</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">#DON&#39;T EDIT THIS FILE IN PLACE, FIRST COPY IT TO defaults/user.config</span>
-</span><span class='line'><span class="c">#CHANGES TO THIS FILE WON&#39;T BE SEEN BY code_swarm, ONLY user.config</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">#Some common options to customize:</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># It&#39;s much faster if we can use OpenGL, but it still doesn&#39;t work on some</span>
-</span><span class='line'><span class="c"># platforms/configurations</span>
-</span><span class='line'><span class="nv">UseOpenGL</span><span class="o">=</span><span class="nb">true</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># The size of the visualization window</span>
-</span><span class='line'><span class="nv">Width</span><span class="o">=</span>640
-</span><span class='line'><span class="nv">Height</span><span class="o">=</span>280
-</span><span class='line'>
-</span><span class='line'><span class="nv">Font</span><span class="o">=</span>Helvetica
-</span><span class='line'><span class="nv">FontSize</span><span class="o">=</span>25
-</span><span class='line'><span class="nv">BoldFontSize</span><span class="o">=</span>20
-</span><span class='line'><span class="nv">TakeSnapshots</span><span class="o">=</span><span class="nb">true</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">#Size in pixels of the width and height of avatar images</span>
-</span><span class='line'><span class="nv">AvatarSize</span><span class="o">=</span>64
-</span><span class='line'>
-</span><span class='line'><span class="nv">InputFile</span><span class="o">=</span>/Users/mvj3/eoemobile/code/eoecn_codebang/.code_swarm/log.xml
-</span><span class='line'><span class="nv">SnapshotLocation</span><span class="o">=</span>frames/code_swarm-#####.png
-</span><span class='line'><span class="c">#For more options, see defaults/code_swarm.config</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Draw names (combinatory) :</span>
-</span><span class='line'><span class="c"># Draw sharp names?</span>
-</span><span class='line'><span class="nv">DrawNamesSharp</span><span class="o">=</span><span class="nb">true</span>
-</span><span class='line'><span class="c"># And draw a glow around names? (Runs slower)</span>
-</span><span class='line'><span class="nv">DrawNamesHalos</span><span class="o">=</span><span class="nb">false</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Draw files (combinatory) :</span>
-</span><span class='line'><span class="c"># Draw sharp files</span>
-</span><span class='line'><span class="nv">DrawFilesSharp</span><span class="o">=</span><span class="nb">false</span>
-</span><span class='line'><span class="c"># Draw fuzzy files</span>
-</span><span class='line'><span class="nv">DrawFilesFuzzy</span><span class="o">=</span><span class="nb">true</span>
-</span><span class='line'><span class="c"># Draw jelly files</span>
-</span><span class='line'><span class="nv">DrawFilesJelly</span><span class="o">=</span><span class="nb">false</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Show the Legend at start</span>
-</span><span class='line'><span class="nv">ShowLegend</span><span class="o">=</span><span class="nb">false</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Show the History at start</span>
-</span><span class='line'><span class="nv">ShowHistory</span><span class="o">=</span><span class="nb">true</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Show the Date at start</span>
-</span><span class='line'><span class="nv">ShowDate</span><span class="o">=</span><span class="nb">true</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Show edges between authors and files, mostly for debug purpose</span>
-</span><span class='line'><span class="nv">ShowEdges</span><span class="o">=</span><span class="nb">false</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Turn on Debug counts.</span>
-</span><span class='line'><span class="nv">ShowDebug</span><span class="o">=</span><span class="nb">false</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Natural distance of files to people</span>
-</span><span class='line'><span class="nv">EdgeLength</span><span class="o">=</span>25
-</span><span class='line'>
-</span><span class='line'><span class="c"># Amount of life to decrement</span>
-</span><span class='line'><span class="nv">EdgeDecrement</span><span class="o">=</span>-2
-</span><span class='line'><span class="nv">FileDecrement</span><span class="o">=</span>-2
-</span><span class='line'><span class="nv">PersonDecrement</span><span class="o">=</span>-1
-</span><span class='line'>
-</span><span class='line'><span class="c">#Speeds.</span>
-</span><span class='line'><span class="c">#Optional: NodeSpeed=7.0, If used, FileSpeed and PersonSpeed need not be set.</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="nv">FileSpeed</span><span class="o">=</span>7.0
-</span><span class='line'><span class="nv">PersonSpeed</span><span class="o">=</span>2.0
-</span><span class='line'>
-</span><span class='line'><span class="c">#Masses</span>
-</span><span class='line'><span class="nv">FileMass</span><span class="o">=</span>1.0
-</span><span class='line'><span class="nv">PersonMass</span><span class="o">=</span>10.0
-</span><span class='line'>
-</span><span class='line'><span class="c"># Life of an Edge</span>
-</span><span class='line'><span class="nv">EdgeLife</span><span class="o">=</span>250
-</span><span class='line'>
-</span><span class='line'><span class="c"># Life of a File</span>
-</span><span class='line'><span class="nv">FileLife</span><span class="o">=</span>200
-</span><span class='line'>
-</span><span class='line'><span class="c"># Life of a Person</span>
-</span><span class='line'><span class="nv">PersonLife</span><span class="o">=</span>255
-</span><span class='line'>
-</span><span class='line'><span class="c"># Highlight percent.</span>
-</span><span class='line'><span class="c"># This is the amount of time that the person or</span>
-</span><span class='line'><span class="c"># file will be highlighted.</span>
-</span><span class='line'><span class="nv">HighlightPct</span><span class="o">=</span>5
-</span><span class='line'>
-</span><span class='line'><span class="c">## Physics engine selection and configuration</span>
-</span><span class='line'><span class="c"># Directory physics engine config files reside in.</span>
-</span><span class='line'><span class="nv">PhysicsEngineConfigDir</span><span class="o">=</span>physics_engine
-</span><span class='line'><span class="c"># Force calculation algorithms (&quot;PhysicsEngineLegacy&quot;, &quot;PhysicsEngineSimple&quot;...) :</span>
-</span><span class='line'><span class="nv">PhysicsEngineSelection</span><span class="o">=</span>PhysicsEngineOrderly
-</span><span class='line'>
-</span><span class='line'><span class="c">#Is the input xml sorted by date?  It&#39;s faster and uses much less memory if it is</span>
-</span><span class='line'><span class="nv">IsInputSorted</span><span class="o">=</span><span class="nb">true</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># OpenGL is experimental. Use at your own risk.</span>
-</span><span class='line'><span class="nv">UseOpenGL</span><span class="o">=</span><span class="nb">false</span>
-</span><span class='line'><span class="nv">ShowUserName</span><span class="o">=</span><span class="nb">true</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2013/01/26/create-a-code-bang-for-eoecn//blog/page/2/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>

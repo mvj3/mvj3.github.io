@@ -6,7 +6,7 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Dec 15th, 2013 Tags: Human Mind, Software Development 引言 本文试图从直观的角度阐述如何做好常规的软件工程，保持良好的开发进度和可维护性，同时让项目经验对技术社区具有启发意义。 &hellip;">
+	<meta name="description" content="Published on: Dec 16th, 2013 Tags: Rails, Refactoring 背景介绍 在 阳光书屋的官网 上写着，“阳光书屋乡村信息教育化行动是一项公益教育计划，我们致力于用科技填补城乡教育鸿沟，以平板电脑为载体，让每一个农村的孩子都接触到优质的教育资源。” &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -108,6 +108,307 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/12/16/refectoring-code-at-sunshine-library-in-three-months/">
+		
+			Rails 重构，我在阳光书屋的三个月</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-16T12:26:00+08:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/refactoring/'>Refactoring</a>
+
+
+</div>
+    </div>
+		<h3>背景介绍</h3>
+
+<p>在 <a href="http://www.sunshine-library.org">阳光书屋的官网</a> 上写着，“阳光书屋乡村信息教育化行动是一项公益教育计划，我们致力于用科技填补城乡教育鸿沟，以平板电脑为载体，让每一个农村的孩子都接触到优质的教育资源。” 学生和老师用的平板电脑学习机是基于Android移动开源系统的&#8221;晓书&#8221;，通过独立研发的阳光桌面OEM定制学习环境，并包含阳光电子书包和阳光学习提高班等App来开展混合式教学模式。</p>
+
+<p>而支撑其后台的便是Ruby on Rails这套Web开发框架，到目前为止经历了三代架构的变迁。当我以Ruby架构师角色在八月底进入书屋时，随着秋季的开学，项目也在紧张地进行着包括新功能后期收尾，迁移到MongoDB数据库重构，和提高班数据系分析新系统 等工作。@rechaorevee 和 @Logicalmars 两位志愿开发者主要负责了测试相关的工作。</p>
+
+<p>重构的事稍后再行一一细说，先简单的过一下前面两代。</p>
+
+<h3>第一代Rails架构</h3>
+
+<p>单独一个Rails程序，借用其中一个志愿开发者 @Logicalmars 的话说，就是&#8221;主要用Ruby on Rails写服务器后台。我们这开发人员不多，很多东西都得自己搞，我不光更加理解了RoR，还顺便学习了如何架设Rails的服务器，如何做MySQL Replication，如何向安卓端同步数据库Table等等&#8221;。</p>
+
+<h3>第二代Rails架构</h3>
+
+<p>随着业务的细化，需求逐渐被明朗细化为LocalServer和CloudServer两大块。</p>
+
+<p>从网络层面上说，LocalServer搭在学校当地以提供快速的网络响应，CloudServer搭在阿里云上去管理协调各LocalServer，两者通过VPN串联起来位于同一网络中以保证信息的安全。</p>
+
+<p>从业务层面上说，LocalServer提供的功能包括晓书的电子书包等API通讯，设备管理，教师备课和查看学生数据等。CloudServer提供的功能包括各LocalServer管理，提高班和App等公用资源的分发和中转，查看跨校统计数据等。这方面就不展开细说了，主要是为下面的技术和重构提供一些背景概念。</p>
+
+<p>根据其分布式特点，采用了MongoDB数据库，在保留_id主键时同时使用了全局唯一的 <a href="http://en.wikipedia.org/wiki/Universally_unique_identifier">uuid</a> 键作为CloudServer和众LocalServer的资源共享管理的依据。</p>
+
+<p>等业务需求大概确定下来后，剩下来的就是如何用技术实现之，并可以适当的随着业务需求发生变动而更好的迭代之。</p>
+
+<h3>第二代Rails架构和第三代重构，如何挖坑和填坑</h3>
+
+<h4>面临的挑战</h4>
+
+<p>在 [背景介绍] 的最后提到，我进入该项目时，已经处于紧张的项目上线期。简单的形容一下就是，</p>
+
+<ul>
+<li>维护一个项目难，</li>
+<li>维护一个二手项目难，</li>
+<li>维护一个臃肿的二手项目更难，</li>
+<li>维护一个开发中的臃肿的二手项目更难，</li>
+<li>维护一个有紧急上线或BUG修复的开发中的臃肿的二手项目非常难。</li>
+</ul>
+
+
+<p>完全展开按照线性叙事来讲就太琐碎了，为了给第三者理解上的方便，还是就以下几个重点来分享一下吧。</p>
+
+<h4>Rails 拆分和合并</h4>
+
+<p>问题：</p>
+
+<p>在第二代，书屋把Rails程序剥离为LocalServer和CloudServer两个Rails应用程序。代码物理上的分拆虽然带来了从业务去理解技术上的一些好处，但是冗余的问题随之而来，模型和视图上的占了多数，而这个同时保持两份修改显然不是明知之举。事实证明有些BUG确实是因为两边数据结构没有修改一致导致的，甚至有些相同的字段在两边都有不同的存储形式。</p>
+
+<p>解答：</p>
+
+<p>Local和Cloud合为一个Rails项目，代码或模块用全局变量判断载入。</p>
+
+<ol>
+<li>在 <code>config/initializers/constants.rb</code> 里建立全局变量，比如 <code>$IS_LOCAL_SERVER</code>, <code>$IS_CLOUD_SERVER</code> 等。</li>
+<li>公用的 <code>models</code> 按照Rails约定放在app/models目录下，各自环境的功能分别放在 <code>lib/models/local</code> 和 <code>lib/models/cloud</code> 目录下。载入过程在 <code>(Rails::Application).load_extend_model_features</code> 方法，分别可通过 Mongoid::Sunshine 模块 和 ApplicationController重载 实现动态载入。</li>
+<li>routes, controller, views等还是按照Rails约定走，唯一区别是在代码里用全局变量判断载入。</li>
+<li>目前Production, Development, 以及部署模式已完全兼容Rails默认约定。</li>
+</ol>
+
+
+<p>相关技术细节披露：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># 定义Model功能依不同环境动态载入</span>
+</span><span class='line'><span class="k">def</span> <span class="p">(</span><span class="ss">Rails</span><span class="p">:</span><span class="ss">:Application</span><span class="p">)</span><span class="o">.</span><span class="nf">load_extend_model_features</span>
+</span><span class='line'>  <span class="no">Dir</span><span class="o">[</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;lib/models/</span><span class="si">#{</span><span class="no">LocalCloud</span><span class="o">.</span><span class="n">short_name</span><span class="si">}</span><span class="s2">/*.rb&quot;</span><span class="p">)</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">path</span><span class="o">|</span>
+</span><span class='line'>    <span class="c1"># load appended feature if the model already exists.</span>
+</span><span class='line'>    <span class="k">next</span> <span class="k">if</span> <span class="ow">not</span> <span class="no">Object</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/([a-z\_]*).rb/</span><span class="p">)</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">classify</span><span class="o">.</span><span class="n">to_sym</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="no">Rails</span><span class="o">.</span><span class="n">env</span> <span class="o">==</span> <span class="s1">&#39;production&#39;</span><span class="p">)</span> <span class="p">?</span> <span class="nb">require</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="p">:</span> <span class="nb">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span> <span class="k">if</span> <span class="n">defined?</span> <span class="no">Rails</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># 配置最公用的Mongoid::Sunshine，直接替换默认的Mongoid::Document。</span>
+</span><span class='line'><span class="k">module</span> <span class="nn">Mongoid</span>
+</span><span class='line'>  <span class="k">module</span> <span class="nn">Sunshine</span>
+</span><span class='line'>    <span class="kp">extend</span> <span class="ss">ActiveSupport</span><span class="p">:</span><span class="ss">:Concern</span>
+</span><span class='line'>    <span class="n">included</span> <span class="k">do</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Document</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Timestamps</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:TouchParentsRecursively</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:Paranoia</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:UUIDGenerator</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:SyncWithDeserialization</span> <span class="k">if</span> <span class="vg">$IS_LOCAL_SERVER</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">ActiveModel</span><span class="p">:</span><span class="ss">:IsLocalOrCloud</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">ActiveModel</span><span class="p">:</span><span class="ss">:AsJsonFilter</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:ManyOrManytomanySetter</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:DistributeTree</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sr">/ETL::/</span><span class="p">))</span> <span class="c1"># 排除同步ETL</span>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:ChapterZipStyle</span> <span class="k">if</span> <span class="sx">%W[Chapter Lesson Activity Material Problem ProblemChoice]</span><span class="o">.</span><span class="n">include?</span> <span class="nb">self</span><span class="o">.</span><span class="n">name</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># autoload app/models/cloud|local/*.rb</span>
+</span><span class='line'>      <span class="p">(</span><span class="ss">Rails</span><span class="p">:</span><span class="ss">:Application</span><span class="p">)</span><span class="o">.</span><span class="n">load_extend_model_features</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kp">include</span> <span class="ss">Mongoid</span><span class="p">:</span><span class="ss">:OverwriteDefaultFeatures</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># 在development模式下动态载入Model</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="c1"># load cloud and local features model exclusively</span>
+</span><span class='line'>  <span class="n">before_filter</span> <span class="k">do</span>
+</span><span class='line'>    <span class="p">(</span><span class="ss">Rails</span><span class="p">:</span><span class="ss">:Application</span><span class="p">)</span><span class="o">.</span><span class="n">load_extend_model_features</span>
+</span><span class='line'>  <span class="k">end</span> <span class="k">if</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span> <span class="o">!=</span> <span class="s1">&#39;production&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>要提一点的是，除了测试可以帮你解决重构是否无误的问题外，请活用 <code>git grep</code> 来分析相关的代码调用。</p>
+
+<h4>阳光电子书包的同步更新 自动策略</h4>
+
+<p>晓书上的电子书包是按 科目(1) &lt;&ndash; 章节(n) &lt;&ndash; 课时(n) 的组织结构去划分的，每种富媒体资源都是以文件夹形式挂载在最下面的课时节点上。一旦某课时发生变动，就更新自己级其上的章节和科目的时间戳。这样客户端可以定时请求LocalServer，依据时间戳去更新对应结构和数据（删除操作由结构树自己来管理更新）。</p>
+
+<p>之前的解决方案由于文件夹的内容类型比较复杂，且在Controller和Model等多处都有操作，没有统一的分层机制，所以对于时间戳更新的遗漏难免。</p>
+
+<p>对此我的解决方案是写了Mongoid的一个插件mongoid_touch_parents_recursively，它依赖Mongoid Model间的关系声明来在 <code>after_save</code> 钩子里更新，并解决了多对多和一对多等关系。具体原理请见 <a href="https://github.com/mvj3/mongoid_touch_parents_recursively/blob/sunshine/lib/mongoid_touch_parents_recursively.rb">实现文件描述</a> 和 <a href="https://github.com/mvj3/mongoid_touch_parents_recursively">README配置文档</a> 。</p>
+
+<h4>课程压缩包的内容优雅的解压缩</h4>
+
+<p>在线教育相比其他社交和电子商务等行业，多类型结构的课程数据包含了各种形式的文本，逻辑关联和多媒体文件等，因此提高班的产品owner @fxp 设计了基于JSON格式和文件目录的SchemeFolder来灵活管理课程数据。在导入后台过程中出现了解压缩相关处理代码和课程数据组织逻辑混淆的场面，给二次维护带来一些难解。</p>
+
+<p>对此我在 <a href="http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering/">人类思维和软件工程学</a> 的 #框架之后# 一节中对这次重构的策略做了详细分析，抽取了<a href="https://github.com/mvj3/mongoid_unpack_paperclip">mongoid_unpack_paperclip</a> 模块来给含有paperclip的Mongoid 支持解压缩包和清理的封装。只需要include Mongoid::Paperclip和Mongoid::UnpackPaperclip即可，然后调用 <code>self.unpack_paperclip { ... }</code> 去做对应的操作即可。</p>
+
+<p>其中对Paperclip对象的获取是通过对 <a href="https://github.com/mvj3/mongoid_unpack_paperclip/blob/sunshine/lib/mongoid_unpack_paperclip.rb#L16">Model自省</a> 获得的。</p>
+
+<h4>JSON API 输出的定制</h4>
+
+<p>之前在面向移动客户端JSON API输出的开发时，有些API都是客户端按自己结构去定义的，而没有针对Model做RESTful输出，实现者用Helper方法对资源进行了递归描述，这样定义起来代码比较冗余和难以公用。限于客户端的设计，这部分只能按原来设计继续维护了。</p>
+
+<p>在LocalServer和CloudServer都做了as_json的覆写，这里交叉公用了一些字段。因此写了 active_model_as_json_filter 来做类似<code>as_json</code> options 的配置，比如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">App</span>
+</span><span class='line'>  <span class="nb">self</span><span class="o">.</span><span class="n">as_json_options</span><span class="o">.</span><span class="n">except</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="ss">:classroom_ids</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者配置全局的属性配置，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">ActiveModel</span><span class="p">:</span><span class="ss">:AsJsonFilter</span><span class="o">.</span><span class="n">finalizer_proc</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
+</span><span class='line'> <span class="n">result</span><span class="o">[</span><span class="s1">&#39;id&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">[</span><span class="s1">&#39;uuid&#39;</span><span class="o">]</span> <span class="k">if</span> <span class="n">result</span><span class="o">[</span><span class="s1">&#39;uuid&#39;</span><span class="o">]</span>
+</span><span class='line'> <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更多见 <a href="https://github.com/mvj3/active_model_as_json_filter">active_model_as_json_filter</a> 开源项目主页描述。</p>
+
+<h4>元数据同步的数据类型兼容</h4>
+
+<p>CloudServer到LocalServer的数据同步是通过JSON API进行的，这个在上面的前两代Rails架构已经提到了。但是里面遇到的问题是因为MongoDB数据库是SchemeLess的，而且也没有很好的对时间类型做反序列化的支持。比如你给<code>checked_at</code>时间字段赋值<code>2013-11-22 15:43:04 +0800</code>，保存的还是String类型。</p>
+
+<p>因为时间类型的字段不单单是只有<code>created_at</code>和<code>updated_at</code>两个Rails默认的字段名，还可能有其他比如上面提到的<code>checked_at</code>，如果全部手工定制也就一团乱了，所以最好方法是在配置field时候指定type为DateTime等类型，这样也就可以对Model通过自省来获得在<code>before_save</code>时要解析的字段值了。 具体实现见 <a href="https://github.com/mvj3/mongoid_sync_with_deserialization/blob/sunshine/lib/mongoid_sync_with_deserialization.rb#L35">mongoid_sync_with_deserialization</a> 。</p>
+
+<h4>Mongoid使用uuid字段进行Model关联</h4>
+
+<p>在 #第二代Rails架构# 提到，书屋的资源都是用uuid来标示唯一的，这个在ActiveRecord时期即是如此。</p>
+
+<p>而迁移到MongoDB之后，由于它是为单collection设计优化的数据库，查询操作并没有像ActiveRecord那般对模型关系处理的成熟，（个人更建议用MySQL或含有NoSQL特性HStore的PostgreSQL)。</p>
+
+<p>有个多对多关联数据保存的BUG，在<em>id主键存在情况下，通过另外一个uuid键来做多对多，而结果却是对方保存的</em>ids是uuid，而自己保存的<em>ids却是非期待的</em>id。仔细调查发现是Mongoid没有对这种特殊情况做 <a href="https://github.com/mvj3/mongoid_many_or_many_to_many_setter/blob/sunshine/doc/mongoid.markdown">深入兼容</a> 。</p>
+
+<p>因此我也写了 mongoid_many_or_many_to_many_setter 去利用Model之间关联关系自省在<code>before_save</code>时 <a href="https://github.com/mvj3/mongoid_many_or_many_to_many_setter/blob/sunshine/lib/mongoid_many_or_many_to_many_setter.rb#L29">重新赋值</a> 。</p>
+
+<h4>同步机制的范式转移</h4>
+
+<p>进入书屋后，遇到的最大问题就是服务器间数据同步不一致，黑盒子，VPN内部因传输冗余媒体文件而导致网络堵塞。</p>
+
+<p>之前采用的技术方案组合我觉得更多是从技术层面去混搭，很明显这个犯了过度追求自己不能很好掌控的新技术，和对本身业务理解不深刻的错误。一想到多服务器高性能分发，就用了RabbitMQ的分发订阅，但是却忽略了最大的瓶颈其实在于媒体文件的传输。一想到文件传输，就用了支持异步多并发的NodeJS框架，和前者一样，本质在网络带带宽限制上，以及细力度操作。更多见 <a href="https://github.com/mvj3/distribute_tree#%E5%90%8C%E6%AD%A5%E6%9E%B6%E6%9E%84%E5%8F%98%E8%BF%81%E5%8E%86%E5%8F%B2%E6%A6%82%E8%BF%B0">同步架构变迁历史概述</a> 。</p>
+
+<p>让我们梳理数据同步的本质，从数据量和业务上考虑，可以分为，一是树的同步，二是叶子上的多媒体数据同步。</p>
+
+<p>树的同步就是JSON元数据的同步，这是飞快的。不过它分为两种同步模式，第一种是自动同步，即在CloudServer对数据进行了CRUD后，都要马上反映到各个被要求同步的LocalServer那里去。这里有些LocalServer可能由于业务或网络问题是不需要同步的，所以得有个管理同步服务器的功能。第二种同步是手工同步，比如新增一个学校，或者一个学校因为某种原因中途中断了同步，而现在要继续同步，那么就要单独对它进行同步。从业务操作上来说，最好就是点一个按钮即可，而反映到技术层面就是必然有种组织在管理全部元数据，那这就是以School为Root，Chapter, Folder, Lesson等为层叠Children的 <a href="https://github.com/mvj3/distribute_tree">DistributeTree</a> ，其中的关系都通过Model类变量 <code>@@distribute_children</code> 得到声明，在同步时被递归访问进行，当然在自动同步模式中这个就被 <a href="https://github.com/mvj3/distribute_tree/blob/sunshine/lib/distribute_tree.rb#L20">禁用</a> 了。如前面所说，手工同步最好点一个按钮即可，但是我们这里可以在一个页面里选择多个学校和多个资源一起同步。</p>
+
+<p>叶子上的多媒体数据同步在树的同步下就没问题了，不过一点需要注意的是最好是采用网络下行同步以保证网络速度，也即是被同步方自己请求静态资源地址。</p>
+
+<p>总结一点，其实就和NoSQL挑战SQL的情况一样，企业对结构化数据的一致性和方便管理的需求远远大于SchemeLess和高性能。所以技术选型更多是从业务出发，让技术辅助业务，而不是因为技术的某些特性听上去和业务某些场景相符就选择了，应该按业务最本质的结构和最大比例的需求来。</p>
+
+<h3>一些关于重构的想法</h3>
+
+<ul>
+<li>我个人现在反感给Model添加太多的逻辑，长长的上百行，几百行，我觉得最好只存在module引入的声明，字段的声明，和类似Paperclip等插件DSL的声明，其他处理都依照业务划分到不同的类和模块中。</li>
+<li>很多人都误会了 <code>Slim controllers, fat models</code> 的本意，它其实只是关于重构箴言一段话里的中间一句。Fat models只是鼓励你DRY(don’t repeat yourself)，实现逻辑共享而已，其次是Model相比Cotroller更有利于测试，因为业务核心的处理往往都是在Model层面。推荐看 <a href="http://joncairns.com/2013/04/fat-model-skinny-controller-is-a-load-of-rubbish/">“Fat model, skinny controller” is a load of rubbish</a> 。</li>
+<li>三层以上关系一般来说不宜用继承，它超过了<a href="http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering/">人类理解的复杂度</a>，记住&#8221;组合优于继承&#8221;。</li>
+<li>测试覆盖率，代码坏味道自动发现，scrum开发模式等都不能保证软件项目的质量，唯一可以保证的就是深刻地结合业务与技术，在你的业务里用你的技术再去深层次地抽象出另一个&#8221;MVC&#8221;模块化的框架结构。</li>
+<li>重构的前提是不改变软件的行为，而混乱的代码经由重构后，它的内部结构已经不是之前那个范式了。</li>
+<li>当你需要对项目进行重构时，那就说明该项目以前存在某种技术或人员等上的问题。</li>
+<li>代码没有被结构化和注释，不是项目时间因素，而是个人水平能力的体现，因为代码结构和注释体现了思考。</li>
+<li>BUG如果是功能，那就不能修复了，而是要花更多的时间去分析和开发。</li>
+<li>除非是为了表达结构，否则不推荐重复代码。我对单行代码有偏爱，比如 <code>def teacher?; self.user_type == 'teacher'; end</code> 。</li>
+<li>类似不要在GUI里放入逻辑等，都是模块化的体现。但是很多初级程序员不知道这一点，良好的程序员会注意这一点，而优秀的程序员已经在实践之。</li>
+<li>逻辑只是用来证明直观，正是范式的体现。</li>
+<li>类似重构原则只是事后补救时说服别人用的，它无益于提升你的编码能力，就像很多人做的和以为的设计模式只是在你有几年工作经验后才会去整理自己知识经验体系用的而已，否则会很难以理解这些设计模式。</li>
+<li>重构中会有造成自己方被动和被误解的情况，因为甲方看到的和关心的只是是软件的表面行为而已，请慎重沟通。</li>
+<li>正如《重构》第359页提到的，它的进度应该是，今天一点点，明天一点点。不是一次性全部重构(那就是重写了)，而是每次重构一点点，不断的抽取模块，按当时的业务需求和BUG来，当然其中也可能有依赖，去重构牵扯的功能模块。</li>
+<li>关于管理软件的复杂度和理解力的原则和思想方面可以参考我写的另一篇 <a href="http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering/">人类思维和软件工程学</a> 。</li>
+</ul>
+
+
+<h3>为什么我能做到以上重构</h3>
+
+<p>其实如果没有四五年的工作经验，没有上半年把 <a href="http://mvj3.github.io/2013/08/04/a-man-github/">一个单页应用在线学习应用完全模块化</a> 的思考和经验，我可能还只是停留在 <code>Slim controllers, fat models</code> 和 翻起Martin Folwer的《重构》手册指导的那种层次而已。</p>
+
+<h3>其他教育项目的重构</h3>
+
+<p>Rails社区的一个牛人 @yedingding 在今年2013三月也分享了一篇公益项目Re-education做 <a href="http://yedingding.com/2013/03/04/steps-to-refactor-controller-and-models-in-rails-projects.html">重构</a> 的案例。对于一般规模的Rails项目，[Skinny Controller, Fat Model] 差不多能解决大部分问题了，其次通过适当的Concern(Shared Mixin Module)机制抽取公用部分，再以Delegation Pattern, Service, Presenter，DCI等在MVC不同层面去抽象种种业务逻辑结构。</p>
+
+<h3>关于MongoDB动态字段的吐槽</h3>
+
+<p>MongoDB的动态字段被很多人误用为根据业务变动可以随意动态调整了，其实它的最佳场景是类似新鲜事的非结构化数据及其大数据分片，因为它是为 <strong>单collection</strong> 里读写 <strong>单个记录的整体</strong> 而优化设计的。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2013/12/16/refectoring-code-at-sunshine-library-in-three-months//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -225,7 +526,7 @@
 
 <p>Paul Graham 在《黑客与画家》一书中写到，&#8221;黑客与画家都是在试图创作出优秀的作品。他们本质上都不是在做研究，虽然在创作过程中，他们可能会发现一些新技术。&#8221;</p>
 
-<p>而实际上我以为就艺术这一层面上两者并没有多大关系，唯一的共同点就是都倾向于视觉审美。代码不能拿来听，也不能拿来思考（算法还可以稍微拿来思考一下，但其本质是数学），它只能被拿来看，拿来用计算机去运行，在各个模块或函数中之间调试（那算法来说，这里就包含了具体工程上的很多细节优化实现）。</p>
+<p>而实际上我以为就艺术这一层面上两者并没有多大关系，唯一的共同点就是都倾向于视觉审美。代码不能拿来听，也不能拿来思考（算法还可以稍微拿来思考一下，但其本质是数学），它只能被拿来看，拿来用计算机去运行，在各个模块或函数中之间调试（拿算法来说，这里就包含了具体工程上的很多细节优化实现）。</p>
 
 <p>这里我想举一个有趣的例子，人们一般提起黑客，就想到那些用Vim, Emacs等纯文本界面编辑器的生活在黑底绿字终端下的大牛，IDE太笨重，而且无助于他们对代码的编写，调试，和思考。我不想比较其中的优劣，或者谁更正统，我认为纯文本目录导航浏览更接近把代码在放在大脑里思考的视觉化模式。</p>
 
@@ -1075,115 +1376,6 @@
 <div class="meta">
 	
 		<span class="comments"><a href="/2013/04/05/the-difference-between-XSS-and-CSRF//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/">
-		
-			给xunsearch提供一对多的不重复的数据列表</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-25T14:07:30+08:00" pubdate data-updated="true">Mar 25<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/activerecord/'>ActiveRecord</a>, <a class='category' href='/blog/categories/search/'>Search</a>, <a class='category' href='/blog/categories/sphinx/'>Sphinx</a>
-
-
-</div>
-    </div>
-		<h2>问题概述</h2>
-
-<p>同事采用的xunsearch搜索引擎在搜索一对多表时遇到了重复内容的问题，问题在通过SQL语句来生成的单表有因为一对多而导致的重复信息。简单google下，发现要用group_concat把两个表要用到的文本字段来把每个都合成到一行记录里，但是这样复杂的SQL估计只有大拿才能写的出来。</p>
-
-<h2>解决方案</h2>
-
-<p>于是我想到之前做的thinking-sphinx是支持一对多联合查询的，那就看看thinking-sphinx是如何来生成SQL的。</p>
-
-<p>配置thinking-sphinx，这个参考官网。</p>
-
-<p>code_gists对应多个code_documents，给搜索模块配置索引结构</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CodeGist</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">define_index</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">indexes</span> <span class="n">documents</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
-</span><span class='line'>    <span class="n">indexes</span> <span class="n">documents</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
-</span><span class='line'>    <span class="n">indexes</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
-</span><span class='line'>    <span class="n">indexes</span> <span class="ss">:author</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:content</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">where</span> <span class="s2">&quot;(code_gists.deleted_at IS NULL AND code_documents.deleted_at IS NULL)&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>运行bundle exec rake ts:config后，在config目录就有了config/production.sphinx.conf文件，察看source区块的sql_query为</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">SQL_NO_CACHE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">*</span> <span class="k">CAST</span><span class="p">(</span><span class="mi">3</span> <span class="k">AS</span> <span class="n">SIGNED</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span> <span class="k">AS</span> <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="p">,</span> <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">filename</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">description</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">sphinx_internal_id</span><span class="o">`</span><span class="p">,</span> <span class="mi">0</span> <span class="k">AS</span> <span class="o">`</span><span class="n">sphinx_deleted</span><span class="o">`</span><span class="p">,</span> <span class="mi">1875287073</span> <span class="k">AS</span> <span class="o">`</span><span class="n">class_crc</span><span class="o">`</span><span class="p">,</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">author</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">author</span><span class="o">`</span> <span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">gist_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">WHERE</span> <span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">&gt;=</span> <span class="err">$</span><span class="k">start</span> <span class="k">AND</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="o">&lt;=</span> <span class="err">$</span><span class="k">end</span> <span class="k">AND</span> <span class="p">(</span><span class="n">code_gists</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">code_documents</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">))</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">NULL</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>稍微整理后，变成</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">SQL_NO_CACHE</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span>
-</span><span class='line'>                    <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">filename</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
-</span><span class='line'>                    <span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
-</span><span class='line'>                    <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">description</span><span class="o">`</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span><span class="p">,</span>
-</span><span class='line'>                    <span class="n">IFNULL</span><span class="p">(</span><span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">author</span><span class="o">`</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="o">`</span><span class="n">content</span><span class="o">`</span>
-</span><span class='line'><span class="k">FROM</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span>
-</span><span class='line'><span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">code_documents</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">gist_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span>
-</span><span class='line'><span class="k">WHERE</span> <span class="p">(</span><span class="n">code_gists</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">code_documents</span><span class="p">.</span><span class="n">deleted_at</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
-</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="n">code_gists</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>运行一下，就返回了不重复的数据列表了</p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list//index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
