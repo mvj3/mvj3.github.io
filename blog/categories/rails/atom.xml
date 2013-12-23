@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | 世界的审美！]]></title>
   <link href="http://mvj3.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://mvj3.github.io/"/>
-  <updated>2013-12-22T19:02:25+08:00</updated>
+  <updated>2013-12-23T11:25:45+08:00</updated>
   <id>http://mvj3.github.io/</id>
   <author>
     <name><![CDATA[mvj3]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Rails 重构，我在阳光书屋的三个月]]></title>
+    <title type="html"><![CDATA[Rails项目 重构，我在阳光书屋的三个月]]></title>
     <link href="http://mvj3.github.io/2013/12/16/refectoring-code-at-sunshine-library-in-three-months/"/>
     <updated>2013-12-16T12:26:00+08:00</updated>
     <id>http://mvj3.github.io/2013/12/16/refectoring-code-at-sunshine-library-in-three-months</id>
@@ -22,7 +22,7 @@
 
 <p>在 <a href="http://www.sunshine-library.org">阳光书屋的官网</a> 上写着，“阳光书屋乡村信息教育化行动是一项公益教育计划，我们致力于用科技填补城乡教育鸿沟，以平板电脑为载体，让每一个农村的孩子都接触到优质的教育资源。” 学生和老师用的平板电脑学习机是基于Android移动开源系统的"晓书"，通过独立研发的阳光桌面OEM定制学习环境，并包含阳光电子书包和阳光学习提高班等App来开展混合式教学模式。</p>
 
-<p>而支撑其后台的便是Ruby on Rails这套Web开发框架，到目前为止经历了三代架构的变迁。当我以Ruby架构师角色在八月底进入书屋时，随着秋季的开学，项目也在紧张地进行着包括新功能后期收尾，迁移到MongoDB数据库重构，和提高班数据系分析新系统 等工作。@rechaorevee 和 @Logicalmars 两位志愿开发者主要负责了测试相关的工作。</p>
+<p>而支撑其后台的便是Ruby on Rails这套Web开发框架，到目前为止经历了三代架构的变迁。当我以Ruby架构师角色在八月底进入书屋时，随着秋季的开学，项目也在紧张地进行着包括新功能后期收尾，迁移到MongoDB数据库重构，和提高班数据系分析新系统 等工作。@renchaorevee 和 @Logicalmars 两位志愿开发者主要负责了测试相关的工作。</p>
 
 <p>重构的事稍后再行一一细说，先简单的过一下前面两代。</p>
 
@@ -198,7 +198,7 @@ end
 
 <p>进入书屋后，遇到的最大问题就是服务器间数据同步不一致，黑盒子，VPN内部因传输冗余媒体文件而导致网络堵塞。</p>
 
-<p>之前采用的技术方案组合我觉得更多是从技术层面去混搭，很明显这个犯了过度追求自己不能很好掌控的新技术，和对本身业务理解不深刻的错误。一想到多服务器高性能分发，就用了RabbitMQ的分发订阅，但是却忽略了最大的瓶颈其实在于媒体文件的传输。一想到文件传输，就用了支持异步多并发的NodeJS框架，和前者一样，本质在网络带带宽限制上，以及细力度操作。更多见 <a href="https://github.com/mvj3/distribute_tree#%E5%90%8C%E6%AD%A5%E6%9E%B6%E6%9E%84%E5%8F%98%E8%BF%81%E5%8E%86%E5%8F%B2%E6%A6%82%E8%BF%B0">同步架构变迁历史概述</a> 。</p>
+<p>之前采用的技术方案组合我觉得更多是从技术层面去混搭，很明显这个犯了过度追求自己不能很好掌控的新技术，和对本身业务理解不深刻的错误。一想到多服务器高性能分发，就用了RabbitMQ的分发订阅，但是却忽略了最大的瓶颈其实在于媒体文件的传输。一想到文件传输，就用了支持异步多并发的NodeJS框架，和前者一样，本质在网络带宽限制上，以及细力度操作。更多见 <a href="https://github.com/mvj3/distribute_tree#%E5%90%8C%E6%AD%A5%E6%9E%B6%E6%9E%84%E5%8F%98%E8%BF%81%E5%8E%86%E5%8F%B2%E6%A6%82%E8%BF%B0">同步架构变迁历史概述</a> 。</p>
 
 <p>让我们梳理数据同步的本质，从数据量和业务上考虑，可以分为，一是树的同步，二是叶子上的多媒体数据同步。</p>
 
@@ -212,14 +212,14 @@ end
 
 <ul>
 <li>我个人现在反感给Model添加太多的逻辑，长长的上百行，几百行，我觉得最好只存在module引入的声明，字段的声明，和类似Paperclip等插件DSL的声明，其他处理都依照业务划分到不同的类和模块中。</li>
-<li>很多人都误会了 <code>Slim controllers, fat models</code> 的本意，它其实只是关于重构箴言一段话里的中间一句。Fat models只是鼓励你DRY(don’t repeat yourself)，实现逻辑共享而已，其次是Model相比Cotroller更有利于测试，因为业务核心的处理往往都是在Model层面。推荐看 <a href="http://joncairns.com/2013/04/fat-model-skinny-controller-is-a-load-of-rubbish/">“Fat model, skinny controller” is a load of rubbish</a> 。</li>
+<li>很多人都误会了 <code>Fat model, skinny controller</code> 的本意，它其实只是关于重构箴言一段话里的中间一句。Fat models只是鼓励你DRY(don’t repeat yourself)，实现逻辑共享而已，其次是Model相比Controller更有利于测试，因为业务核心的处理往往都是在Model层面。推荐看 <a href="http://joncairns.com/2013/04/fat-model-skinny-controller-is-a-load-of-rubbish/">“Fat model, skinny controller” is a load of rubbish</a> 。</li>
 <li>三层以上关系一般来说不宜用继承，它超过了<a href="http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering/">人类理解的复杂度</a>，记住"组合优于继承"。</li>
 <li>测试覆盖率，代码坏味道自动发现，scrum开发模式等都不能保证软件项目的质量，唯一可以保证的就是深刻地结合业务与技术，在你的业务里用你的技术再去深层次地抽象出另一个"MVC"模块化的框架结构。</li>
 <li>重构的前提是不改变软件的行为，而混乱的代码经由重构后，它的内部结构已经不是之前那个范式了。</li>
 <li>当你需要对项目进行重构时，那就说明该项目以前存在某种技术或人员等上的问题。</li>
 <li>代码没有被结构化和注释，不是项目时间因素，而是个人水平能力的体现，因为代码结构和注释体现了思考。</li>
 <li>BUG如果是功能，那就不能修复了，而是要花更多的时间去分析和开发。</li>
-<li>除非是为了表达结构，否则不推荐重复代码。我对单行代码有偏爱，比如 <code>def teacher?; self.user_type == 'teacher'; end</code> 。</li>
+<li>除非是为了表达视觉结构，否则不推荐重复代码。我对单行代码有偏爱，比如 <code>def teacher?; self.user_type == 'teacher'; end</code> 。</li>
 <li>类似不要在GUI里放入逻辑等，都是模块化的体现。但是很多初级程序员不知道这一点，良好的程序员会注意这一点，而优秀的程序员已经在实践之。</li>
 <li>逻辑只是用来证明直观，正是范式的体现。</li>
 <li>类似重构原则只是事后补救时说服别人用的，它无益于提升你的编码能力，就像很多人做的和以为的设计模式只是在你有几年工作经验后才会去整理自己知识经验体系用的而已，否则会很难以理解这些设计模式。</li>
@@ -231,7 +231,7 @@ end
 
 <h2>为什么我能做到以上重构</h2>
 
-<p>其实如果没有四五年的工作经验，没有上半年把 <a href="http://mvj3.github.io/2013/08/04/a-man-github/">一个单页应用在线学习应用完全模块化</a> 的思考和经验，我可能还只是停留在 <code>Slim controllers, fat models</code> 和 翻起Martin Fowler的《重构》手册指导的那种层次而已。</p>
+<p>其实如果没有四五年的工作经验，没有上半年把 <a href="http://mvj3.github.io/2013/08/04/a-man-github/">一个单页应用在线学习应用完全模块化</a> 的思考和经验，我可能还只是停留在 <code>Fat model, skinny controller</code> 和 翻起Martin Fowler的《重构》手册指导的那种层次而已。</p>
 
 <h2>其他教育项目的重构</h2>
 
