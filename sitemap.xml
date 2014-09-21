@@ -2,274 +2,278 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://mvj3.github.io/2011/01/19/a-simple-name-pinyin-matching/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/02/01/overwrite-old-indexes-in-sphinx/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/06/17/require-a-gem-which-has-no-gemspec-in-Gemfile/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/07/25/cannnot-find-static-assets-in-Rails-3.1/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/07/27/extract-text-from-html-simply-by-Nokogiri/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/08/27/delete_duplicated_records/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/09/13/multiple_rails_apps_sharing_models_folder/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2011/09/17/use-binary-search-to-seek-a-position-in-rails-logs/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2011/10/09/use-bundle-install-local-to-speed-up-your-gem-install/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2011/10/09/fix-sqlite3-version-compatibility-problem-on-centos/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/10/20/install-nokogiri-locally-on-centos/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2011/11/03/exception_notification_rails3-doesnot-send-mail/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/11/03/mongodb-delete-duplicated-data/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2011/11/15/Fix-yum-Error-requested-datatype-primary-not-available/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2011/12/19/compare-memory-usage-after-init-between-redis-and-memcached/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2011/12/31/rebuild-all-mongoid-collections-indexes/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:13:59+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2012/11/01/android_eoemarket_data_collect_and_analysis_system_summary/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2012/12/13/require-html5shiv-js-in-haml/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2012/12/13/compare-the-performance-of-parsing-nginx-log-via-c-sscanf-and-ruby-regexp/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2012/12/14/the-usage-summary-of-deploy-rails-css-js-img-etc-static-cached-assets-via-unicorn-and-nginx/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2012/12/17/undefined-method-to_crc32_for_1_Fixnum/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2012/12/19/rails-routes-match-multiple-dots/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2012/12/21/compare-the-access-speed-between-trie-and-hash/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/01/08/create-code-repository-in-bitbucket-via-curl/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/01/09/how-to-view-the-history-of-deleted-files-in-git-history/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/01/13/compute-banach-birthday-in-ruby/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/01/15/fix-json-cross-domain/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/01/23/individual-domain-regexp/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:00+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/01/24/define-many-to-many-and-one-to-many-associations-for-informal-database-table-and-field-design-in-activerecord/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/01/26/create-a-code-bang-for-eoecn/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/01/27/interview-frontend-engineer-can-also-be-so-vivid/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/01/30/recent-visitors-implement/</loc>
-        <lastmod>2013-07-23T16:07:42+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/01/30/some-thoughts-about-of-tool-culture-after-reading-creating-facebook/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/02/18/Dir-glob-cache-bug-in-ruby/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/02/18/declare-a-Hash-which-default-value-is-blank-array-in-ruby/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/02/25/start-another-process-in-ruby/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/02/26/delete-trailing-blank-in-vim/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/03/06/rails-general-configuration-problems/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:01+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/03/06/render-haml-independently/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:02+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/03/25/provide-Xunsearch-no-duplicated-one-to-many-data-list/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/04/05/the-difference-between-XSS-and-CSRF/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/04/16/escape-html-by-jquery/</loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:02+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/04/17/statlysis-analysis-design-solve-two-problems-lazy-loading-and-scope/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/05/28/fix-backbone-view-duplicated-events-bind/</loc>
-        <lastmod>2013-12-15T16:20:36+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:03+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:02+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/05/28/solve-Memcached-ServerError-object-too-large-for-cache/
         </loc>
-        <lastmod>2013-07-13T23:14:40+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:02+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem/</loc>
-        <lastmod>2013-07-14T09:49:15+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:03+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/08/04/a-man-github/</loc>
-        <lastmod>2013-12-15T15:37:43+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:03+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering/</loc>
-        <lastmod>2013-12-22T18:56:04+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:03+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://mvj3.github.io/2013/12/16/refectoring-code-at-sunshine-library-in-three-months/
         </loc>
-        <lastmod>2013-12-24T14:18:33+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:03+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://mvj3.github.io/2014/09/21/half-year-review-at-17zuoye/</loc>
+        <lastmod>2014-09-21T23:49:45+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/about.html</loc>
-        <lastmod>2014-01-01T10:24:47+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:03+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/blog/archives/</loc>
-        <lastmod>2013-12-24T14:18:33+08:00</lastmod>
+        <lastmod>2014-09-21T23:49:45+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/</loc>
-        <lastmod>2013-12-24T14:18:33+08:00</lastmod>
+        <lastmod>2014-09-21T23:49:45+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/projects.html</loc>
-        <lastmod>2014-01-03T22:33:31+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:26+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/robots.txt</loc>
-        <lastmod>2013-07-07T11:29:50+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:26+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/search.html</loc>
-        <lastmod>2013-07-13T23:14:41+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:26+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/statistics-analytics-and-dark-knight/</loc>
-        <lastmod>2013-06-17T22:21:22+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:26+08:00</lastmod>
     </url>
     <url>
         <loc>http://mvj3.github.io/statlysis/showterm.html</loc>
-        <lastmod>2013-12-29T21:38:18+08:00</lastmod>
+        <lastmod>2014-04-27T10:14:27+08:00</lastmod>
     </url>
 </urlset>

@@ -6,7 +6,7 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Dec 16th, 2013 Tags: Rails, Refactoring 关键主题 Rails 拆分和合并, 重构技术, API定制, Concern Module开发, 分布式系统数据同步, MongoDB数据库设计 背景介绍 在 阳光书屋的官网 上写着，“ &hellip;">
+	<meta name="description" content="Published on: Sep 21st, 2014 Tags: Review 去年年末经朋友介绍加入 17zuoye，算来也大半年多了，颇有收获，把做过的和想做的事情大概暂记如下。 开源项目 HTTPS://GITHUB.COM/17ZUOYE ，关于我的项目动态大部分都可以从 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -108,6 +108,109 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2014/09/21/half-year-review-at-17zuoye/">
+		
+			我在一起作业的半年回顾</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-21T21:55:00+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2014</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/review/'>Review</a>
+
+
+</div>
+    </div>
+		<p>去年年末经朋友介绍加入 17zuoye，算来也大半年多了，颇有收获，把做过的和想做的事情大概暂记如下。</p>
+
+<h2>开源项目</h2>
+
+<p><a href="HTTPS://GITHUB.COM/17ZUOYE">HTTPS://GITHUB.COM/17ZUOYE</a> ，关于我的项目动态大部分都可以从 Github 得知，陆续做了十多个，应该算高产吧，不过没一个 star ，哈哈，应该是交流不足吧，像我这种内向型，又特别羞涩，和别人交流会消耗大量能量的人真的是个难事，会慢慢改善的。</p>
+
+<p>直接列举吧，详细介绍就以后单独写文章了。项目具体功能都见测试吧，基本功能点都覆盖了，README 有些我偷懒了。</p>
+
+<ol>
+<li><a href="https://github.com/mvj3/etl_utils">etl_utils</a> ETL实用工具库。打印进度，缓存，字符处理等等。</li>
+<li><a href="https://github.com/17zuoye/model_cache">model_cache</a> 直接把 Model instance 持久化缓存到 Model 这个 Dict 里，有 sqlite, shelve, 当然也可以直接 memory 做测试。</li>
+<li><a href="https://github.com/17zuoye/tfidf">tfidf</a> 常用的数据挖掘方法之一，这个实现核心功能就是加了缓存。</li>
+<li><a href="https://github.com/17zuoye/phrase_recognizer">phrase_recognizer</a> 英文短语识别器，支持词形变化。也支持复杂点结构，比如 &ldquo;tie&hellip;to&hellip;&rdquo;, &ldquo;&hellip;weeks old&rdquo;, 运行效率还是不错的。</li>
+<li><a href="https://github.com/17zuoye/fill_broken_words">fill_broken_words</a> 针对小学英语里选择把某些字母从答案里填回到破损的题目内容中的数据修复，各种组合算法，算是所有项目里算法复杂度最高的。没时间优化，可能方法包括对组合做下排序或贪婪算法等。</li>
+<li><a href="https://github.com/17zuoye/region_unit_recognizer">region_unit_recognizer</a> 识别 带有省市区等地址的 企事业单位。</li>
+<li><a href="https://github.com/17zuoye/split_block">split_block</a> 把英语文本按纯英语，纯符号，纯空格等分块，包含相关模块，好支持fill_broken_words, article_segment 等工作。</li>
+<li><a href="https://github.com/17zuoye/article_segment">article_segment</a> 数据修复英语文本里带空格的单词，基于别人的库做的。</li>
+</ol>
+
+
+<p>以上全是Python写的，虽然我之前做了近五年的Ruby项目。</p>
+
+<h2>新录题平台</h2>
+
+<p>临时加入该平台做了两月，负责前期前后端架构，说穿了也就是一个主程。</p>
+
+<ol>
+<li>数据存储在 MongoDB 里，基本是单表设计，但是业务分类很庞大，就是体力活。</li>
+<li>语言框架是 Python 里的 Flask ，插件丰富，从 Rails 直接转过来也不费劲。前期想转 Node.js ，不过被 CTO 劝住了，他应该是对的，项目复杂度不是这种初生生态系统可以控制的。</li>
+<li>前端采用的 Backbone.js ，复杂度堪比后端。顺手写了构造复杂表单编辑和查询的插件 <a href="https://github.com/mvj3/backbone.brick">backbone.brick</a> ，以及在前端里处理嵌套参数访问的实用库 <a href="https://github.com/mvj3/normalize_nested_params">normalize_nested_params</a> 。前者没时间整理，模版部分和业务耦合的紧。后者可以通过 bower 或 npm 安装。</li>
+<li>审核模块业务需求也是很复杂的，可能还要考虑到打回等异常处理。最初设计时过于理想主义了，出于之前架构内省的思想，而且假设从前端业务划分来指导后端数据表设计。事实证明这是错的，中间绕了一个大弯，身心疲惫，最后想到老老实实记录每次详细操作解决了，并默认了整个系统可能在任何时候都可能出错。</li>
+</ol>
+
+
+<h2>题库排重</h2>
+
+<p>题库排重引擎 detdup 是在 17zuoye 的第一个大项目，各种算起来也花了快三个月吧。框架代码加测试 870 行，目前应用于小学和初高中题库平台。</p>
+
+<p>前段时间做了一个内部技术分享，演讲稿在 <a href="https://speakerdeck.com/mvj3/detdup">https://speakerdeck.com/mvj3/detdup</a> 。项目源码因为商业原因而暂时不能公开（所以也不准备写相关文章了），欢迎交流。</p>
+
+<h2>知识点抽取</h2>
+
+<p>说起来做这块还真的是我近几年技术生涯顺利过渡来的结果，感谢连华老师对我的悉心指导。对于完全自学进入计算机行业的我，老师就是&#8221;互联网大学&#8221;，但是数据挖掘这个综合学科一直不得其门，虽然之前也写了 <a href="https://github.com/mvj3/statlysis">statlysis</a> 统计分析框架，但是概率和线性代数等数学模型一直懵懵懂懂，现在只能说进步一点了吧。</p>
+
+<p>核心结果就是完成了 textmulclassify 多标签抽取框架。算法模型基本来自于连华老师，还有俊晨和李恒。我只贡献了文本相似度，算是一个小优化。可能会开源。</p>
+
+<h2>想做的事情</h2>
+
+<ol>
+<li>spark, hadoop等生态系统。</li>
+<li>恶补概率，线性代数等数学。</li>
+<li>开源这个事业。</li>
+<li>看的书虽然多，但是还得把每本书吃得更透些。</li>
+<li>&hellip;</li>
+</ol>
+
+
+<h2>未来</h2>
+
+<p>谈未来多俗气啊，可是人都是越活越俗气，对外交流慢慢停了，每个周末基本和女友一起各种玩，也许就是朴树所言的&#8221;平凡之路&#8221;吧，可是在这个&#8221;屌丝&#8221;也当不起的年代里，&#8221;平凡&#8221;没有什么意义，一个人根本无法逃避，还是选择一直有底气地活下去吧。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2014/09/21/half-year-review-at-17zuoye//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1334,52 +1437,6 @@
 <div class="meta">
 	
 		<span class="comments"><a href="/2013/04/16/escape-html-by-jquery//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/04/05/the-difference-between-XSS-and-CSRF/">
-		
-			XSS和CSRF的区别</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-05T20:22:49+08:00" pubdate data-updated="true">Apr 5<span>th</span>, 2013</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/csrf/'>CSRF</a>, <a class='category' href='/blog/categories/secure/'>Secure</a>, <a class='category' href='/blog/categories/xss/'>XSS</a>
-
-
-</div>
-    </div>
-		<p>XSS 是直接在源网站执行，如常见的如SQL注入和提交JS代码等。解决方法一般为把用户输入都作为不信任数据做转义处理。</p>
-
-<p>CSRF 是破坏者间接利用了用户在源网站登陆情况下，在其他网站诱导用户触发JS请求获取源网站访问授权。Rails里用每次分配随机的 <code>csrf_meta_tag</code> 来解决伪造问题。</p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2013/04/05/the-difference-between-XSS-and-CSRF//index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>

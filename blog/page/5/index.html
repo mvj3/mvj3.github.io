@@ -6,8 +6,12 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Oct 9th, 2011 Tags: CentOS, Sqlite3 问题 sqlite3-ruby的1.3版本在CentOS不兼容，访问数据库时报如下错误：
-/usr/local/ruby/ruby-enterprise-1.8.7-2011.03/bin/ &hellip;">
+	<meta name="description" content="Published on: Oct 20th, 2011 Tags: CentOS, Ruby, nokogiri 帮同事在一台centos上安装nokogiri，记载如下： 系统信息： 1
+2
+3
+4
+[root@localhost ~]# uname -a
+Linux localhost. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -109,6 +113,89 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/10/20/install-nokogiri-locally-on-centos/">
+		
+			CentOS本地安装nokogiri</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-20T16:45:09+08:00" pubdate data-updated="true">Oct 20<span>th</span>, 2011</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/centos/'>CentOS</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/nokogiri/'>nokogiri</a>
+
+
+</div>
+    </div>
+		<p>帮同事在一台centos上安装nokogiri，记载如下：</p>
+
+<p>系统信息：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>[root@localhost ~]# uname -a
+</span><span class='line'>Linux localhost.localdomain 2.6.18-194.el5 #1 SMP Fri Apr 2 14:58:14 EDT 2010 x86_64 x86_64 x86_64 GNU/Linux
+</span><span class='line'>[root@localhost ~]# cat /proc/version
+</span><span class='line'>Linux version 2.6.18-194.el5 (mockbuild@builder10.centos.org) (gcc version 4.1.2 20080704 (Red Hat 4.1.2-48)) #1 SMP Fri Apr 2 14:58:14 EDT 2010
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>卸载并重新安装nokogiri依赖的C库：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo yum remove -y libxml2-devel libxslt-devel
+</span><span class='line'>sudo yum install -y libxml2-devel libxslt-devel
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最近rubygems.org的在amazon的代码库索引源访问极慢，无奈只能把本地安装过的gems压缩包全部拷上去
+scp /usr/local/rvm/gems/ree-1.8.7-2011.03/cache/*gem root@host:~/gems/
+然后在服务器上执行 sudo gem i nokogiri-1.5.0.gem  -l 即可</p>
+
+<p>测试代码如下，nokogiri已能正常解析HTML了</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
+</span><span class='line'><span class="sx">%w[nokogiri open-uri]</span><span class="o">.</span><span class="n">map</span> <span class="o">&amp;</span><span class="nb">method</span><span class="p">(</span><span class="ss">:require</span><span class="p">)</span>
+</span><span class='line'><span class="n">resp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;http://www.douban.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span>
+</span><span class='line'><span class="nb">puts</span> <span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot;body .article .content&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2011/10/20/install-nokogiri-locally-on-centos//blog/page/5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -897,135 +984,12 @@ sqlite-devel-3.3.6-5</p>
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/01/19/a-simple-name-pinyin-matching/">
-		
-			一个简单的姓名拼音匹配</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-19T22:32:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2011</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/algorithm/'>Algorithm</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>
-
-
-</div>
-    </div>
-		<p>一个简单的姓名拼音匹配</p>
-
-<p>姓名一般是由两三个汉字组成，选其顺序且连续的拼音缩略的组合就算匹配成功。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># encoding: UTF-8</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;chinese_pinyin&#39;</span>
-</span><span class='line'><span class="vi">@name</span> <span class="o">=</span> <span class="s2">&quot;成吉思汗&quot;</span>
-</span><span class='line'><span class="n">pinyins</span> <span class="o">=</span> <span class="no">Pinyin</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span><span class="o">.</span><span class="n">split</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># 把姓名生成对应的拼音数组</span>
-</span><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[]</span>
-</span><span class='line'><span class="n">pinyins</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">han</span><span class="p">,</span> <span class="n">index</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">array</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">=</span> <span class="o">[]</span>
-</span><span class='line'>  <span class="n">han</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span><span class="o">|</span><span class="n">num</span><span class="o">|</span> <span class="n">array</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">han</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">]</span> <span class="p">}</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">as</span> <span class="o">=</span> <span class="o">[]</span>
-</span><span class='line'><span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
-</span><span class='line'>  <span class="n">sub_array</span> <span class="o">=</span> <span class="o">[]</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1"># 第一趟生成姓名拼音缩略的所有满足顺序且连续的组合</span>
-</span><span class='line'>  <span class="n">array</span><span class="o">.</span><span class="n">each_with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">ele</span><span class="p">,</span> <span class="n">i</span><span class="o">|</span>
-</span><span class='line'>    <span class="n">ni</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">x</span>
-</span><span class='line'>    <span class="n">sub_array</span> <span class="o">&lt;&lt;</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">.</span><span class="n">.ni</span><span class="o">]</span> <span class="k">if</span> <span class="n">array</span><span class="o">[</span><span class="n">ni</span><span class="o">]</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1"># 第二趟把每个组合各自归并</span>
-</span><span class='line'>  <span class="n">sub_array</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arr</span><span class="o">|</span>
-</span><span class='line'>    <span class="k">while</span> <span class="n">arr</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1</span>
-</span><span class='line'>      <span class="n">sub_as</span> <span class="o">=</span> <span class="o">[]</span>
-</span><span class='line'>      <span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">a1</span><span class="o">|</span> <span class="n">arr</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">a2</span><span class="o">|</span> <span class="n">sub_as</span> <span class="o">&lt;&lt;</span> <span class="p">(</span> <span class="n">a1</span> <span class="o">+</span> <span class="n">a2</span> <span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
-</span><span class='line'>      <span class="n">arr</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="n">sub_as</span><span class="o">]</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>    <span class="n">as</span> <span class="o">&lt;&lt;</span> <span class="n">arr</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="n">arr</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">as</span><span class="o">.</span><span class="n">flatten</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ruby标准库里的abbr.rb是排除两个英文单词的共同缩略，见<a href="http://ruby-doc.org/stdlib/libdoc/abbrev/rdoc/classes/Abbrev.html">http://ruby-doc.org/stdlib/libdoc/abbrev/rdoc/classes/Abbrev.html</a></p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2011/01/19/a-simple-name-pinyin-matching//blog/page/5/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="/blog/page/4/" class="prev">Prev</a>
     
+    
+        <a href="/blog/page/6/" class="next">Next</a>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav>

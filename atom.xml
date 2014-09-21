@@ -4,7 +4,7 @@
   <title><![CDATA[世界的审美！]]></title>
   <link href="http://mvj3.github.io/atom.xml" rel="self"/>
   <link href="http://mvj3.github.io/"/>
-  <updated>2014-01-03T22:52:42+08:00</updated>
+  <updated>2014-09-21T23:50:34+08:00</updated>
   <id>http://mvj3.github.io/</id>
   <author>
     <name><![CDATA[mvj3]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[我在一起作业的半年回顾]]></title>
+    <link href="http://mvj3.github.io/2014/09/21/half-year-review-at-17zuoye/"/>
+    <updated>2014-09-21T21:55:00+08:00</updated>
+    <id>http://mvj3.github.io/2014/09/21/half-year-review-at-17zuoye</id>
+    <content type="html"><![CDATA[<p>去年年末经朋友介绍加入 17zuoye，算来也大半年多了，颇有收获，把做过的和想做的事情大概暂记如下。</p>
+
+<h2>开源项目</h2>
+
+<p><a href="HTTPS://GITHUB.COM/17ZUOYE">HTTPS://GITHUB.COM/17ZUOYE</a> ，关于我的项目动态大部分都可以从 Github 得知，陆续做了十多个，应该算高产吧，不过没一个 star ，哈哈，应该是交流不足吧，像我这种内向型，又特别羞涩，和别人交流会消耗大量能量的人真的是个难事，会慢慢改善的。</p>
+
+<p>直接列举吧，详细介绍就以后单独写文章了。项目具体功能都见测试吧，基本功能点都覆盖了，README 有些我偷懒了。</p>
+
+<ol>
+<li><a href="https://github.com/mvj3/etl_utils">etl_utils</a> ETL实用工具库。打印进度，缓存，字符处理等等。</li>
+<li><a href="https://github.com/17zuoye/model_cache">model_cache</a> 直接把 Model instance 持久化缓存到 Model 这个 Dict 里，有 sqlite, shelve, 当然也可以直接 memory 做测试。</li>
+<li><a href="https://github.com/17zuoye/tfidf">tfidf</a> 常用的数据挖掘方法之一，这个实现核心功能就是加了缓存。</li>
+<li><a href="https://github.com/17zuoye/phrase_recognizer">phrase_recognizer</a> 英文短语识别器，支持词形变化。也支持复杂点结构，比如 &ldquo;tie&hellip;to&hellip;&rdquo;, &ldquo;&hellip;weeks old&rdquo;, 运行效率还是不错的。</li>
+<li><a href="https://github.com/17zuoye/fill_broken_words">fill_broken_words</a> 针对小学英语里选择把某些字母从答案里填回到破损的题目内容中的数据修复，各种组合算法，算是所有项目里算法复杂度最高的。没时间优化，可能方法包括对组合做下排序或贪婪算法等。</li>
+<li><a href="https://github.com/17zuoye/region_unit_recognizer">region_unit_recognizer</a> 识别 带有省市区等地址的 企事业单位。</li>
+<li><a href="https://github.com/17zuoye/split_block">split_block</a> 把英语文本按纯英语，纯符号，纯空格等分块，包含相关模块，好支持fill_broken_words, article_segment 等工作。</li>
+<li><a href="https://github.com/17zuoye/article_segment">article_segment</a> 数据修复英语文本里带空格的单词，基于别人的库做的。</li>
+</ol>
+
+
+<p>以上全是Python写的，虽然我之前做了近五年的Ruby项目。</p>
+
+<h2>新录题平台</h2>
+
+<p>临时加入该平台做了两月，负责前期前后端架构，说穿了也就是一个主程。</p>
+
+<ol>
+<li>数据存储在 MongoDB 里，基本是单表设计，但是业务分类很庞大，就是体力活。</li>
+<li>语言框架是 Python 里的 Flask ，插件丰富，从 Rails 直接转过来也不费劲。前期想转 Node.js ，不过被 CTO 劝住了，他应该是对的，项目复杂度不是这种初生生态系统可以控制的。</li>
+<li>前端采用的 Backbone.js ，复杂度堪比后端。顺手写了构造复杂表单编辑和查询的插件 <a href="https://github.com/mvj3/backbone.brick">backbone.brick</a> ，以及在前端里处理嵌套参数访问的实用库 <a href="https://github.com/mvj3/normalize_nested_params">normalize_nested_params</a> 。前者没时间整理，模版部分和业务耦合的紧。后者可以通过 bower 或 npm 安装。</li>
+<li>审核模块业务需求也是很复杂的，可能还要考虑到打回等异常处理。最初设计时过于理想主义了，出于之前架构内省的思想，而且假设从前端业务划分来指导后端数据表设计。事实证明这是错的，中间绕了一个大弯，身心疲惫，最后想到老老实实记录每次详细操作解决了，并默认了整个系统可能在任何时候都可能出错。</li>
+</ol>
+
+
+<h2>题库排重</h2>
+
+<p>题库排重引擎 detdup 是在 17zuoye 的第一个大项目，各种算起来也花了快三个月吧。框架代码加测试 870 行，目前应用于小学和初高中题库平台。</p>
+
+<p>前段时间做了一个内部技术分享，演讲稿在 <a href="https://speakerdeck.com/mvj3/detdup">https://speakerdeck.com/mvj3/detdup</a> 。项目源码因为商业原因而暂时不能公开（所以也不准备写相关文章了），欢迎交流。</p>
+
+<h2>知识点抽取</h2>
+
+<p>说起来做这块还真的是我近几年技术生涯顺利过渡来的结果，感谢连华老师对我的悉心指导。对于完全自学进入计算机行业的我，老师就是&#8221;互联网大学&#8221;，但是数据挖掘这个综合学科一直不得其门，虽然之前也写了 <a href="https://github.com/mvj3/statlysis">statlysis</a> 统计分析框架，但是概率和线性代数等数学模型一直懵懵懂懂，现在只能说进步一点了吧。</p>
+
+<p>核心结果就是完成了 textmulclassify 多标签抽取框架。算法模型基本来自于连华老师，还有俊晨和李恒。我只贡献了文本相似度，算是一个小优化。可能会开源。</p>
+
+<h2>想做的事情</h2>
+
+<ol>
+<li>spark, hadoop等生态系统。</li>
+<li>恶补概率，线性代数等数学。</li>
+<li>开源这个事业。</li>
+<li>看的书虽然多，但是还得把每本书吃得更透些。</li>
+<li>&hellip;</li>
+</ol>
+
+
+<h2>未来</h2>
+
+<p>谈未来多俗气啊，可是人都是越活越俗气，对外交流慢慢停了，每个周末基本和女友一起各种玩，也许就是朴树所言的&#8221;平凡之路&#8221;吧，可是在这个&#8221;屌丝&#8221;也当不起的年代里，&#8221;平凡&#8221;没有什么意义，一个人根本无法逃避，还是选择一直有底气地活下去吧。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails项目 重构，我在阳光书屋的三个月]]></title>
@@ -1261,37 +1329,6 @@ Run &lsquo;bundle install&rsquo; to install missing gems.</p>
 <h2>把当前自己的访问也添加上</h2>
 
 <p>上面唯一的缺陷是不能马上在当次访问里加上当前自己的访客信息，这个其实可以通过一个技巧来解决，那就是在浏览器里去把ajax获取来的访客列表加上自己的访客信息就OK了。两个注意点是排重和排除访问自己的页面。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[前端工程师的面试也可以如此生动]]></title>
-    <link href="http://mvj3.github.io/2013/01/27/interview-frontend-engineer-can-also-be-so-vivid/"/>
-    <updated>2013-01-27T22:43:49+08:00</updated>
-    <id>http://mvj3.github.io/2013/01/27/interview-frontend-engineer-can-also-be-so-vivid</id>
-    <content type="html"><![CDATA[<p>公司下半年因*.eoe.cn项目要开发上线，寻找合适的前端工程师势在必行。过程很坎坷，我翻了下自己的工作日志，招聘过程达三个月之久。来面试的有互联网公司的，培训学校的，同事推荐的，&hellip;，各种基本功薄弱的，薪资漫天要价的，不靠谱啊。最终相中了一个工作两三年的，在偏时尚媒体设计公司待过的女前端工程师。</p>
-
-<p>面试是和其他同事一起进行的，除了对品性和工作方式的考察外，专业方面看的还是基础知识和经验。前端工程师一般分两类，一种是设计+CSS，关键词也就是Dreamweaver+Photoshop，这种人较多，但通常计算机知识薄弱。另一种是JS+CSS，偏重浏览器内的MVC, 这种人比较少，也是业界稀缺的。可能有人会说两者都包的人，那这种人是全才，基本都可以去创业了。我本身是Ruby(Rails）后端背景的，对前端略懂，而浏览器兼容性几乎没接触过。因此面试偏CSS的不太容易问出什么，也就是面试宝典里的绝对定位法，inline和block区别，jQuery选择器优化，等之类的。</p>
-
-<p>一个偶然的机会，在问到一个前来面试的觉得国内有哪些觉得不错的前端产品的时候，有人提到了网易的新闻聚合（见下图news.tags.163.png），它采用了不同大小矩形色块的TreeMap可视化方式展现了新闻资讯集合。从源码上说，它只有不到150行的规整的HTML结构，足够在短时间内把握。让我们边看这个网页边面试：</p>
-
-<ol>
-<li> 点击右上角的刷新按钮后，每个资讯元素重新滑动排列，这里可以考察HTML5的CSS，下面的&#8221;今天, 三天，一周&#8221;的时间范围的切换也是。</li>
-<li> 在这里还可以去问这些元素是重新排列，还是从服务器端获取的，可以让对方去源码里找出是哪一行还是引用的文件里调用了ajax。</li>
-<li> 打开chrome的调试器，并点击Network标签，在重新加载后，有些请求的Status变成了304，有些Size变成了from cache，这里可以去考察HTTP常识。</li>
-<li> 刚才我们翻开了HTML源码，问下css引用链接在上而js引用在下的原因，考察浏览器的渲染顺序。</li>
-<li> 接着我们又发现新闻数据并没有在HTML里看到，看对方是否可以知晓js如何调用。</li>
-<li> 看过css后，我们发现一个script标签里的type是text/x-micro-template，问下这是干什么的。如果对方回答出模版后，可以再去模版的实现原理，这样就实际就考察了对js闭包的了解。</li>
-<li> js代码里面有些英文单词，可以趁机考考英文水平，很多工程师都没听说过github的。</li>
-</ol>
-
-
-<p>问到这里的时候，水平自然见分晓了。这种方式虽然系统考察了一个前端该具备的技术能力，但事后证明它会让某些在CSS方面不错的和能实际快速的干活的人才错过了。
-对一般的互联网团队来说，1, CSS命名的规范结构化，2, 严格遵守jQuery链式调用规范，而不是一大堆东抄西补的原生js，3, 和快速的动手能力，前端工程师的这三点才是最重要的。</p>
-
-<p>Android技术招聘可参看@iceskysl 的 <a href="http://my.eoe.cn/iceskysl/archive/21.html">说说我招聘android技术人员的思路</a> ，里面提到的4个点对招聘一般的应用工程师其实都适用。</p>
-
-<p>本文存放在 <a href="http://code.eoe.cn/145">code.eoe.cn 的gist版本</a> 。</p>
 ]]></content>
   </entry>
   

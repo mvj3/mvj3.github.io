@@ -6,7 +6,7 @@
 	<title>世界的审美！</title>
     <meta name="author" content="mvj3">
     
-	<meta name="description" content="Published on: Dec 14th, 2012 Tags: Cache, Nginx, Unicorn nginx方案 接上文 Rails动态文件添加ETag缓存 来自动生成304 Not Modified告诉客户端来直接使用本地缓存，但是在这种情况下会出现图片闪动（重新加载渲染）， &hellip;">
+	<meta name="description" content="Published on: Dec 17th, 2012 Tags: ActiveRecord, Sphinx 预备知识 如果对条件选择做索引的话，sphinx采用的数据结构均为非字符类型，碰到字符字段，在ThinkingSphinx都被默认经CRC32转换成标识唯一整数。 解决过程 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -108,6 +108,60 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/12/17/undefined-method-to_crc32_for_1_Fixnum/">
+		
+			Undefined Method To_crc32 for 1:Fixnum</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-17T11:21:29+08:00" pubdate data-updated="true">Dec 17<span>th</span>, 2012</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/activerecord/'>ActiveRecord</a>, <a class='category' href='/blog/categories/sphinx/'>Sphinx</a>
+
+
+</div>
+    </div>
+		<h2>预备知识</h2>
+
+<p>如果对条件选择做索引的话，sphinx采用的数据结构均为非字符类型，碰到字符字段，在ThinkingSphinx都被默认经CRC32转换成标识唯一整数。</p>
+
+<h2>解决过程</h2>
+
+<p>ThinkingSphinx需要对表名做一个CRC32转化，具体在 lib/thinking_sphinx/source/sql.rb 的 <code>crc_column</code> 方法。该方法里为了对继承表进行兼容，里面会判断Rails里约定的 <code>inheritance_column</code> 是否也在表字段里（代码为 <code>@model.column_names.include?(@model.inheritance_column)</code> ），如果有就把type字段也作为CRC32的参数。可是如果type为整数类型，那么它没有 <code>to_crc32</code> 方法，所以就报了undefined method `to_crc32&#8217; for 1:Fixnum 错误。</p>
+
+<h2>解决方案</h2>
+
+<p>给有整数type字段的model加一句 <code>self.inheritance_column = :_type</code></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/2012/12/17/undefined-method-to_crc32_for_1_Fixnum//blog/page/4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -787,89 +841,6 @@
 <div class="meta">
 	
 		<span class="comments"><a href="/2011/11/03/exception_notification_rails3-doesnot-send-mail//blog/page/4/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/10/20/install-nokogiri-locally-on-centos/">
-		
-			CentOS本地安装nokogiri</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-20T16:45:09+08:00" pubdate data-updated="true">Oct 20<span>th</span>, 2011</time></div>
-      <div class="tags">Tags: 
-
-
-	<a class='category' href='/blog/categories/centos/'>CentOS</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/nokogiri/'>nokogiri</a>
-
-
-</div>
-    </div>
-		<p>帮同事在一台centos上安装nokogiri，记载如下：</p>
-
-<p>系统信息：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>[root@localhost ~]# uname -a
-</span><span class='line'>Linux localhost.localdomain 2.6.18-194.el5 #1 SMP Fri Apr 2 14:58:14 EDT 2010 x86_64 x86_64 x86_64 GNU/Linux
-</span><span class='line'>[root@localhost ~]# cat /proc/version
-</span><span class='line'>Linux version 2.6.18-194.el5 (mockbuild@builder10.centos.org) (gcc version 4.1.2 20080704 (Red Hat 4.1.2-48)) #1 SMP Fri Apr 2 14:58:14 EDT 2010
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>卸载并重新安装nokogiri依赖的C库：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo yum remove -y libxml2-devel libxslt-devel
-</span><span class='line'>sudo yum install -y libxml2-devel libxslt-devel
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最近rubygems.org的在amazon的代码库索引源访问极慢，无奈只能把本地安装过的gems压缩包全部拷上去
-scp /usr/local/rvm/gems/ree-1.8.7-2011.03/cache/*gem root@host:~/gems/
-然后在服务器上执行 sudo gem i nokogiri-1.5.0.gem  -l 即可</p>
-
-<p>测试代码如下，nokogiri已能正常解析HTML了</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
-</span><span class='line'><span class="sx">%w[nokogiri open-uri]</span><span class="o">.</span><span class="n">map</span> <span class="o">&amp;</span><span class="nb">method</span><span class="p">(</span><span class="ss">:require</span><span class="p">)</span>
-</span><span class='line'><span class="n">resp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;http://www.douban.com&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span>
-</span><span class='line'><span class="nb">puts</span> <span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot;body .article .content&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/2011/10/20/install-nokogiri-locally-on-centos//blog/page/4/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
