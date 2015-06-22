@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>世界的审美！</title>
+    <description>An avid open-source full-stack engineer. Works include [Human programming language](http://human-lang.org), [luiti](https://github.com/17zuoye/luiti), and [statlysis](https://github.com/mvj3/statlysis) etc.
+</description>
+    <link>http://mvj3.github.io/</link>
+    <atom:link href="http://mvj3.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 22 Jun 2015 18:32:49 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Jun 2015 18:32:49 +0800</lastBuildDate>
+    <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>持续集成初试随记</title>
+        <description>&lt;h3 id=&quot;section&quot;&gt;强烈建议对于线上的常驻后台服务都加上持续集成。&lt;/h3&gt;
+
+&lt;p&gt;在我初步接触持续集成的这几个月来，最有体会的不是说都非得搞完美的单元测试和再上层一点的集成测试，而是确保当时项目依赖的软件环境版本配置是真的可以跑的。好处有很多，暂时想到以下五个意义：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;软件部署得隔离(Python 我这边用的 Virtualenv)，这意味着不能用 root 部署。同时项目依赖的文件目录得是可配置的。&lt;/li&gt;
+  &lt;li&gt;新来同事拿到代码，至少TA可以照着持续集成的步骤把项目跑起来。&lt;/li&gt;
+  &lt;li&gt;持续集成和代码质量是相辅相成的，会更加促进从整体上去思考整体项目的合理架构。&lt;/li&gt;
+  &lt;li&gt;持续集成意味着对版本控制(hg, git)会更善加利用，比如良好的 commit 粒度。&lt;/li&gt;
+  &lt;li&gt;可以跑的项目都直观的显示在 持续集成的管理界面，这样就可以更方便的知道别人的代码到底长啥样子：）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;分享一下个人的持续集成案例，&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;开源的我用的是 Travis，比如 https://travis-ci.org/17zuoye/luiti 。&lt;/li&gt;
+  &lt;li&gt;公司内部业务我用的是 buildbot。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;项目是否需要加持续集成：&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;需要的。比如 Web 服务，定时数据生产，和业务剥离的代码库和框架，等等。&lt;/li&gt;
+  &lt;li&gt;可不需要。比如 临时报表，日常的 SQL查询，等等。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;持续集成的推荐软件：&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Python 用 buildbot http://buildbot.net/&lt;/li&gt;
+  &lt;li&gt;Java 一般用的是 Jenkins。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Sat, 20 Jun 2015 15:26:29 +0800</pubDate>
+        <link>http://mvj3.github.io/2015/06/20/a-little-thought-on-continuous-integration</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2015/06/20/a-little-thought-on-continuous-integration</guid>
+        
+        
+        <category>continuous integration</category>
+        
+      </item>
+    
+      <item>
+        <title>我在一起作业的半年回顾</title>
+        <description>&lt;p&gt;去年年末经朋友介绍加入 17zuoye，算来也大半年多了，颇有收获，把做过的和想做的事情大概暂记如下。&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;开源项目&lt;/h2&gt;
+
+&lt;p&gt;HTTPS://GITHUB.COM/17ZUOYE ，关于我的项目动态大部分都可以从 Github 得知，陆续做了十多个，应该算高产吧，不过没一个 star ，哈哈，应该是交流不足吧，像我这种内向型，又特别羞涩，和别人交流会消耗大量能量的人真的是个难事，会慢慢改善的。&lt;/p&gt;
+
+&lt;p&gt;直接列举吧，详细介绍就以后单独写文章了。项目具体功能都见测试吧，基本功能点都覆盖了，README 有些我偷懒了。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mvj3/etl_utils&quot;&gt;etl_utils&lt;/a&gt; ETL实用工具库。打印进度，缓存，字符处理等等。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/17zuoye/model_cache&quot;&gt;model_cache&lt;/a&gt; 直接把 Model instance 持久化缓存到 Model 这个 Dict 里，支持 sqlite, shelve等存储格式, 当然也可以直接 memory 做测试。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/17zuoye/tfidf&quot;&gt;tfidf&lt;/a&gt; 常用的数据挖掘方法之一，这个实现核心功能就是加了缓存。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/17zuoye/phrase_recognizer&quot;&gt;phrase_recognizer&lt;/a&gt; 英文短语识别器，支持词形变化。也支持复杂点结构，比如 “tie…to…”, “…weeks old”, 运行效率还是不错的。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/17zuoye/fill_broken_words&quot;&gt;fill_broken_words&lt;/a&gt; 针对小学英语里选择把某些字母从答案里填回到破损的题目内容中的数据修复，各种组合算法，算是所有项目里算法复杂度最高的。没时间优化，可能方法包括对组合做下排序或贪婪算法等。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/17zuoye/region_unit_recognizer&quot;&gt;region_unit_recognizer&lt;/a&gt; 识别 带有省市区等地址的 企事业单位。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/17zuoye/split_block&quot;&gt;split_block&lt;/a&gt; 把英语文本按纯英语，纯符号，纯空格等分块，包含相关模块，好支持fill_broken_words, article_segment 等工作。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/17zuoye/article_segment&quot;&gt;article_segment&lt;/a&gt; 数据修复英语文本里带空格的单词，基于别人的库做的。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;以上全是Python写的，虽然我之前做了近五年的Ruby项目。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;新录题平台&lt;/h2&gt;
+
+&lt;p&gt;临时加入该平台做了两月，负责前期前后端架构，说穿了也就是一个主程。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;数据存储在 MongoDB 里，基本是单表设计，但是业务分类很庞大，就是体力活。&lt;/li&gt;
+  &lt;li&gt;语言框架是 Python 里的 Flask ，插件丰富，从 Rails 直接转过来也不费劲。前期想转 Node.js ，不过被 CTO 劝住了，他应该是对的，项目复杂度不是这种初生生态系统可以控制的。&lt;/li&gt;
+  &lt;li&gt;前端采用的 Backbone.js ，复杂度堪比后端。顺手写了构造复杂表单编辑和查询的插件 &lt;a href=&quot;https://github.com/mvj3/backbone.brick&quot;&gt;backbone.brick&lt;/a&gt; ，以及在前端里处理嵌套参数访问的实用库 &lt;a href=&quot;https://github.com/mvj3/normalize_nested_params&quot;&gt;normalize_nested_params&lt;/a&gt; 。前者没时间整理，模版部分和业务耦合的紧。后者可以通过 bower 或 npm 安装。&lt;/li&gt;
+  &lt;li&gt;审核模块业务需求也是很复杂的，可能还要考虑到打回等异常处理。最初设计时过于理想化了，出于之前架构内省的思想，而且假设从前端业务划分来指导后端数据表设计。事实证明这是错的，中间绕了一个大弯，身心疲惫，最后想到老老实实记录每次详细操作解决了，并默认了整个系统在任何时候都可能出错。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;题库排重&lt;/h2&gt;
+
+&lt;p&gt;题库排重引擎 detdup 是在 17zuoye 的第一个大项目，各种算起来也花了快三个月吧。框架代码加测试 870 行，目前应用于小学和初高中题库平台。&lt;/p&gt;
+
+&lt;p&gt;前段时间做了一个内部技术分享，演讲稿在 https://speakerdeck.com/mvj3/detdup 。项目源码因为商业原因而暂时不能公开（所以也不准备写相关文章了），欢迎交流。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;20150606 补记。源码地址在 https://github.com/17zuoye/detdup ，并通过 travis 测试。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;知识点抽取&lt;/h2&gt;
+
+&lt;p&gt;说起来做这块还真的是我近几年技术生涯顺利过渡来的结果，感谢连华老师对我的悉心指导。对于完全自学进入计算机行业的我，老师就是”互联网大学”，但是数据挖掘这个综合学科一直不得其门，虽然之前也写了 &lt;a href=&quot;https://github.com/mvj3/statlysis&quot;&gt;statlysis&lt;/a&gt; 统计分析框架，但是概率和线性代数等数学模型一直懵懵懂懂，现在只能说进步一点了吧。&lt;/p&gt;
+
+&lt;p&gt;主要结果就是完成了 textmulclassify 多标签抽取框架。算法模型基本来自于连华老师，还有俊晨和李恒。我只贡献了文本相似度，算是一个小优化。可能会开源。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;想做的事情&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;spark, hadoop等生态系统。&lt;/li&gt;
+  &lt;li&gt;恶补概率，线性代数等数学。&lt;/li&gt;
+  &lt;li&gt;开源这个事业。&lt;/li&gt;
+  &lt;li&gt;看的书虽然多，但是还得把每本书吃得更透些。&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;未来&lt;/h2&gt;
+
+&lt;p&gt;谈未来多俗气啊，可是人都是越活越俗气，对外交流慢慢停了，每个周末基本和女友一起各种玩，也许就是朴树所言的”平凡之路”吧，可是在这个”屌丝”也当不起的年代里，”平凡”没有什么意义，一个人根本无法逃避，还是选择一直有底气地活下去吧。&lt;/p&gt;
+</description>
+        <pubDate>Sun, 21 Sep 2014 21:55:00 +0800</pubDate>
+        <link>http://mvj3.github.io/2014/09/21/half-year-review-at-17zuoye</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2014/09/21/half-year-review-at-17zuoye</guid>
+        
+        
+        <category>review</category>
+        
+      </item>
+    
+      <item>
+        <title>Rails项目 重构，我在阳光书屋的三个月</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;关键主题&lt;/h2&gt;
+
+&lt;p&gt;Rails 拆分和合并, 重构技术, API定制, Concern Module开发, 分布式系统数据同步, MongoDB数据库设计&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;背景介绍&lt;/h2&gt;
+
+&lt;p&gt;在 &lt;a href=&quot;http://www.sunshine-library.org&quot;&gt;阳光书屋的官网&lt;/a&gt; 上写着，“阳光书屋乡村信息教育化行动是一项公益教育计划，我们致力于用科技填补城乡教育鸿沟，以平板电脑为载体，让每一个农村的孩子都接触到优质的教育资源。” 学生和老师用的平板电脑学习机是基于Android移动开源系统的”晓书”，通过独立研发的阳光桌面OEM定制学习环境，并包含阳光电子书包和阳光学习提高班等App来开展混合式教学模式。&lt;/p&gt;
+
+&lt;p&gt;而支撑其后台的便是Ruby on Rails这套Web开发框架，到目前为止经历了三代架构的变迁。当我以Ruby架构师角色在八月底进入书屋时，随着秋季的开学，项目也在紧张地进行着包括新功能后期收尾，迁移到MongoDB数据库重构，和提高班数据系分析新系统 等工作。@renchaorevee 和 @Logicalmars 两位志愿开发者主要负责了测试相关的工作。&lt;/p&gt;
+
+&lt;p&gt;重构的事稍后再行一一细说，先简单的过一下前面两代。&lt;/p&gt;
+
+&lt;h2 id=&quot;rails&quot;&gt;第一代Rails架构&lt;/h2&gt;
+
+&lt;p&gt;单独一个Rails程序，借用其中一个志愿开发者 @Logicalmars 的话说，就是”主要用Ruby on Rails写服务器后台。我们这开发人员不多，很多东西都得自己搞，我不光更加理解了RoR，还顺便学习了如何架设Rails的服务器，如何做MySQL Replication，如何向安卓端同步数据库Table等等”。&lt;/p&gt;
+
+&lt;h2 id=&quot;rails-1&quot;&gt;第二代Rails架构&lt;/h2&gt;
+
+&lt;p&gt;随着业务的细化，需求逐渐被明朗细化为LocalServer和CloudServer两大块。&lt;/p&gt;
+
+&lt;p&gt;从网络层面上说，LocalServer搭在学校当地以提供快速的网络响应，CloudServer搭在阿里云上去管理协调各LocalServer，两者通过VPN串联起来位于同一网络中以保证信息的安全。&lt;/p&gt;
+
+&lt;p&gt;从业务层面上说，LocalServer提供的功能包括晓书的电子书包等API通讯，设备管理，教师备课和查看学生数据等。CloudServer提供的功能包括各LocalServer管理，提高班和App等公用资源的分发和中转，查看跨校统计数据等。这方面就不展开细说了，主要是为下面的技术和重构提供一些背景概念。&lt;/p&gt;
+
+&lt;p&gt;根据其分布式特点，采用了MongoDB数据库，在保留_id主键时同时使用了全局唯一的 &lt;a href=&quot;http://en.wikipedia.org/wiki/Universally_unique_identifier&quot;&gt;uuid&lt;/a&gt; 键作为CloudServer和众LocalServer的资源共享管理的依据。&lt;/p&gt;
+
+&lt;p&gt;等业务需求大概确定下来后，剩下来的就是如何用技术实现之，并可以适当的随着业务需求发生变动而更好的迭代之。&lt;/p&gt;
+
+&lt;h2 id=&quot;rails-2&quot;&gt;第二代Rails架构和第三代重构，如何挖坑和填坑&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;面临的挑战&lt;/h3&gt;
+
+&lt;p&gt;在 [背景介绍] 的最后提到，我进入该项目时，已经处于紧张的项目上线期。简单的形容一下就是，&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;维护一个项目难，&lt;/li&gt;
+  &lt;li&gt;维护一个二手项目难，&lt;/li&gt;
+  &lt;li&gt;维护一个臃肿的二手项目更难，&lt;/li&gt;
+  &lt;li&gt;维护一个开发中的臃肿的二手项目更难，&lt;/li&gt;
+  &lt;li&gt;维护一个有紧急上线或BUG修复的开发中的臃肿的二手项目非常难。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;完全展开按照线性叙事来讲就太琐碎了，为了给第三者理解上的方便，还是就以下几个重点来分享一下吧。&lt;/p&gt;
+
+&lt;h3 id=&quot;rails-&quot;&gt;Rails 拆分和合并&lt;/h3&gt;
+
+&lt;p&gt;问题：&lt;/p&gt;
+
+&lt;p&gt;在第二代，书屋把Rails程序剥离为LocalServer和CloudServer两个Rails应用程序。代码物理上的分拆虽然带来了从业务去理解技术上的一些好处，但是冗余的问题随之而来，模型和视图上的占了多数，而这个同时保持两份修改显然不是明知之举。事实证明有些BUG确实是因为两边数据结构没有修改一致导致的，甚至有些相同的字段在两边都有不同的存储形式。&lt;/p&gt;
+
+&lt;p&gt;解答：&lt;/p&gt;
+
+&lt;p&gt;Local和Cloud合为一个Rails项目，代码或模块用全局变量判断载入。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;在 &lt;code&gt;config/initializers/constants.rb&lt;/code&gt; 里建立全局变量，比如 &lt;code&gt;$IS_LOCAL_SERVER&lt;/code&gt;, &lt;code&gt;$IS_CLOUD_SERVER&lt;/code&gt; 等。&lt;/li&gt;
+  &lt;li&gt;公用的 &lt;code&gt;models&lt;/code&gt; 按照Rails约定放在app/models目录下，各自环境的功能分别放在 &lt;code&gt;lib/models/local&lt;/code&gt; 和 &lt;code&gt;lib/models/cloud&lt;/code&gt; 目录下。载入过程在 &lt;code&gt;(Rails::Application).load_extend_model_features&lt;/code&gt; 方法，分别可通过 Mongoid::Sunshine 模块 和 ApplicationController重载 实现动态载入。&lt;/li&gt;
+  &lt;li&gt;routes, controller, views等还是按照Rails约定走，唯一区别是在代码里用全局变量判断载入。&lt;/li&gt;
+  &lt;li&gt;目前Production, Development, 以及部署模式已完全兼容Rails默认约定。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;相关技术细节披露：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# 定义Model功能依不同环境动态载入&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;load_extend_model_features&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;Dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;lib/models/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;LocalCloud&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;short_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/*.rb&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# load appended feature if the model already exists.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;constants&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/([a-z\_]*).rb/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classify&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_sym&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;production&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;defined?&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 配置最公用的Mongoid::Sunshine，直接替换默认的Mongoid::Document。&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Mongoid&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Sunshine&lt;/span&gt;
+    &lt;span class=&quot;kp&quot;&gt;extend&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveSupport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Concern&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;included&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Document&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Timestamps&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;TouchParentsRecursively&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Paranoia&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;UUIDGenerator&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SyncWithDeserialization&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;vg&quot;&gt;$IS_LOCAL_SERVER&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveModel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;IsLocalOrCloud&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveModel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AsJsonFilter&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ManyOrManytomanySetter&lt;/span&gt;
+
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DistributeTree&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/ETL::/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 排除同步ETL&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ChapterZipStyle&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%W[Chapter Lesson Activity Material Problem ProblemChoice]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;# autoload app/models/cloud|local/*.rb&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_extend_model_features&lt;/span&gt;
+
+      &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Mongoid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;OverwriteDefaultFeatures&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 在development模式下动态载入Model&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActionController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# load cloud and local features model exclusively&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;before_filter&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_extend_model_features&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;production&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;要提一点的是，除了测试可以帮你解决重构是否无误的问题外，请活用 &lt;code&gt;git grep&lt;/code&gt; 来分析相关的代码调用。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;阳光电子书包的同步更新 自动策略&lt;/h3&gt;
+
+&lt;p&gt;晓书上的电子书包是按 科目(1) &amp;lt;- 章节(n) &amp;lt;- 课时(n) 的组织结构去划分的，每种富媒体资源都是以文件夹形式挂载在最下面的课时节点上。一旦某课时发生变动，就更新自己级其上的章节和科目的时间戳。这样客户端可以定时请求LocalServer，依据时间戳去更新对应结构和数据（删除操作由结构树自己来管理更新）。&lt;/p&gt;
+
+&lt;p&gt;之前的解决方案由于文件夹的内容类型比较复杂，且在Controller和Model等多处都有操作，没有统一的分层机制，所以对于时间戳更新的遗漏难免。&lt;/p&gt;
+
+&lt;p&gt;对此我的解决方案是写了Mongoid的一个插件mongoid_touch_parents_recursively，它依赖Mongoid Model间的关系声明来在 &lt;code&gt;after_save&lt;/code&gt; 钩子里更新，并解决了多对多和一对多等关系。具体原理请见 &lt;a href=&quot;https://github.com/mvj3/mongoid_touch_parents_recursively/blob/sunshine/lib/mongoid_touch_parents_recursively.rb&quot;&gt;实现文件描述&lt;/a&gt; 和 &lt;a href=&quot;https://github.com/mvj3/mongoid_touch_parents_recursively&quot;&gt;README配置文档&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;课程压缩包的内容优雅的解压缩&lt;/h3&gt;
+
+&lt;p&gt;在线教育相比其他社交和电子商务等行业，多类型结构的课程数据包含了各种形式的文本，逻辑关联和多媒体文件等，因此提高班的产品owner @fxp 设计了基于JSON格式和文件目录的SchemeFolder来灵活管理课程数据。在导入后台过程中出现了解压缩相关处理代码和课程数据组织逻辑混淆的场面，给二次维护带来一些难解。&lt;/p&gt;
+
+&lt;p&gt;对此我在 &lt;a href=&quot;http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering/&quot;&gt;人类思维和软件工程学&lt;/a&gt; 的 #框架之后# 一节中对这次重构的策略做了详细分析，抽取了&lt;a href=&quot;https://github.com/mvj3/mongoid_unpack_paperclip&quot;&gt;mongoid_unpack_paperclip&lt;/a&gt; 模块来给含有paperclip的Mongoid 支持解压缩包和清理的封装。只需要include Mongoid::Paperclip和Mongoid::UnpackPaperclip即可，然后调用 ` self.unpack_paperclip { … } ` 去做对应的操作即可。&lt;/p&gt;
+
+&lt;p&gt;其中对Paperclip对象的获取是通过对 &lt;a href=&quot;https://github.com/mvj3/mongoid_unpack_paperclip/blob/sunshine/lib/mongoid_unpack_paperclip.rb#L16&quot;&gt;Model自省&lt;/a&gt; 获得的。&lt;/p&gt;
+
+&lt;h3 id=&quot;json-api-&quot;&gt;JSON API 输出的定制&lt;/h3&gt;
+
+&lt;p&gt;之前在面向移动客户端JSON API输出的开发时，有些API都是客户端按自己结构去定义的，而没有针对Model做RESTful输出，实现者用Helper方法对资源进行了递归描述，这样定义起来代码比较冗余和难以公用。限于客户端的设计，这部分只能按原来设计继续维护了。&lt;/p&gt;
+
+&lt;p&gt;在LocalServer和CloudServer都做了as_json的覆写，这里交叉公用了一些字段。因此写了 active_model_as_json_filter 来做类似&lt;code&gt;as_json&lt;/code&gt; options 的配置，比如：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;App&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;as_json_options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:classroom_ids&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;或者配置全局的属性配置，&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;ActiveModel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AsJsonFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;finalizer_proc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;uuid&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;uuid&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;更多见 &lt;a href=&quot;https://github.com/mvj3/active_model_as_json_filter&quot;&gt;active_model_as_json_filter&lt;/a&gt; 开源项目主页描述。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;元数据同步的数据类型兼容&lt;/h3&gt;
+
+&lt;p&gt;CloudServer到LocalServer的数据同步是通过JSON API进行的，这个在上面的前两代Rails架构已经提到了。但是里面遇到的问题是因为MongoDB数据库是SchemeLess的，而且也没有很好的对时间类型做反序列化的支持。比如你给&lt;code&gt;checked_at&lt;/code&gt;时间字段赋值&lt;code&gt;2013-11-22 15:43:04 +0800&lt;/code&gt;，保存的还是String类型。&lt;/p&gt;
+
+&lt;p&gt;因为时间类型的字段不单单是只有&lt;code&gt;created_at&lt;/code&gt;和&lt;code&gt;updated_at&lt;/code&gt;两个Rails默认的字段名，还可能有其他比如上面提到的&lt;code&gt;checked_at&lt;/code&gt;，如果全部手工定制也就一团乱了，所以最好方法是在配置field时候指定type为DateTime等类型，这样也就可以对Model通过自省来获得在&lt;code&gt;before_save&lt;/code&gt;时要解析的字段值了。 具体实现见 &lt;a href=&quot;https://github.com/mvj3/mongoid_sync_with_deserialization/blob/sunshine/lib/mongoid_sync_with_deserialization.rb#L35&quot;&gt;mongoid_sync_with_deserialization&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;h3 id=&quot;mongoiduuidmodel&quot;&gt;Mongoid使用uuid字段进行Model关联&lt;/h3&gt;
+
+&lt;p&gt;在 #第二代Rails架构# 提到，书屋的资源都是用uuid来标示唯一的，这个在ActiveRecord时期即是如此。&lt;/p&gt;
+
+&lt;p&gt;而迁移到MongoDB之后，由于它是为单collection设计优化的数据库，查询操作并没有像ActiveRecord那般对模型关系处理的成熟，（个人更建议用MySQL或含有NoSQL特性HStore的PostgreSQL)。&lt;/p&gt;
+
+&lt;p&gt;有个多对多关联数据保存的BUG，在_id主键存在情况下，通过另外一个uuid键来做多对多，而结果却是对方保存的_ids是uuid，而自己保存的_ids却是非期待的_id。仔细调查发现是Mongoid没有对这种特殊情况做 &lt;a href=&quot;https://github.com/mvj3/mongoid_many_or_many_to_many_setter/blob/sunshine/doc/mongoid.markdown&quot;&gt;深入兼容&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;p&gt;因此我也写了 mongoid_many_or_many_to_many_setter 去利用Model之间关联关系自省在&lt;code&gt;before_save&lt;/code&gt;时 &lt;a href=&quot;https://github.com/mvj3/mongoid_many_or_many_to_many_setter/blob/sunshine/lib/mongoid_many_or_many_to_many_setter.rb#L29&quot;&gt;重新赋值&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;同步机制的范式转移&lt;/h3&gt;
+
+&lt;p&gt;进入书屋后，遇到的最大问题就是服务器间数据同步不一致，黑盒子，VPN内部因传输冗余媒体文件而导致网络堵塞。&lt;/p&gt;
+
+&lt;p&gt;之前采用的技术方案组合我觉得更多是从技术层面去混搭，很明显这个犯了过度追求自己不能很好掌控的新技术，和对本身业务理解不深刻的错误。一想到多服务器高性能分发，就用了RabbitMQ的分发订阅，但是却忽略了最大的瓶颈其实在于媒体文件的传输。一想到文件传输，就用了支持异步多并发的NodeJS框架，和前者一样，本质在网络带宽限制上，以及细力度操作。更多见 &lt;a href=&quot;https://github.com/mvj3/distribute_tree#同步架构变迁历史概述&quot;&gt;同步架构变迁历史概述&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;p&gt;让我们梳理数据同步的本质，从数据量和业务上考虑，可以分为，一是树的同步，二是叶子上的多媒体数据同步。&lt;/p&gt;
+
+&lt;p&gt;树的同步就是JSON元数据的同步，这是飞快的。不过它分为两种同步模式，第一种是自动同步，即在CloudServer对数据进行了CRUD后，都要马上反映到各个被要求同步的LocalServer那里去。这里有些LocalServer可能由于业务或网络问题是不需要同步的，所以得有个管理同步服务器的功能。第二种同步是手工同步，比如新增一个学校，或者一个学校因为某种原因中途中断了同步，而现在要继续同步，那么就要单独对它进行同步。从业务操作上来说，最好就是点一个按钮即可，而反映到技术层面就是必然有种组织在管理全部元数据，那这就是以School为Root，Chapter, Folder, Lesson等为层叠Children的 &lt;a href=&quot;https://github.com/mvj3/distribute_tree&quot;&gt;DistributeTree&lt;/a&gt; ，其中的关系都通过Model类变量 &lt;code&gt;@@distribute_children&lt;/code&gt; 得到声明，在同步时被递归访问进行，当然在自动同步模式中这个就被 &lt;a href=&quot;https://github.com/mvj3/distribute_tree/blob/sunshine/lib/distribute_tree.rb#L20&quot;&gt;禁用&lt;/a&gt; 了。如前面所说，手工同步最好点一个按钮即可，但是我们这里可以在一个页面里选择多个学校和多个资源一起同步。&lt;/p&gt;
+
+&lt;p&gt;叶子上的多媒体数据同步在树的同步下就没问题了，不过一点需要注意的是最好是采用网络下行同步以保证网络速度，也即是被同步方自己请求静态资源地址。&lt;/p&gt;
+
+&lt;p&gt;总结一点，其实就和NoSQL挑战SQL的情况一样，企业对结构化数据的一致性和方便管理的需求远远大于SchemeLess和高性能。所以技术选型更多是从业务出发，让技术辅助业务，而不是因为技术的某些特性听上去和业务某些场景相符就选择了，应该按业务最本质的结构和最大比例的需求来。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-7&quot;&gt;一些关于重构的想法&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;我个人现在反感给Model添加太多的逻辑，长长的上百行，几百行，我觉得最好只存在module引入的声明，字段的声明，和类似Paperclip等插件DSL的声明，其他处理都依照业务划分到不同的类和模块中。&lt;/li&gt;
+  &lt;li&gt;很多人都误会了 &lt;code&gt;Fat model, skinny controller&lt;/code&gt; 的本意，它其实只是关于重构箴言一段话里的中间一句。Fat models只是鼓励你DRY(don’t repeat yourself)，实现逻辑共享而已，其次是Model相比Controller更有利于测试，因为业务核心的处理往往都是在Model层面。推荐看 &lt;a href=&quot;http://joncairns.com/2013/04/fat-model-skinny-controller-is-a-load-of-rubbish/&quot;&gt;“Fat model, skinny controller” is a load of rubbish&lt;/a&gt; 。&lt;/li&gt;
+  &lt;li&gt;三层以上关系一般来说不宜用继承，它超过了&lt;a href=&quot;http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering/&quot;&gt;人类理解的复杂度&lt;/a&gt;，记住”组合优于继承”。&lt;/li&gt;
+  &lt;li&gt;测试覆盖率，代码坏味道自动发现，scrum开发模式等都不能保证软件项目的质量，唯一可以保证的就是深刻地结合业务与技术，在你的业务里用你的技术再去深层次地抽象出另一个”MVC”模块化的框架结构。&lt;/li&gt;
+  &lt;li&gt;重构的前提是不改变软件的行为，而混乱的代码经由重构后，它的内部结构已经不是之前那个范式了。&lt;/li&gt;
+  &lt;li&gt;当你需要对项目进行重构时，那就说明该项目以前存在某种技术或人员等上的问题。&lt;/li&gt;
+  &lt;li&gt;代码没有被结构化和注释，不是项目时间因素，而是个人水平能力的体现，因为代码结构和注释体现了思考。&lt;/li&gt;
+  &lt;li&gt;BUG如果是功能，那就不能修复了，而是要花更多的时间去分析和开发。&lt;/li&gt;
+  &lt;li&gt;除非是为了表达视觉结构，否则不推荐重复代码。我对单行代码有偏爱，比如 &lt;code&gt;def teacher?; self.user_type == &#39;teacher&#39;; end&lt;/code&gt; 。&lt;/li&gt;
+  &lt;li&gt;类似不要在GUI里放入逻辑等，都是模块化的体现。但是很多初级程序员不知道这一点，良好的程序员会注意这一点，而优秀的程序员已经在实践之。&lt;/li&gt;
+  &lt;li&gt;逻辑只是用来证明直观，正是范式的体现。&lt;/li&gt;
+  &lt;li&gt;类似重构原则只是事后补救时说服别人用的，它无益于提升你的编码能力，就像很多人做的和以为的设计模式只是在你有几年工作经验后才会去整理自己知识经验体系用的而已，否则会很难以理解这些设计模式。&lt;/li&gt;
+  &lt;li&gt;重构中会有造成自己方被动和被误解的情况，因为甲方看到的和关心的只是是软件的表面行为而已，请慎重沟通。&lt;/li&gt;
+  &lt;li&gt;正如《重构》第359页提到的，它的进度应该是，今天一点点，明天一点点。不是一次性全部重构(那就是重写了)，而是每次重构一点点，不断的抽取模块，按当时的业务需求和BUG来，当然其中也可能有依赖，去重构牵扯的功能模块。&lt;/li&gt;
+  &lt;li&gt;关于管理软件的复杂度和理解力的原则和思想方面可以参考我写的另一篇 &lt;a href=&quot;http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering/&quot;&gt;人类思维和软件工程学&lt;/a&gt; 。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-8&quot;&gt;为什么我能做到以上重构&lt;/h2&gt;
+
+&lt;p&gt;其实如果没有四五年的工作经验，没有上半年把 &lt;a href=&quot;http://mvj3.github.io/2013/08/04/a-man-github/&quot;&gt;一个单页应用在线学习应用完全模块化&lt;/a&gt; 的思考和经验，我可能还只是停留在 &lt;code&gt;Fat model, skinny controller&lt;/code&gt; 和 翻起Martin Fowler的《重构》手册指导的那种层次而已。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-9&quot;&gt;其他教育项目的重构&lt;/h2&gt;
+
+&lt;p&gt;Rails社区的一个牛人 @yedingding 在今年2013三月也分享了一篇公益项目Re-education做 &lt;a href=&quot;http://yedingding.com/2013/03/04/steps-to-refactor-controller-and-models-in-rails-projects.html&quot;&gt;重构&lt;/a&gt; 的案例。对于一般规模的Rails项目，[Skinny Controller, Fat Model] 差不多能解决大部分问题了，其次通过适当的Concern(Shared Mixin Module)机制抽取公用部分，再以Delegation Pattern, Service, Presenter，DCI等在MVC不同层面去抽象种种业务逻辑结构。&lt;/p&gt;
+
+&lt;h2 id=&quot;mongodb&quot;&gt;关于MongoDB动态字段的吐槽&lt;/h2&gt;
+
+&lt;p&gt;MongoDB的动态字段被很多人误用为根据业务变动可以随意动态调整了，其实它的最佳场景是类似新鲜事的非结构化数据及其大数据分片，因为它是为 &lt;strong&gt;单collection&lt;/strong&gt; 里读写 &lt;strong&gt;单个记录的整体&lt;/strong&gt; 而优化设计的。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 16 Dec 2013 12:26:00 +0800</pubDate>
+        <link>http://mvj3.github.io/2013/12/16/refectoring-code-at-sunshine-library-in-three-months</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2013/12/16/refectoring-code-at-sunshine-library-in-three-months</guid>
+        
+        
+        <category>refactoring</category>
+        
+        <category>rails</category>
+        
+      </item>
+    
+      <item>
+        <title>人类思维和软件工程学</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;引言&lt;/h2&gt;
+&lt;p&gt;本文试图从直观的角度阐述如何做好常规的软件工程，保持良好的开发进度和可维护性，同时让项目经验对技术社区具有启发意义。Github源代码托管和社交网站里的JavaScript和Ruby等开源代码繁多火爆的盛景无疑充分地说明了这一点。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;人类思维特点&lt;/h2&gt;
+&lt;p&gt;试着把十根左右的火柴散乱地倒在地上，你会发觉你无法一下子看清有多少根。请注意，这里是&lt;strong&gt;看清&lt;/strong&gt;，接着你可以在几秒之内慢慢地&lt;strong&gt;数清&lt;/strong&gt;有多少根火柴。&lt;/p&gt;
+
+&lt;p&gt;这就是一般人类思维的极限和特点，人无法同时在脑子直观地在同一个层面掌握六七个以上不同事物。&lt;/p&gt;
+
+&lt;p&gt;再换个例子就是手机号码比生日难记的多。手机号码首三位是给运营商用的， 后面的8位被用于地区和用户编码了，对于人脑记忆而言毫无规则。而生日首先已经被人类经验分成了年份和月日这样两层，年份除去世纪就是一个两位数了，而月日是由大小不超过12的两个简单数字组成的。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;混沌时代&lt;/h2&gt;
+&lt;p&gt;试想你现在要去写一个猜单词游戏客户端，目标是如何在有限步骤内猜中更多的单词。这个需求可不是你可以用一个MVC框架可以套用的，你得自己去组织代码。&lt;/p&gt;
+
+&lt;p&gt;一开始你大概设计了基本的算法框架，先在一个文件里写着，不断的抽取方法，刚开始看着还不错。&lt;/p&gt;
+
+&lt;p&gt;当代码越来越多失去控制的时候，你考虑是否可以把算法独立出去作为一个库存在了。这样你就有了主程序和算法库两个文件。&lt;/p&gt;
+
+&lt;p&gt;接着你发现对方的服务器有时发生超时或内部错误，网络访问速度对于一次要执行几百次的程序也太慢，因此需要搭建本地的Mock服务器，这样你又多了remote和local两套实现机制，加上公用部分就是三个文件了。&lt;/p&gt;
+
+&lt;p&gt;如果再算上README等文档, 单词数据源文件，测试代码，你就会发现现在这差不多是一个成规模的项目了，它有十来个按目录分组的文件。&lt;/p&gt;
+
+&lt;p&gt;以上的例子并非虚构，它实际来源于我参加Strikingly的限时两天远程面试编程项目 &lt;a href=&quot;https://github.com/mvj3/hangman/commits/master&quot;&gt;Hangman&lt;/a&gt; ，以上代码迭代重构过程完全可以从commit信息里得知。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;框架之初&lt;/h2&gt;
+&lt;p&gt;经历过 #混沌时代# 的我们，要去写一个涉及到数据库操作，业务逻辑，页面渲染，缓存管理，等等的复杂应用，如果没有一个像Rails这样便捷的Web框架，而自己一个一个去实现，那是一件多大工作量的事情。&lt;/p&gt;
+
+&lt;p&gt;有了框架，一切都很美满，用Rails漂亮的DSL配置下代码就可以了。&lt;/p&gt;
+
+&lt;p&gt;我相信没有哪个Rails用户不会为RESTful架构简洁的风格所体现出来的哲学所折服，GET, POST, PUT, DELETE 四种HTTP动词，index, new, create, show, edit, update, destroy 七种Controller方法，基本解决了大部分需求。别人来二次维护项目时也能很快地上手。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;框架之中&lt;/h2&gt;
+&lt;p&gt;然而实际的世界远远没有这么简单，Rails框架并不能覆盖到你全部的业务。有些人可能看过一则传授怎样画马的短篇漫画，&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2013-12-15-human-mind-and-software-engineering/how_to_draw_a_horse.jpg&quot; alt=&quot;怎样画马&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;最后一步背后的工作恰恰是最关键的，和耗时最长的，也即是我们常说的 &lt;a href=&quot;https://duckduckgo.com/?q=一万小时定律&quot;&gt;一万小时定律&lt;/a&gt; ，充分地强调了对技艺的理解力，经验，思考，和风格等。&lt;/p&gt;
+
+&lt;p&gt;当然在开源如此繁华和被倡导的年代，你可以使用插件，比如 exception_notification 去管理你的程序异常。&lt;/p&gt;
+
+&lt;p&gt;再有更大型的，比如devise用户认证，kaminari分页，等等，它们在Rails的MVC三层都扎根了，甚至还包括了数据库和前端javascript。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;框架之后&lt;/h2&gt;
+&lt;p&gt;慢慢地，有Rails开发经验的人，慢慢会发现总有一些不太适合放在Rails MVC三层里面的公共代码，于是一般都会把它们放到config/initializers/或lib/目录下。&lt;/p&gt;
+
+&lt;p&gt;但是总有一些比较大的东西让你Hold不住，举个例子，一个Model的业务逻辑是从压缩包里导入多层次的内容，并且得处理格式不规范等各种异常，那样很快就让这个Model增加了两百多行，方法数量超过了二十个，即使放到单独的文件里也还嫌多。描述过程的方法和公用的方法混合在一起相互引用，变量共享，中间结果缓存，很快就变得难以维护和扩展。&lt;/p&gt;
+
+&lt;p&gt;其实这个过程和Ruby社区的HTTP中间件处理库Rack做的事情在形式上有点类似，该库把HTTP请求的Header和body封装成Rack对象，然后被一个一个封装成模块的业务需求顺序地处理掉，过程类似于剥洋葱，最后把结果返回给客户端。&lt;/p&gt;
+
+&lt;p&gt;所以我们可以把这塞在一个文件的方法重构为以下概念上独立的三个部分。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;把解压缩和清理临时文件封装成一个Model插件。&lt;/li&gt;
+  &lt;li&gt;把多层次内容的处理过程放到一个类似 Rack 的类中多个实例中，任何异常由调用方捕获。&lt;/li&gt;
+  &lt;li&gt;处理过程中，数据格式验证可以直接代理到 Model.new(data).validated? 去。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;这样就清晰多了，调试也很方便。另外你也可以把它独立出去作为一个模块去处理了，这样model就瘦了不少。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-6&quot;&gt;框架之上，来一场范式转移&lt;/h2&gt;
+&lt;p&gt;让我们再引申一下，对比之前全都放在一个Model类里去操作的做法，新的其实是建立了自己的结构，也就是框架。&lt;/p&gt;
+
+&lt;p&gt;这里面最重要的一点就是，一旦你写的代码和Rails本身的MVC框架无关时，代码组织超出了一定规模，而且它没有对应的开源库可以帮助，那么是有必要去专门为这个问题构造一个模块，框架，或者DSL了。&lt;/p&gt;
+
+&lt;p&gt;著名科学哲学家 Thomas S. Kuhn 写过一本《科学革命的结构》，里面提出了”范式转移”这一概念。举个物理学的范式转移例子，关于物质运动的解释，已经历经了从亚里士多德时代的模糊度量，到牛顿定律的理想化计算，再到爱因斯坦相对论的更精细化表述，这样三种体系。精度的变化只是表象中的其中一个度量，最关键的是里面大部分概念已经发生了本质性的变化，或者说那些名字已经不是原来的所指。比如物体的质量在在牛顿力学里不可变的，而在爱因斯坦相对论里因为速度的改变，质量也会发生变化。&lt;/p&gt;
+
+&lt;p&gt;同样，对于构建复杂应用的软件工程师来说，我们所使用的程序语言和软件框架就某个已启动项目来说一般很少发生变化，因为它们通常是业界认可和采用的模式和工具。编程过程中发生的各种技术问题，包括命名不清晰不一致，重复造轮子，破坏单一职责原则，Copy-Paste Style，意大利面条式代码，没有恰当的注释文档，等等，这里不一一列举，它们已经在Martin Fowler的著作《重构》一书中被详细论述。&lt;/p&gt;
+
+&lt;p&gt;针对一般的网站开发，我以为MVC只相当于三段论这种原则性的方法论而已，而做好一个复杂系统的根本前提是在于你的计算机科学方面的系统知识，数年实际项目编程经验，以及风格化的思考（这通常就是一种品味）。当我们面对的项目越复杂时，不断精细化和抽象化的思考和重构应该贯穿在项目的各个生命周期。于是，Rails, Mongoid, Devise等从中而出。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-7&quot;&gt;《黑客与画家》&lt;/h2&gt;
+&lt;p&gt;很多人都赞同编程是一种创造性活动，再甚之是一种艺术，大可以和绘画等艺术形式媲美。&lt;/p&gt;
+
+&lt;p&gt;我以为这是对的，很多人都认同旧项目一般都难以维护，特别是糟糕的代码。同样对于一幅画来说，如果乱糟糟一堆，色彩，元素关系，细节刻画都很差劲，稍微修修补补绝对没有画龙点睛的效果，这后来者真的还不如重画。写程序对比其他艺术形式的一个好处就是可以通过采用或抽取开源组件来获得更好的可维护性。&lt;/p&gt;
+
+&lt;p&gt;Paul Graham 在《黑客与画家》一书中写到，”黑客与画家都是在试图创作出优秀的作品。他们本质上都不是在做研究，虽然在创作过程中，他们可能会发现一些新技术。”&lt;/p&gt;
+
+&lt;p&gt;而实际上我以为就艺术这一层面上两者并没有多大关系，唯一的共同点就是都倾向于视觉审美。代码不能拿来听，也不能拿来思考（算法还可以稍微拿来思考一下，但其本质是数学），它只能被拿来看，拿来用计算机去运行，在各个模块或函数中之间调试（拿算法来说，这里就包含了具体工程上的很多细节优化实现）。&lt;/p&gt;
+
+&lt;p&gt;这里我想举一个有趣的例子，人们一般提起黑客，就想到那些用Vim, Emacs等纯文本界面编辑器的生活在黑底绿字终端下的大牛，IDE太笨重，而且无助于他们对代码的编写，调试，和思考。我不想比较其中的优劣，或者谁更正统，我认为纯文本目录导航浏览更接近把代码在放在大脑里思考的视觉化模式。&lt;/p&gt;
+
+&lt;p&gt;大家看看Vim的操作指南，它的使用模式里居然区分了浏览和编辑等模式，这对用惯了其他电脑程序的人而言无异于初次见到数学的等于符号和编程里的等于符号不等价一样让人惊异。在Vim里，我们用的更多的是浏览模式，编辑模式只有输入纯内容而已；而在浏览模式，你可以让光标在字与词，段落之间快速移动，可以把上下行对换，可以批量对齐，甚至可以拷贝某个长方形区块的文本。在此我想说的是，黑客和画家一样，思考的是元素与元素的关系，局部和整体的关系，从远观的良好命名的代码目录结构里可以看出项目架构（这个一般被Rails这种框架负责了），也可以从细观的在单个文件的某个类或者函数中把握其局部的独立性（这个就是代码良好的耦合性和单一职责原则）。&lt;/p&gt;
+
+&lt;p&gt;而如果采用IDE编写，它会依据行业公认的软件工程经验去组织和自动化代码编写和管理，强壮的Java社区的整个工业体系无疑说明了这一点。但是它严重破坏了代码组织的直观，架构和编程完全可以分开，编程从业人员变成其中一颗螺丝钉，编程也失去了创造性的乐趣，导致很多人错误地变成了只会一种软件框架的和吃青春饭的”码农”，很多人觉得三十岁后必然得转向管理或业务。&lt;/p&gt;
+
+&lt;p&gt;同是视觉性的绘画创作（我先声明我不会画画，所以言论可能有失偏颇），它不像诗歌，小说，音乐一样是生活在时间里的艺术，它力求的是直观，从全局和细部都可以欣赏，现代绘画有些已经抛弃细部了，它的画只能在一定距离外才能被有度量尺度限制的人眼看懂和欣赏它的美，比如印象派画家 莫奈的 &lt;img src=&quot;/images/2013-12-15-human-mind-and-software-engineering/780px-Claude_Monet%2C_Impression%2C_soleil_levant%2C_1872.jpg&quot; alt=&quot;《印象·日出》&quot; /&gt; 。&lt;/p&gt;
+
+&lt;p&gt;拿编程和绘画打个比方就是，好的应用程序应该以user story为基本单位去勾勒程序架构，像一幅大型古典油画一样每个细部都可以拿出来欣赏把玩，而不是被扁平地代入一个一个现成的充满棱角的技术框架。其中具体的算法只是采用的材质不同，采用的开源库可能只是某个人物的帽子或者职业特征，技术架构体现了构图。真正优美的软件工程，应该让作为故事的皮肤和血肉恰到好处地覆盖骨架，使人一眼就能明白那是一个美人，而不是畸形得像是失败实验品的科学怪物。&lt;/p&gt;
+
+&lt;p&gt;事实上任何高级的创作必然是纯手工的，或者手工在里面起了必不可少的作用，这个看看奢侈品或咨询行业就知道了。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-8&quot;&gt;回归本质&lt;/h2&gt;
+&lt;p&gt;试想一下，规划或者维护项目的时候，一般相关负责人都会画出一个类似思维导图的项目架构图，这个被业界普遍认可和采用。但是有些没亲手架构并实现过大型复杂多系统的人很容易会拿业务架构去套技术架构，搞出一个又一个貌合神离的子系统，而实际做的时候，变成了一个个只能靠HTTP通讯的孤立系统，类似于日常见到靠OAuth相互认证的互不关联的多个互联网网站一样，当超出一个MVC框架可以hold住时，他们开始束手无策。&lt;/p&gt;
+
+&lt;p&gt;针对人类思维特点，类似于键盘人体工程学，我们在编写软件时应该注意代码在浏览上对于人类思维的直观，除了比较熟知的一个函数里不要写太多代码外，同样一个作为基本单元的功能也最好不要超出六七个相对不同的函数集。有些人可能不太明白，他们确确实实见到了很多包括有名的开源项目里都有单文件里几百行甚至几千行的代码，但是这些优秀的代码通常都是在一个层次里面把函数集合放在单独抽取的模块里。不要担心做不到这一点，用不同颜色去标记不同国家地区的地图都可以仅用 &lt;a href=&quot;http://zh.wikipedia.org/wiki/四色定理&quot;&gt;四种颜色来染色&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;p&gt;机械的本质就是齿轮之间的咬合，而相互驱动的齿轮绝对不能像混乱的意大利面条一样到处都是死结。&lt;/p&gt;
+
+&lt;h2 id=&quot;law-of-demeter-&quot;&gt;Law of Demeter (得墨忒耳定律)&lt;/h2&gt;
+&lt;p&gt;前段时间同事和我分享了一篇 &lt;a href=&quot;http://pragprog.com/articles/tell-dont-ask&quot;&gt;Tell, Don’t Ask&lt;/a&gt; 的文章，讲述了模块调用之间松耦合的原则，所谓”不在其位，不谋其政”，此观点也可以被归纳为 &lt;a href=&quot;http://zh.wikipedia.org/wiki/得墨忒耳定律&quot;&gt;Law of Demeter&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;p&gt;Law of Demeter处理的是已经划分好模块后如何相互之间通讯和单一职责的事情，而人类同时只能处理有限数量的相似对象的原则指明了什么时候应该适当重构的这条界限。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-9&quot;&gt;别人说的一些话&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;http://www.wentrue.net/blog/?p=1324 为什么用R写代码很爽，是因为它把枯燥的敲键盘的工作变成有趣的大脑思维的工作。马上就被勤奋的cleverpig同学逮住了。 这几天看《黑客与画家》，看到Paul Graham很有创意地把黑客和画家的工作关联起来——正是我要表达的意思！&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 15 Dec 2013 16:19:00 +0800</pubDate>
+        <link>http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering</guid>
+        
+        
+        <category>software development</category>
+        
+        <category>human mind</category>
+        
+      </item>
+    
+      <item>
+        <title>一个人的&quot;github&quot;</title>
+        <description>&lt;p&gt;Github不是一个人做的，三个核心创始人在创业时都是写代码的，其中两个人作为程序员也十分有名，是不少有名开源项目的作者。对比这个星球上其他伟大的IT公司，Github网站的代码是能开源就尽量开源的，包括操作Git的grit，用作消息队列的resque，等。Github自然不是我做的，但作为一个自诩有好品味的程序员，我在努力向Github学习和实践它的精神和有益的工作方式，我要构建一个自己的”github”，在此也感谢我所处的公司 eoe 能给我自己去选择技术架构和工作进度这样相对灵活的工作方式的机会。&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;缘起&lt;/h2&gt;
+&lt;p&gt;今年上半年我的主要工作内容是负责一个专注在线学习编程的单页面应用网站的技术部分。从缘起来说，eoe本身主要是做以Android为主的移动开发者服务的，应用市场，移动应用SDK统计，开发者大会活动等都有涉猎，正式的尝试进入IT培训从去年2012年中就开始了（当然想法会更早些）。&lt;/p&gt;
+
+&lt;p&gt;当时CEO @靳岩 让我调研公司进入类似 codecademy.com 在线编程领域方案的可能性，这对于当时刚做完&lt;a href=&quot;http://mvj3.github.io/2012/11/01/android_eoemarket_data_collect_and_analysis_system_summary&quot;&gt;优亿市场应用海量下载统计分析&lt;/a&gt; 的算法与数据挖掘工程师无疑是一个很刺激的技术点。codecademy, codeschool 等这些国外在线编程网站毫无意外的展示了他们的创新性，codecademy 既支持JavaScript, HTML, CSS这些浏览器本身就提供编程环境的技术，也提供相对初级的Ruby, Python等后端语言在浏览器的模拟实现，他们用的相关技术包括用LLVM把代码编译成JavaScript执行的编译器Emscripten。codeschool里有个 &lt;a href=&quot;http://code.eoe.cn/67&quot;&gt;很有意思的地方&lt;/a&gt; 就是，它支持在浏览器里按照他们的规则去用Objective-C写iOS程序，编译是在服务器进行的，并通过base64编码不断传回截图，然后模拟成仿佛浏览器真的成了完美的IDE一样，包括编译信息和出错栈。 对于我们要实现在浏览器里用Java编写Android程序，一般方案是采用传送到服务器编译执行，但是这样涉及到复杂的沙盒模型，且对服务器端资源消耗过大。我知道有一家真的实现了，他们前端用的是flash技术，但是这个只能针对简单快速编译的项目，而且我觉得这个脱离了要教会对方学习的本质，因为以后的实际演练肯定是在Eclipse等IDE里进行的，而你的浏览器在现有技术情况下肯定无法全部模拟。后来我也想到了可以以IDE插件的形式解决把线下教学搬到线上的基本构思，技术难度降低一半，这是后话。在教学中三环节 &lt;code&gt;教问练&lt;/code&gt; 中，真正把教和练做好的公司大概就这几家了，问的话去是程序员都上的stackoverflow等网站就好了。&lt;/p&gt;
+
+&lt;p&gt;去年下半年做了偏前端的 &lt;a href=&quot;http://skill.eoe.cn&quot;&gt;技能测评&lt;/a&gt;，和偏后端的 &lt;a href=&quot;http://code.eoe.cn&quot;&gt;gist.github.com 克隆网站&lt;/a&gt; 。前者算基本没用过，后者不温不火，这让我明白了一个道理，如果我仅仅沉迷于技术实现，自己却无法分身去从事数种自己不熟悉或不太愿意实际执行的工作，那么它的命运就完全取决于组织的决定，因为一个真实产品的成长它需要不同职责的人的参与。前段时间听 @teahour 的一期 &lt;a href=&quot;http://teahour.fm/2013/07/15/lean-startup-with-knewone.html&quot;&gt;和knewone的李路聊聊技术和精益创业&lt;/a&gt; 也聊到类似的情况，很有共鸣。&lt;/p&gt;
+
+&lt;p&gt;而公司在这半年也陆续做了些小规模的Android培训。今年2013春节后，正式开启线上教育项目，产品设计由 @iceskysl 主导和驱动，我开始做聊天技术的预演，内容运营部门则调动内外部资源继续制作教程内容。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;研发&lt;/h2&gt;
+&lt;p&gt;单页面学习应用 learn.eoe.cn 和 报名支付宣传 xuexie.eoe.cn 及后台管理的整体开发上线共历时大概三四个月，我负责的是 learn.eoe.cn（一位前端同事负责写CSS），其他的都是php项目组负责实施。&lt;/p&gt;
+
+&lt;p&gt;当 @iceskysl 设计好产品基本原型后，确认学习过程中为单页面应用，因为里面的聊天，问答，考试等的一些操作应该是尽量避免重载页面的。我自告奋勇去设计了学习系统的数据库设计，基本思想上按模块做命名空间切分，课程大纲设计为一个课程包含多个课时，一个课时包含多个小节，小节可以为视频，资料，测评等多种类型，这是内容部分。对应的学生数据则是一个学习数据表绑定一个课程，并关联观看视频监控记录，考试记录，和计时等。这期间，项目组内关于数据结构，或者说课程具体的产品设计需求，经过多次讨论，终于达成思路上的一致。&lt;/p&gt;
+
+&lt;p&gt;以下是现在上线后测试服务器里学习页面的多个模块的截图。
+&lt;img src=&quot;/images/2013-08-04-one-man-github/learn_video.png&quot; alt=&quot;learn_video&quot; /&gt;
+&lt;img src=&quot;/images/2013-08-04-one-man-github/learn_qa.png&quot; alt=&quot;learn_qa&quot; /&gt;
+&lt;img src=&quot;/images/2013-08-04-one-man-github/learn_exam.png&quot; alt=&quot;learn_exam&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;我对架构设计的原则是技术模块化，业务流程化，两者互相解耦。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;业务流程化&lt;/h3&gt;
+&lt;p&gt;对于一个学生来说，TA面对的主体是课程和TA的学习数据，其他都是依附于其之上。&lt;/p&gt;
+
+&lt;p&gt;对于内容管理人员来说，课程是标准的层级关联，视频和其他也只是依附于其之上。&lt;/p&gt;
+
+&lt;p&gt;对于我作为学习页面的技术负责人来说，用户是否付款和加入某个班级只是一个是非状态。用户的学习状态依赖于业务需求，可能需要结合多个数据源做操作判断，比如是否可以测评要保证你起码观看过教学视频及教学资料，是否学习完成也依赖于你对该课程所有课时的学习状态。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;技术模块化&lt;/h3&gt;
+&lt;p&gt;想清楚好以上清晰的业务流程骨架后，我开始本人4年技术生涯里最彻底的模块拆解，并开源出十多个模块。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;跨子域名用户登陆&lt;/strong&gt;，用的是PHP写的单点登陆解决方案UCenter，我整理了 @iceskysl 从PHP改写的Ruby代码，并&lt;a href=&quot;https://github.com/eoecn/ucenter_authcode&quot;&gt;开源&lt;/a&gt;出来。在应用时，有次遇到误把对方一个每次都变的cookies作为这边的唯一身份认证，这个在单域名操作体现不出来，而访问多个子域名后这边session就失效了。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;视频播放&lt;/strong&gt;用的 &lt;a href=&quot;http://www.videojs.com&quot;&gt;VIDEO.JS&lt;/a&gt; 框架，不需要太多配置代码。另外我想了个开源的&lt;a href=&quot;https://github.com/eoecn/videojs_user_track&quot;&gt;视频监控的方案&lt;/a&gt;，就是把用户对不同时间段的观看频次对应的以秒为单位的数组里，播放一次是1, 最大是9，以此观察视频具体效果，和单个学生的学习疑点。从最近遇到的一个BUG来看，浏览器缓存了视频，但是网络是随时可断的，导致某些网络不太稳定的用户的监控数据可能是部分缺失的。所以监控数据还是得与业务逻辑彻底分开的，前者只应该作为业务判断参考之一。（有人可能会提到放在cookie里，但是其最大长度是4K，那么一个小时的视频 &lt;code&gt;1*2*3600=7200&lt;/code&gt; 就放不下了）。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;参考资料&lt;/strong&gt;用的是markdown编辑和渲染，我抽取了ruby-china的markdown渲染代码，并 &lt;a href=&quot;https://github.com/eoecn/markdown-ruby-china&quot;&gt;自动识别程序语言，文件名，别名等多种格式&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;问答讨论&lt;/strong&gt;是个太标准的CRUD应用，一个论坛无非是主题和回复，里面显示的用户名和头像其实都是可以在前端用JavaScript去组装的， &lt;a href=&quot;http://mvj3.github.io/2013/05/28/fix-backbones-view-duplicated-events-bind/&quot;&gt;用Backbones这个Javascript MVC框架实现模版和事件绑定&lt;/a&gt;  ，添加完数据表后，直接用一个Rails Helper配置下即可，我把它取名为 &lt;a href=&quot;https://github.com/eoecn/qa-rails&quot;&gt;qa-rails&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;测评&lt;/strong&gt;是个相对独立的业务，鉴于去年做过差不多的，这次实现更加精炼了些，JavaScript 239行，HAML两个模版60行。这块限于业务特殊无法作到开源。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;班级讨论&lt;/strong&gt;是基于 &lt;a href=&quot;https://github.com/faye/faye&quot;&gt;Faye消息订阅发布系统&lt;/a&gt; 做的，并实现了 &lt;a href=&quot;https://github.com/eoecn/faye-online&quot;&gt;在线用户显示和计时&lt;/a&gt;，原理是绑定了Faye提供用户登入和登出的事件接口。 这里要特别感谢我们的一个女产品(条理清晰的黑盒测试)，是她用心的测试出了有这个用户的电脑非正常关闭浏览器造成服务器端一直在计时的错误。Faye 检测用户退出有两种方法，一种是服务器端的EventMachine定期检测client是否失去连接；另一种是客户端在浏览器关闭前发送disconnect请求(对应的配置选项是autodisconnect)，如果正常关闭那是ok的，但是如果用户取消关闭，那么这个faye client就死掉了，也就无法聊天，更新在线用户和计时。然后我想到了一种方案是，就是关闭autodisconnect，把这个事件改为发送让服务器三秒后才去检测这个client是否继续存活的请求，这样无论浏览器是否关掉，服务器 都照样主动检测。聊天室的弊端在于它的特点是需要中央服务器，无法支持过大的聊天室，这里暗示的一个信息是系统架构是可以按聊天室拆分做负载均衡的。&lt;/p&gt;
+
+&lt;p&gt;上面说的大部分都是从前端角度分析的，现在来说说后端。&lt;/p&gt;
+
+&lt;p&gt;随着项目不断迭代，我发现几乎大部分操作都直接绑定到用户学习状态表 LearnIssue 了，关联的课时和学习状态，每门课时对应的视频观看数据和考试信息都是代理过去，这样逻辑相对还是很清晰的。&lt;/p&gt;
+
+&lt;p&gt;在写单页面应用时，虽然像问答和聊天都独立出去用JavaScript载入了，但是还是需要同时载入几十个变量。&lt;a href=&quot;http://ruby-china.org/topics/12477&quot;&gt;一般人都会反应为什么不整合到Model里去呢&lt;/a&gt; ，原因是我还把十多个数据合法验证加入到Controller里去了，这里包括后台人员录入的数据不规范和用户访问权限等，出错方式是给出带参数说明的 &lt;code&gt;redirect_to&lt;/code&gt; URL ，比如 &lt;code&gt;?reason=course_invalid&lt;/code&gt; ，这样后台可以随时调整并在前端验证。在调整业务的时候，我经常要去调整变量位置，所以就写了类似rake步骤依赖的 &lt;a href=&quot;http://github.com/eoecn/stepstepstep&quot;&gt;stepstepstep.gem&lt;/a&gt; 去生成自动排序执行的14个before_filters，里面涉及一个图论算法。&lt;/p&gt;
+
+&lt;p&gt;这个项目一个很大的特色之一是对JSON的运用，比如学习状态，课程信息等。大部分是直接用 &lt;a href=&quot;https://github.com/bdurand/json_record/&quot;&gt;json_record&lt;/a&gt; 配置的，效果等同于MongoDB文档存储（当然副作用是不能直接用SQL做字段本身的操作了），但是运维只需面对MySQL即可。我把项目设计成基本都是单表操作，现在一个学习页面的载入包含着近50条SQL查询，而响应时间却都还在300ms左右。&lt;/p&gt;
+
+&lt;p&gt;最后为了给大家一个相对直观的项目复杂度的理解，我运行 &lt;code&gt;bundle exec rake stats&lt;/code&gt; 对Ruby源码情况做了简单统计，并对比由牛人 @huacnlee 主导开发的 Ruby China专业社区论坛。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;learn.eoe.cn
++----------------------+-------+-------+---------+---------+-----+-------+
+| Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
++----------------------+-------+-------+---------+---------+-----+-------+
+| Controllers          |   558 |   356 |       9 |      24 |   2 |    12 |
+| Helpers              |    26 |    19 |       0 |       4 |   0 |     2 |
+| Models               |   690 |   529 |      17 |      54 |   3 |     7 |
+| Libraries            |   114 |    86 |       1 |       2 |   2 |    41 |
+| Integration tests    |     0 |     0 |       0 |       0 |   0 |     0 |
+| Functional tests     |    11 |     6 |       2 |       0 |   0 |     0 |
+| Unit tests           |     8 |     6 |       2 |       0 |   0 |     0 |
++----------------------+-------+-------+---------+---------+-----+-------+
+| Total                |  1407 |  1002 |      31 |      84 |   2 |     9 |
++----------------------+-------+-------+---------+---------+-----+-------+
+  Code LOC: 990     Test LOC: 12     Code to Test Ratio: 1:0.0
+
+ruby-china
++----------------------+-------+-------+---------+---------+-----+-------+
+| Name                 | Lines |   LOC | Classes | Methods | M/C | LOC/M |
++----------------------+-------+-------+---------+---------+-----+-------+
+| Controllers          |  1587 |  1251 |      32 |     182 |   5 |     4 |
+| Helpers              |   365 |   301 |       0 |      41 |   0 |     5 |
+| Models               |  1542 |  1166 |      24 |     106 |   4 |     9 |
+| Mailers              |    18 |    15 |       2 |       1 |   0 |    13 |
+| Javascripts          |  6908 |  5006 |       1 |     546 | 546 |     7 |
+| Libraries            |   552 |   411 |       6 |      41 |   6 |     8 |
+| Api specs            |   171 |   148 |       0 |       2 |   0 |    72 |
+| Cell specs           |   127 |   106 |       0 |       0 |   0 |     0 |
+| Controller specs     |   678 |   572 |       0 |       0 |   0 |     0 |
+| Helper specs         |   364 |   290 |       0 |       0 |   0 |     0 |
+| Lib specs            |   229 |   173 |       0 |       0 |   0 |     0 |
+| Model specs          |  1034 |   859 |       3 |       0 |   0 |     0 |
+| Request specs        |    40 |    33 |       0 |       0 |   0 |     0 |
+| Routing specs        |    58 |    43 |       0 |       0 |   0 |     0 |
+| View specs           |    34 |    26 |       0 |       0 |   0 |     0 |
++----------------------+-------+-------+---------+---------+-----+-------+
+| Total                | 13707 | 10400 |      68 |     919 |  13 |     9 |
++----------------------+-------+-------+---------+---------+-----+-------+
+  Code LOC: 8150     Test LOC: 2250     Code to Test Ratio: 1:0.3&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;假设代码质量和风格差不多的话，从代码量来说 learn.eoe.cn 主体Ruby部分的复杂度是 ruby-china.org 的三分之一 （从Models和Controllers占比来说也是差不多的），对于一个单页应用来说这差不多了。唯一的区别是learn.eoe.cn的控制器方法行数比ruby-china.org大三倍，这和业务逻辑更加复杂有关。（Ruby China得排除基本都是外部静态js的这6908行统计数据。）&lt;/p&gt;
+
+&lt;p&gt;另外上午我写了一段Ruby脚本来统计 &lt;a href=&quot;https://gist.github.com/mvj3/6149713&quot;&gt;learn.eoe.cn Rails项目及其开源项目源码行数&lt;/a&gt; ，结果为：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;[rails_engine_eoe]  Ruby:884 | JavaScript:15 | HAML:0
+[ucenter_authcode]  Ruby:78 | JavaScript:0 | HAML:0
+[rack_image_assets_cache_control]  Ruby:28 | JavaScript:0 | HAML:0
+[faye-online]  Ruby:678 | JavaScript:52 | HAML:0
+[qa-rails]  Ruby:259 | JavaScript:280 | HAML:183
+[videojs_user_track]  Ruby:140 | JavaScript:84 | HAML:0
+[stepstepstep]  Ruby:271 | JavaScript:0 | HAML:0
+[cross_time_calculation]  Ruby:143 | JavaScript:0 | HAML:0
+[/Users/mvj3/eoemobile/code/learn]  Ruby:4113 | JavaScript:1108 | HAML:517
+
+[total] Ruby:6721 | JavaScript:1539 | HAML:700&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;可以看到Ruby和JavaScript有三分之一左右是开源的，Ruby更多些。另外一个数据是git提交日志,  &lt;code&gt;1,347 commits / 21,477 ++ / 12,354 --&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;p&gt;这项目最大的遗憾就是没有测试，和互联网创业产品风格及资源配备等都很有关系，不过抽取的外部库比较重要或重逻辑的地方都写了必要的测试了。&lt;/p&gt;
+
+&lt;p&gt;注明: 本文仅代表个人观点，与实际所涉公司无关。&lt;/p&gt;
+</description>
+        <pubDate>Sun, 04 Aug 2013 09:20:00 +0800</pubDate>
+        <link>http://mvj3.github.io/2013/08/04/a-man-github</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2013/08/04/a-man-github</guid>
+        
+        
+        <category>rails</category>
+        
+        <category>single page application</category>
+        
+      </item>
+    
+      <item>
+        <title>How do I create stepstepstep gem</title>
+        <description>&lt;p&gt;A few months ago, I was writing a single page application about learning mobile development technology at http://learn.eoe.cn. This page contains lessons, a video, classes, teachers, students, reference material, question-to-answers, exams, chat messages, and their current all learning statuses and dependencies. In brief, there are fifteen steps to load this page, including privileges to judge, fourteen illegal &lt;code&gt;redirect_to&lt;/code&gt; , etc. So I need to write a step dependencies management tool, like rake tasks.&lt;/p&gt;
+
+&lt;p&gt;At first, I thought maybe I could define several &lt;code&gt;proc&lt;/code&gt;s in a single before_filter, but the execution context is really complicated. Then one day, I found action_jackson.gem, which was written by &lt;a href=&quot;https://github.com/blakefrost/action_jackson&quot;&gt;Blake Taylor&lt;/a&gt; two years ago. The core implementation of this gem is to define each action as a method, and at last call a class method &lt;code&gt;register_filters&lt;/code&gt; to register all these methods as &lt;code&gt;before_filter&lt;/code&gt; independently. Of course, they’re ordered by the earlier declarations. This implementation is not elegant, but the idea is really awesome, it doesn’t break Rails’s rules.&lt;/p&gt;
+
+&lt;p&gt;Then I got a deep understanding of the Rails controllers filters’s implementation mechanism. Maybe &lt;code&gt;skip_before_filter&lt;/code&gt; helped. In each &lt;code&gt;step&lt;/code&gt;, I insert it first, extract all the inserted steps by &lt;code&gt;skip_before_filter&lt;/code&gt;, then sort them by TSort(a topological sorting algorithm provided by Ruby standard library), and at last append them again to before_filters. It works, and all rspecs are passed.&lt;/p&gt;
+
+&lt;p&gt;I renamed it from action_jackson to stepstepstep, because the DSL is only a &lt;code&gt;step&lt;/code&gt; class method, which handles all the details. Most of the implementations were rewritten, and I added rspecs . Thanks Blake Taylor :)&lt;/p&gt;
+
+&lt;p&gt;The project homepage is http://github.com/eoecn/stepstepstep&lt;/p&gt;
+</description>
+        <pubDate>Sat, 13 Jul 2013 16:41:00 +0800</pubDate>
+        <link>http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem</guid>
+        
+        
+        <category>rails</category>
+        
+        <category>rake</category>
+        
+        <category>algorithm</category>
+        
+      </item>
+    
+      <item>
+        <title>解决 Memcached::ServerError: object too large for cache 错误</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;问题&lt;/h2&gt;
+&lt;p&gt;在添加 &lt;a href=&quot;http://code.eoe.cn/1620&quot;&gt;用jsbeautifier.org解压缩jing.fm的Web版的js代码
+&lt;/a&gt; 的长达7029行js代码后，后台服务器马上报500错误，对应错误信息是 &lt;code&gt;Memcached::ServerError: &quot;object too large for cache&quot;. Key {&quot;git_file_html_8741fc1d7923a820e7de64d996125a527792cc89&quot;=&amp;gt;&quot;localhost:11211:8&quot;}&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;解决方案&lt;/h2&gt;
+&lt;p&gt;在添加 [用jsbeautifier.org解压缩jing.fm的Web版的js代码
+配置memcached的-I选项以调整每个cache item的最大值。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;memcached -I 3m -p &lt;span class=&quot;m&quot;&gt;11211&lt;/span&gt; -v -m &lt;span class=&quot;m&quot;&gt;512&lt;/span&gt; -d&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 28 May 2013 15:28:32 +0800</pubDate>
+        <link>http://mvj3.github.io/2013/05/28/solve-Memcached-ServerError-object-too-large-for-cache</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2013/05/28/solve-Memcached-ServerError-object-too-large-for-cache</guid>
+        
+        
+        <category>memcached</category>
+        
+      </item>
+    
+      <item>
+        <title>从Git的Log里列出今天提交的代码记录信息</title>
+        <description>
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;GIT_USERNAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;git config --global --get user.name&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; git log --author &lt;span class=&quot;nv&quot;&gt;$GIT_USERNAME&lt;/span&gt; --no-merges --after&lt;span class=&quot;o&quot;&gt;={&lt;/span&gt;1.day.ago&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;        cat &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;        grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;^commit &amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;        grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;^Author: &amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;        grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;^Date: &amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt;        grep -v &lt;span class=&quot;s2&quot;&gt;&amp;quot;^$&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt;        tail -r&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 28 May 2013 15:28:32 +0800</pubDate>
+        <link>http://mvj3.github.io/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs</guid>
+        
+        
+        <category>git</category>
+        
+      </item>
+    
+      <item>
+        <title>解决Backbone视图的事件重复绑定</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;原理&lt;/h2&gt;
+&lt;p&gt;Backbone的模版和事件绑定原理是输出HTML，供dom操作。然后利用Javascript代理机制进行对应的事件绑定。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;QAListTopicView&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Backbone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;View&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;s2&quot;&gt;&amp;quot;click li&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;topic_show&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;topic_show&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;#qa_list_topic_template&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;topics&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;opts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;topics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;list_topic_view&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;QAListTopicView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;#qa ul&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;list_topic_view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;el&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;如果在View.render方法里进行事件绑定，那么就会对多重Backbone.View的多重实例进行重复绑定。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;例子&lt;/h2&gt;
+&lt;p&gt;详细的一个使用Backbone里的View和Event的例子见: https://github.com/eoecn/qa-rails/blob/master/app/assets/javascripts/qa-rails.js&lt;/p&gt;
+</description>
+        <pubDate>Tue, 28 May 2013 15:28:32 +0800</pubDate>
+        <link>http://mvj3.github.io/2013/05/28/fix-backbone-view-duplicated-events-bind</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2013/05/28/fix-backbone-view-duplicated-events-bind</guid>
+        
+        
+        <category>backbone</category>
+        
+      </item>
+    
+      <item>
+        <title>统计分析DSL设计，解决惰性加载 和 作用域 两个问题</title>
+        <description>
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# encoding: UTF-8&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# 统计分析DSL设计&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;singleton&amp;#39;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;StatlysisDslDesign&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;必须配置proc&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;
+
+      &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;开始配置 StatlysisDslDesign&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# 1, 作用域   使用&amp;amp;block把proc对象传递给其他对象作用域执行&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;StatlysisDslDesign&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time_log&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;process&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily_crons&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_proc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;开始执行 &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 任务&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;no&quot;&gt;StatlysisDslDesign&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time_log&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+          &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;结果 &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_proc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;config&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;Configuration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instance&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+    &lt;span class=&quot;kp&quot;&gt;protected&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;time_log&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;时长 &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;秒&amp;quot;&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Configuration&lt;/span&gt;
+    &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Singleton&lt;/span&gt;
+    &lt;span class=&quot;kp&quot;&gt;attr_accessor&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:daily_crons&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily_crons&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_proc&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;instance_exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_proc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;daily&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;symbol&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;必须配置一个和symbol对应的proc&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;block_given?&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# 2, 惰性加载 实现方法用proc包装block&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;daily_crons&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;symbol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Proc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;StatlysisDslDesign&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;daily&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:large_count&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;rand&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;Struct&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;daily&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:slow_count&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;Struct&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;StatlysisDslDesign&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;__END__&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;开始配置 StatlysisDslDesign&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;时长 0.0秒&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;------------------------------------------&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;开始执行 large_count 任务&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;结果 #&amp;lt;struct count=10000000000&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;时长 0.57秒&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;------------------------------------------&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;开始执行 slow_count 任务&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;结果 #&amp;lt;struct count=1&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;时长 3.0秒&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;------------------------------------------&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Wed, 17 Apr 2013 21:42:44 +0800</pubDate>
+        <link>http://mvj3.github.io/2013/04/17/statlysis-analysis-design-solve-two-problems-lazy-loading-and-scope</link>
+        <guid isPermaLink="true">http://mvj3.github.io/2013/04/17/statlysis-analysis-design-solve-two-problems-lazy-loading-and-scope</guid>
+        
+        
+        <category>statlysis</category>
+        
+        <category>lazy-loading</category>
+        
+        <category>proc</category>
+        
+      </item>
+    
+  </channel>
+</rss>
