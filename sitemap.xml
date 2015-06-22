@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://mvj3.github.io/2015/06/22/why-most-of-people-cant-understand-Max-Howell-cant-pass-whiteboard-coding-test</loc>
+    <lastmod>2015-06-22T19:52:01+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://mvj3.github.io/2015/06/22/a-little-thought-about-how-to-be-a-good-programmer-in-a-team</loc>
+    <lastmod>2015-06-22T19:35:39+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://mvj3.github.io/2015/06/20/a-little-thought-on-continuous-integration</loc>
     <lastmod>2015-06-20T15:26:29+08:00</lastmod>
   </url>

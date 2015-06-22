@@ -7,13 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
 
-  <title>世界的审美！</title>
+  <title>如何在团队里做一个好程序员的一些想法</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/custom.css">
-  <link rel="canonical" href="http://mvj3.github.io/blog/page8/">
+  <link rel="canonical" href="http://mvj3.github.io/2015/06/22/a-little-thought-about-how-to-be-a-good-programmer-in-a-team">
   <link rel="alternate" type="application/rss+xml" title="世界的审美！" href="http://mvj3.github.io/feed.xml" />
 
 	<script>
@@ -96,72 +96,59 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">如何在团队里做一个好程序员的一些想法</h1>
+    <p class="post-meta">Jun 22, 2015</p>
+    <p></p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Dec 13, 2012</span>
+  <article class="post-content">
+    <p>我觉得 Code Review，变量名，编码风格等这几个相对于其他还是稍微次优先级的，尤其关系到公司规模和发展情况。</p>
 
-        <h2>
-          <a class="post-link" href="/2012/12/13/compare-the-performance-of-parsing-nginx-log-via-c-sscanf-and-ruby-regexp">用C的sscanf和Ruby的正则表达式解析nginx日志性能对比</a>
-        </h2>
+<p>我觉得做到以下两点基本就可以了，不管什么样的公司，</p>
 
-      </li>
-    
-      <li>
-        <span class="post-meta">Dec 13, 2012</span>
+<p>第一，运行正确结果，这样就意味着没有足够的单元测试是不行的（人类思维本身就不善于把理解立体地翻译到逻辑），在做好测试的时候，基本可以把初级程序员的大部分缺点都消灭了，当然很多人没有做到。</p>
 
-        <h2>
-          <a class="post-link" href="/2012/12/13/require-html5shiv-js-in-haml">HAML引用html5shiv.js</a>
-        </h2>
+<p>第二，别人要你给解释任何层次的业务对应到代码的时候，十几秒到几分钟内就应该找到，这个水平是非常有难度的，只有资深程序员和架构师可以勉强做到，其中要求你的代码得是设计合理，勤于优化结构，而且没有抽象过程和部分函数式编程的能力是做不到的。</p>
 
-      </li>
-    
-      <li>
-        <span class="post-meta">Nov 1, 2012</span>
+<p>通常说的 Code Review ，其出发点主要是为了解决协作的问题，包括编码风格，这个对水平低的人是有好处的，对水平高的人是有损伤的，包括阻碍了思考以及时间成本。所以个人建议换一种方式， Code Review 前做好测试，然后给别人讲思路，确保这代码三月后适当水平的人都能维护，那基本就OK了。</p>
 
-        <h2>
-          <a class="post-link" href="/2012/11/01/android_eoemarket_data_collect_and_analysis_system_summary">Android优亿市场数据采集分析系统概要</a>
-        </h2>
+<p>说个奖励的问题，好像是应该给代码写的好的人更多奖励的，可是公司是靠业务盈利的，所以看不到直接贡献，还是倾向于奖励对业务贡献更多的工程师，那这个就只能看部门了。如果公司有相当的奖励或尊重，那么团队代码文化就会好多了。</p>
 
-      </li>
-    
-      <li>
-        <span class="post-meta">Dec 31, 2011</span>
+<p>总结一句，幸福的家庭都是相似的，不幸的家庭各有各的不幸。</p>
 
-        <h2>
-          <a class="post-link" href="/2011/12/31/rebuild-all-mongoid-collections-indexes">整个项目的mongoid表重建索引</a>
-        </h2>
+<hr />
+<p>20150622 补充:</p>
 
-      </li>
-    
-      <li>
-        <span class="post-meta">Dec 19, 2011</span>
+<p>以上想法是一段时间前最初回复在公司的技术微信群里，在地铁上用 iPhone
+仓促写的。如今我也并不想改，只是做了下分段，还是保存当初原滋原味的思绪比较好。</p>
 
-        <h2>
-          <a class="post-link" href="/2011/12/19/compare-memory-usage-after-init-between-redis-and-memcached">redis和memcached初始化内存比较</a>
-        </h2>
+<p>原本想法是, 用 Code Review 来提高团队代码质量是个伪命题，很不容易执行，也很少听说有公司执行（除了某些财大气粗的
+Google 等大公司，或者有时候装装逼的坚持某些奇怪的软件原则的人），因为太难了，我认为比加单元测试都更加划不来。</p>
 
-      </li>
-    
-  </ul>
+<p>以后我会专门写文章从原理层面详细解释。</p>
 
-  <!-- Pagination links -->
-  <div class="pagination">
-    
-      <a href="/blog/page7" class="previous">Previous</a>
-    
-    <span class="page_number ">Page: 8 of 11</span>
-    
-      <a href="/blog/page9" class="next">Next</a>
-    
+  </article>
 
-  </div>
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
 
-  <p class="rss-subscribe pull-right">subscribe <a href="/feed.xml">via RSS</a></p>
+	    var disqus_shortname = 'mvj3';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
 
 
 </div>
@@ -242,8 +229,8 @@
 
       ga('create', 'UA-19059295-1', 'auto');
       ga('send', 'pageview', {
-        'page': '/blog/page8/index.html',
-        'title': ''
+        'page': '/2015/06/22/a-little-thought-about-how-to-be-a-good-programmer-in-a-team',
+        'title': '如何在团队里做一个好程序员的一些想法'
       });
     }, 1000);
 	</script>
