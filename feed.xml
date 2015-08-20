@@ -2,12 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>世界的审美！</title>
-    <description>An avid open-source full-stack engineer. Works include [Human programming language](http://human-lang.org), [luiti](https://github.com/17zuoye/luiti), and [statlysis](https://github.com/mvj3/statlysis) etc.
-</description>
+    <description>An avid open-source full-stack engineer.</description>
     <link>http://mvj3.github.io/</link>
     <atom:link href="http://mvj3.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 20 Aug 2015 09:24:02 +0800</pubDate>
-    <lastBuildDate>Thu, 20 Aug 2015 09:24:02 +0800</lastBuildDate>
+    <pubDate>Thu, 20 Aug 2015 19:41:43 +0800</pubDate>
+    <lastBuildDate>Thu, 20 Aug 2015 19:41:43 +0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
