@@ -40,12 +40,6 @@
   }
   </script>
 
-
-    <script type="text/javascript">
-    window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var n=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(n?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(a,o);for(var r=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["clearEventProperties","identify","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=r(p[c])};
-    heap.load("2603407934");
-  </script>
-
 </head>
 
 
@@ -105,15 +99,15 @@ p ol li a {
 }
 </style>
 
-<h3 id="david-chen--aka-mvj3-"><strong>David Chen</strong> (陈大伟), aka <strong>@mvj3</strong> .</h3>
-
-<p>I’m an avid open-source full-stack engineer, focusing on <a href="/projects/#building-the-data-warehouse-in-python-07-2014-present-">data</a> and <a href="/projects/#rails-engine-or-related-05-2013-12-2013-">web</a>,
-and have created an offline task management framework called <a href="https://luiti.github.io">luiti</a>.</p>
-
-<p align="center">
-  <!-- ![mvj3_wear_sunglasses](/images/mvj3/mvj3_wear_sungclasses.jpg){: height='360px' width='480px'}" -->
-  <img src="/images/mvj3/mvj3_wear_sungclasses_20150526.jpg" alt="mvj3_wear_sunglasses_20150526" height="360px" width="480px" />
-</p>
+<div>
+  <div align="center" style="float:left; margin-right:30px;">
+    <!-- ![mvj3_wear_sunglasses](/images/mvj3/mvj3_wear_sungclasses.jpg){: height='360px' width='480px'}" -->
+    <!-- <img src="/images/mvj3/mvj3_wear_sungclasses_20150526.jpg" alt="mvj3_wear_sunglasses_20150526" height="360px" width="480px"> -->
+    <img src="/images/mvj3/thumb_linkedin_avatar_with_python_1024.jpg" alt="thumb_linkedin_avatar_with_python_1024" height="256px" width="256px" />
+  </div>
+  <p id="self_introduction_beside_avatar" style="padding-top:20px;"><h3 id="david-chen--aka-mvj3-"><strong>David Chen</strong> (陈大伟), aka <strong>@mvj3</strong> .</h3><p class="text"></p><p>I’m an avid open-source full-stack engineer, focusing on <a href="/projects/#building-the-data-warehouse-in-python-07-2014-present-">data</a> and <a href="/projects/#rails-engine-or-related-05-2013-12-2013-">web</a>, and have created an offline task management framework called <a href="https://github.com/luiti/luiti">luiti</a>.</p><p></p></p>
+  <div class="clearfix"></div>
+</div>
 
 <h2 id="recommended-posts">Recommended posts</h2>
 <ol>
@@ -133,7 +127,7 @@ and have created an offline task management framework called <a href="https://lu
   <li>2015-07-18, <a href="http://bbs.pinggu.org/thread-3815359-1-1.html">Python沙龙深度交流会-第二十期CDA俱乐部活动</a>, Luiti - An Offline Task Management Framework, <a href="https://speakerdeck.com/mvj3/luiti-an-offline-task-management-framework">view</a>, <a href="https://github.com/mvj3/mvj3.github.io/raw/master/pdfs/Luiti%20-%20An%20Offline%20Task%20Management%20Framework.pdf">download</a>, <a href="http://v.youku.com/v_show/id_XMTI5MjE1MTA4NA==.html?f=25942084">video</a></li>
   <li>2014-08-24, Internal sharing at 17zuoye, Detdup - Detect duplicated items engine, <a href="https://speakerdeck.com/mvj3/detdup-detect-duplicated-items-engine">view</a>, <a href="https://github.com/mvj3/mvj3.github.io/raw/master/pdfs/detdup%20-%20Detect%20duplicated%20items%20engine.pdf">download</a></li>
   <li>2013-06-22, Ruby Saturday in Beijing, <a href="http://ruby-china.org/topics/11806">15 gems within two years</a></li>
-  <li>2012-09-01, Ruby Saturday in Beijing, <a href="/statistics-analytics-and-dark-knight">Statistical Analysis and The Dark Knight</a></li>
+  <li>2012-09-01, Ruby Saturday in Beijing, <a href="/statistics-analytics-and-dark-knight">Statistic Analysis and The Dark Knight</a></li>
 </ul>
 
 <h2 id="open-source">Open Source</h2>
@@ -186,6 +180,8 @@ Chinese version: 物质的奴隶，时尚的仆人，内在的国王，艺术的
 
 <script>
 $(document).ready(function() {
+  // $("#self_introduction_beside_avatar").html([$("#david-chen--aka-mvj3-"), $(".footer_intro").find("p")]);
+
   // render recent posts.
   var recent_posts_header = $("#recent-posts");
   var recent_posts_dom = recent_posts_header.next("p");
@@ -277,7 +273,7 @@ $(document).ready(function() {
       </div>
 
       <div class="footer-col  footer-col-3 footer_intro">
-        <p class="text"><p>I’m an avid open-source full-stack engineer, focusing on data and web, and have created an offline task management framework called <a href="https://github.com/luiti/luiti">luiti</a>.</p>
+        <p class="text"><p>I’m an avid open-source full-stack engineer, focusing on <a href="/projects/#building-the-data-warehouse-in-python-07-2014-present-">data</a> and <a href="/projects/#rails-engine-or-related-05-2013-12-2013-">web</a>, and have created an offline task management framework called <a href="https://github.com/luiti/luiti">luiti</a>.</p>
 </p>
       </div>
     </div>
@@ -335,6 +331,14 @@ div.footer_intro {
 })("script", "parsely", document);
 </script>
 <!-- END Parse.ly Include -->
+
+
+<!-- Heap Analytics -->
+<script type="text/javascript">
+  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var n=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(n?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(a,o);for(var r=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["clearEventProperties","identify","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=r(p[c])};
+  heap.load("2603407934");
+</script>
+
 
 
   </body>
