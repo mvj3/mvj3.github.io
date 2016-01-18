@@ -5,8 +5,8 @@
     <description>An avid open-source full-stack engineer.</description>
     <link>http://mvj3.github.io/</link>
     <atom:link href="http://mvj3.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 25 Nov 2015 14:51:02 +0800</pubDate>
-    <lastBuildDate>Wed, 25 Nov 2015 14:51:02 +0800</lastBuildDate>
+    <pubDate>Mon, 18 Jan 2016 19:55:01 +0000</pubDate>
+    <lastBuildDate>Mon, 18 Jan 2016 19:55:01 +0000</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -89,7 +89,7 @@
 
 &lt;p&gt;最后说点个人的其他收获，从行为数据来看，这次发表文章得到的赞和关注获得了我个人历史上前所未有的新高，这让我有信心去做一些编程领域里我认为非常有价值的一些事，比如我的 &lt;a href=&quot;http://human-lang.org&quot;&gt;Human 编程语言&lt;/a&gt; 。&lt;/p&gt;
 </description>
-        <pubDate>Mon, 22 Jun 2015 19:52:01 +0800</pubDate>
+        <pubDate>Mon, 22 Jun 2015 12:52:01 +0100</pubDate>
         <link>http://mvj3.github.io/2015/06/22/why-most-of-people-cant-understand-Max-Howell-cant-pass-whiteboard-coding-test</link>
         <guid isPermaLink="true">http://mvj3.github.io/2015/06/22/why-most-of-people-cant-understand-Max-Howell-cant-pass-whiteboard-coding-test</guid>
         
@@ -129,7 +129,7 @@ Google 等大公司，或者有时候装装逼的坚持某些奇怪的软件原�
 
 &lt;p&gt;以后我会专门写文章从原理层面详细解释。&lt;/p&gt;
 </description>
-        <pubDate>Mon, 22 Jun 2015 19:35:39 +0800</pubDate>
+        <pubDate>Mon, 22 Jun 2015 12:35:39 +0100</pubDate>
         <link>http://mvj3.github.io/2015/06/22/a-little-thought-about-how-to-be-a-good-programmer-in-a-team</link>
         <guid isPermaLink="true">http://mvj3.github.io/2015/06/22/a-little-thought-about-how-to-be-a-good-programmer-in-a-team</guid>
         
@@ -173,7 +173,7 @@ Google 等大公司，或者有时候装装逼的坚持某些奇怪的软件原�
   &lt;li&gt;Java 一般用的是 Jenkins。&lt;/li&gt;
 &lt;/ol&gt;
 </description>
-        <pubDate>Sat, 20 Jun 2015 15:26:29 +0800</pubDate>
+        <pubDate>Sat, 20 Jun 2015 08:26:29 +0100</pubDate>
         <link>http://mvj3.github.io/2015/06/20/a-little-thought-on-continuous-integration</link>
         <guid isPermaLink="true">http://mvj3.github.io/2015/06/20/a-little-thought-on-continuous-integration</guid>
         
@@ -246,7 +246,7 @@ Google 等大公司，或者有时候装装逼的坚持某些奇怪的软件原�
 
 &lt;p&gt;谈未来多俗气啊，可是人都是越活越俗气，对外交流慢慢停了，每个周末基本和女友一起各种玩，也许就是朴树所言的”平凡之路”吧，可是在这个”屌丝”也当不起的年代里，”平凡”没有什么意义，一个人根本无法逃避，还是选择一直有底气地活下去吧。&lt;/p&gt;
 </description>
-        <pubDate>Sun, 21 Sep 2014 21:55:00 +0800</pubDate>
+        <pubDate>Sun, 21 Sep 2014 21:55:00 +0100</pubDate>
         <link>http://mvj3.github.io/2014/09/21/half-year-review-at-17zuoye</link>
         <guid isPermaLink="true">http://mvj3.github.io/2014/09/21/half-year-review-at-17zuoye</guid>
         
@@ -462,7 +462,7 @@ Google 等大公司，或者有时候装装逼的坚持某些奇怪的软件原�
 
 &lt;p&gt;MongoDB的动态字段被很多人误用为根据业务变动可以随意动态调整了，其实它的最佳场景是类似新鲜事的非结构化数据及其大数据分片，因为它是为 &lt;strong&gt;单collection&lt;/strong&gt; 里读写 &lt;strong&gt;单个记录的整体&lt;/strong&gt; 而优化设计的。&lt;/p&gt;
 </description>
-        <pubDate>Mon, 16 Dec 2013 12:26:00 +0800</pubDate>
+        <pubDate>Mon, 16 Dec 2013 12:26:00 +0000</pubDate>
         <link>http://mvj3.github.io/2013/12/16/refectoring-code-at-sunshine-library-in-three-months</link>
         <guid isPermaLink="true">http://mvj3.github.io/2013/12/16/refectoring-code-at-sunshine-library-in-three-months</guid>
         
@@ -582,7 +582,7 @@ Google 等大公司，或者有时候装装逼的坚持某些奇怪的软件原�
   &lt;li&gt;http://www.wentrue.net/blog/?p=1324 为什么用R写代码很爽，是因为它把枯燥的敲键盘的工作变成有趣的大脑思维的工作。马上就被勤奋的cleverpig同学逮住了。 这几天看《黑客与画家》，看到Paul Graham很有创意地把黑客和画家的工作关联起来——正是我要表达的意思！&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Sun, 15 Dec 2013 16:19:00 +0800</pubDate>
+        <pubDate>Sun, 15 Dec 2013 16:19:00 +0000</pubDate>
         <link>http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering</link>
         <guid isPermaLink="true">http://mvj3.github.io/2013/12/15/human-mind-and-software-engineering</guid>
         
@@ -712,7 +712,7 @@ ruby-china
 
 &lt;p&gt;注明: 本文仅代表个人观点，与实际所涉公司无关。&lt;/p&gt;
 </description>
-        <pubDate>Sun, 04 Aug 2013 09:20:00 +0800</pubDate>
+        <pubDate>Sun, 04 Aug 2013 09:20:00 +0100</pubDate>
         <link>http://mvj3.github.io/2013/08/04/a-man-github</link>
         <guid isPermaLink="true">http://mvj3.github.io/2013/08/04/a-man-github</guid>
         
@@ -735,7 +735,7 @@ ruby-china
 
 &lt;p&gt;The project homepage is http://github.com/eoecn/stepstepstep&lt;/p&gt;
 </description>
-        <pubDate>Sat, 13 Jul 2013 16:41:00 +0800</pubDate>
+        <pubDate>Sat, 13 Jul 2013 16:41:00 +0100</pubDate>
         <link>http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem</link>
         <guid isPermaLink="true">http://mvj3.github.io/2013/07/13/how-do-i-create-stepstepstep-gem</guid>
         
@@ -761,7 +761,7 @@ ruby-china
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;memcached -I 3m -p &lt;span class=&quot;m&quot;&gt;11211&lt;/span&gt; -v -m &lt;span class=&quot;m&quot;&gt;512&lt;/span&gt; -d&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 </description>
-        <pubDate>Tue, 28 May 2013 15:28:32 +0800</pubDate>
+        <pubDate>Tue, 28 May 2013 08:28:32 +0100</pubDate>
         <link>http://mvj3.github.io/2013/05/28/solve-Memcached-ServerError-object-too-large-for-cache</link>
         <guid isPermaLink="true">http://mvj3.github.io/2013/05/28/solve-Memcached-ServerError-object-too-large-for-cache</guid>
         
@@ -783,7 +783,7 @@ ruby-china
 &lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt;        tail -r&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 </description>
-        <pubDate>Tue, 28 May 2013 15:28:32 +0800</pubDate>
+        <pubDate>Tue, 28 May 2013 08:28:32 +0100</pubDate>
         <link>http://mvj3.github.io/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs</link>
         <guid isPermaLink="true">http://mvj3.github.io/2013/05/28/list-ones-git-commit-messages-in-today-from-the-git-logs</guid>
         
