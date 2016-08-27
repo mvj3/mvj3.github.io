@@ -184,7 +184,7 @@
 <span class="lineno">10</span>                 <span class="k">AND</span> <span class="p">(</span><span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">is_delete</span><span class="o">`</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="lineno">11</span>                 <span class="k">AND</span> <span class="o">`</span><span class="n">common_user_favorite</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">model</span><span class="o">`</span> <span class="o">=</span> <span class="s1">&#39;code&#39;</span><span class="p">);</span></code></pre></div>
 
-<p>最后声明是用户表(CommonMember)对代码表(CodeGist)的has_many 是通过 用户表(CommonMember)对收藏表(CommonUserFavorite)的has_many 和 收藏表(CommonUserFavorite)对代码表(CodeGist)的belongs_to 共同实现的，这两个声明关系分别表述为  <code>:through =&gt; :favs</code> 和  <code>:source =&gt; :gist</code>。各自的示例如： </p>
+<p>最后声明是用户表(CommonMember)对代码表(CodeGist)的has_many 是通过 用户表(CommonMember)对收藏表(CommonUserFavorite)的has_many 和 收藏表(CommonUserFavorite)对代码表(CodeGist)的belongs_to 共同实现的，这两个声明关系分别表述为  <code>:through =&gt; :favs</code> 和  <code>:source =&gt; :gist</code>。各自的示例如：</p>
 
 <p><code>cm = CommonMember.where(:uid =&gt; 470700).first</code></p>
 

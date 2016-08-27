@@ -5,8 +5,8 @@
     <description>An avid open-source full-stack engineer.</description>
     <link>http://mvj3.github.io/</link>
     <atom:link href="http://mvj3.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 05 Mar 2016 15:40:37 +0000</pubDate>
-    <lastBuildDate>Sat, 05 Mar 2016 15:40:37 +0000</lastBuildDate>
+    <pubDate>Sat, 27 Aug 2016 12:19:32 +0100</pubDate>
+    <lastBuildDate>Sat, 27 Aug 2016 12:19:32 +0100</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -17,7 +17,7 @@
 
 &lt;p&gt;这个事件在国内也引起了很大讨论，各大社区都有，以下主要总结 &lt;a href=&quot;http://www.zhihu.com/question/31202353?rf=31187043&quot;&gt;如何看待 Max Howell 被 Google 拒绝？&lt;/a&gt; 里的讨论，态度主要分为以下两派：
 1. 大多是惊讶或者调侃大牛居然连这个算法里的基础题也做不出来，有讨论具体算法细节的，也有发明段子讽刺连面试官给你放水都还帮不了你。
-2. 小部分人怀疑白板面试是否真的能很好的筛选人才，毕竟没有多少项目经验的做过算法功课的应届生也可以做到通过这种白板算法面试。 &lt;/p&gt;
+2. 小部分人怀疑白板面试是否真的能很好的筛选人才，毕竟没有多少项目经验的做过算法功课的应届生也可以做到通过这种白板算法面试。&lt;/p&gt;
 
 &lt;p&gt;很不幸的是，我并没有看到更多有分量的开源软件牛人（像 Max Howell 作出 Homebrew 这样巨作的，上了 Github 排行榜的）出来支持 Max Howell 的观点。这也说明了程序员的地位相对企业的地位而言是远不如的，更多聪明的人是选择了沉默，我也听说过&lt;a href=&quot;http://timyang.net/google/open-source/&quot;&gt;为什么优秀开发者进入Google后就不参与开源了&lt;/a&gt;。&lt;/p&gt;
 
