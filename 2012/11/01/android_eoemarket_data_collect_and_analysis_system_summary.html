@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
 
-  <title>Projects</title>
+  <title>Android优亿市场数据采集分析系统概要</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
 
   <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 
-  <link rel="canonical" href="http://localhost:4000/projects/">
+  <link rel="canonical" href="http://localhost:4000/2012/11/01/android_eoemarket_data_collect_and_analysis_system_summary">
   <link rel="alternate" type="application/rss+xml" title="世界的审美！" href="http://localhost:4000/feed.xml" />
 
 	<script>
@@ -89,173 +89,60 @@
         <div class="post">
 
   <header class="post-header">
-    <!-- <h1 class="post-title">Projects</h1> -->
+    <h1 class="post-title">Android优亿市场数据采集分析系统概要</h1>
+    <p class="post-meta">Nov 1, 2012</p>
+    <p></p>
   </header>
 
   <article class="post-content">
-    <script src="/bower_components/underscore/underscore-min.js" type="text/javascript"></script>
-<link rel="stylesheet" href="/bower_components/timesheet.js/dist/timesheet.min.css">
-<script src="/bower_components/timesheet.js/dist/timesheet.min.js" type="text/javascript"></script>
-<script src="/bower_components/marked/marked.min.js" type="text/javascript"></script>
-<script src="projects.js" type="text/javascript"></script>
+    <h2 id="目标">目标</h2>
+<p>满足公司管理和运营人员，以及外部合作公司的数据需求，业务包括优亿市场应用下载，搜索等。</p>
 
-<div id="timesheet">
-</div>
+<h2 id="难点">难点</h2>
+<p>数据量大，实时，多维，只有淘宝等大公司或者专业的大数据公司才能处理。</p>
 
-<style>
-#timesheet {
-  height: 1400px;
-}
-#timesheet ul li span.label a {
-  color: white;
-}
+<h2 id="实时入库架构">实时入库架构</h2>
+<p>处理系统 由多个解析引擎和分布式的Mongodb数据库构成。</p>
 
-pre#project_groups {
-  margin-top: 20px;
-  margin-bottom: -40px;
-  word-wrap: normal;
-  background-color: #fdfdfd;
-  border: none;
-  width: 930px;  /* allow long ul/li project description */
-}
-pre#project_groups p {
-  margin-top: -20px;
-}
-pre#project_groups ol {
-  margin-top: -30px;
-}
-</style>
+<ul>
+  <li>日志数据源 为带时间戳的文本日志，常见的如nginx, sphinx，或定制的应用日志等，分布在各个机器的项目通过NFS把日志目录挂载到处理系统所在节点，或者直接把处理引擎部署到日志所在机器。</li>
+  <li>解析引擎 用Ruby脚本语言实现，方便根据业务需求灵活快速修改，内存稳定在400-500MB。 它根据上次解析时间点通过 <a href="http://rubygems.org/gems/logpos">二分查找</a> 实现毫秒级定位，并即时批量解析入库，避免了统计报表因数据量大处理时间慢而只能隔天出的弊端，以及重复解析的资源浪费。</li>
+</ul>
 
-<!-- TODO need to immprove my English writing.-->
-<pre id="project_groups" style="display:none;">
-### Building the data warehouse in Python (07/2014 - present)
+<p>相关技巧</p>
 
-In recent two years, I'm forced on **offline data processing**, the big part is to build a
-data warehouse, and aims to provide reports for millions of users. At the same time, I
-built serveral useful tools, and put them all in https://github.com/luiti organization.
+<ul>
+  <li>采用批量入库大大节约了带宽开销，入库速度，以及数据库索引优化，入库速度平均达到2万+条日志每分钟。</li>
+  <li>根据项目对数据精度的不同需求，各自实现了空间时间利用率很高但不百分百精确的bloomfilter或几乎完全精确的SHA加密等不同层级的排重策略。</li>
+  <li>日志格式通过递增对User-Agent等枚举字段常用标签进行压缩，字段大部分为占用空间极少的整数类型，并通过 <a href="http://rubygems.org/gems/activerecord_idnamecache">activerecord_idnamecache.gem</a> 内存缓存快速访问。</li>
+  <li><a href="/2012/12/13/compare-the-performance-of-parsing-nginx-log-via-c-sscanf-and-ruby-regexp/">用C的sscanf和Ruby的正则表达式解析nginx日志性能对比</a></li>
+</ul>
 
-Hadoop is our fundamental infrastructure, includes HDFS, YARN, and Hive. On the top of
-Hadoop, we use [luigi][28], [hue][39], and luiti to manage the business codes.
+<h2 id="统计分析架构">统计分析架构</h2>
+<p>统计分析构建在具有MapReduce并发分布式处理的Mongodb数据库和流式管道处理的Shell脚本上，并用Ruby脚本语言进行业务定制。</p>
 
-1. [luiti][1] an offline task management framework, built on top of [luigi][28]. And it's the biggest
-   project I had ever created, and was used and developed more than half of a year.
-2. [etl_utils][32] includes lots of useful utils, e.g. print processing speed on whatever
-   enumrable object, etc.
-3. [rsyncrun][33] Rsync your code to server and run.
-4. [validata][34] A data validator library used to detect invalid data with error informations,
-   based on MongoEngine.
-5. [model_cache][35] Cache data in `{ item_id => item_content }` format, supported storage are
-   memory, sqlite and redis.
+<ul>
+  <li>需求场景要求该系统具有快速，并发，容错，数据压缩等几个特性，目前日常Job在50+。</li>
+  <li>为此构建了灵活的面向业务的DSL，比如简单的一行</li>
+</ul>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">MapReduce</span><span class="p">.</span><span class="nf">count</span> <span class="no">EoeDownloadServerNginxLog</span><span class="p">,</span> <span class="p">[</span><span class="n">app_id</span><span class="p">,</span> <span class="ss">:channel_id</span><span class="p">],</span> <span class="no">StatDownloadLogInAppChannel</span> </code></pre></figure>
+<p>即可对每天几百万下载日志在十几分钟内统计出每个渠道每个应用的下载量，另外可以在语句块里传入特定的处理逻辑以更满足业务需求。在多维统计数据入库时，只记录了有值的部分，高效利用了磁盘空间。</p>
+<ul>
+  <li>数据展示 采用Rails web框架开发。用户访问统计时，应用程序先在内存声明空值的多维数组，再填入数据库里有值的部分，最后在浏览器里用图表展示出来，这样有效避免了磁盘IO过慢的问题。</li>
+</ul>
 
+<h2 id="相关演讲">相关演讲</h2>
+<p><a href="http://ruby-china.org/topics/5092">2012年09月01日</a> 在盛大创新院做过一次分享, 幻灯片地址在 <a href="http://mvj3.github.io/statistics-analytics-and-dark-knight">统计分析与黑暗骑士</a> 。</p>
 
-### Text mining in Python (06/2014 - 05/2015)
+<h2 id="缺陷">缺陷</h2>
+<ol>
+  <li>如直接按日写日志而不是每日切割的话，那么按上次解析位置重新开始就不需要额外排重。</li>
+  <li>自定制的简单分割的日志解析会快上几倍。</li>
+</ol>
 
-All of below projects were built at [17zuoye][27], which collected millions of examination questions.
-And the data team that I belonged to, needed to do some text mining.
+  </article>
 
-1. [detdup][20] Detect duplicated items engine.
-2. [textmulclassify][21] Extract one or multiple tags by giving a text.
-3. [tfidf][22] Compute tf idf with idf and tfidf cache independently.
-4. [phrase_recognizer][23] Phrase recognizer.
-5. [fill_broken_words][24] Fill broken words.
-6. [region_unit_recognizer][25] Region unit recognizer.
-7. [article_segment][26] Article segment.
-8. [hangman][40] Hangman is a word game played between two people. One person selects a secret
-   word, and the other tries to determine the word by guessing it letter-by-letter. I used Ruby
-   to solve this algorithm problem in a two-days remote interview.
-
-### Some JavaScript stuffs (03/2014 - 05/2015)
-
-1. [sample-diff][29] "Sample diff" diffs two big files with a few of them, and require only one IO
-   per file. The sample algorithm is called [Reservoir sampling][30].
-2. [nested-keys][36] CRUD nested keys on JavaScript object.
-3. [normalize_nested_params][37] Normalize nested params.
-4. [redmine.chosen.js][38] Enable chosen.js on Redmine's select boxes
-
-
-### Offline job in Ruby (08/2011 - 12/2013)
-
-[statlysis][8] is a thin Ruby DSL about statistics, support Mongoid and ActiveRecord.
-
-Statlysis's main idea is that report table should be simple, so people can understand quickly,
-and it means no SQL join is great. So we need to prepare the data source that driven by user
-events, using asynchronous tasks to insert new record into a pre-designed single table. This
-project is no longer maintained, cause I would like to use Python in recent years, but I still
-think the idea is very great, and it's suitable for thousands to millions of orders of magnitude.
-
-1. [logpos][9] Use binary search to seek a position in logs that include timestamp in every line.
-2. [only_one_rake][10] ensure only one rake is running at a time.
-
-
-### Rails Engine or related (05/2013 - 12/2013)
-1. [faye-online][2] Faye online user list and time count
-2. [qa-rails][3] A mini forum provided by only a simple helper, written in Backbone.
-3. [videojs_user_track][4] monitoring users playing videos.
-4. [distribute_tree][5] a Rails engine used to sharing data between one cloud server and multiple
-   local servers.
-5. [stepstepstep][6] DSL for defining before_filters's dependencies like rake tasks.
-6. [rack_image_assets_cache_control][7] Cache Control Image Assets in rails development.
-
-
-### ORM(ActiveRecord/Mongoid) plugins (01/2013 - 12/2013)
-1. [activerecord_idnamecache][11] Use Mysql AUTO_INCREMENT to support key value cache.
-2. [mongoid_uuid_generator][12] Generate an uuid column automately in Mongoid
-3. [mongoid_sync_with_deserialization][13] Support advanced data-type serialize when sync data in
-   JSON data format, such as Time.
-4. [active_model_as_json_filter][14] generate `as_json` by config properties directly.
-5. [mongoid_unpack_paperclip][15] In Mongoid with paperclip support, encapsulates uncompressing
-   and cleaning zip package operations.
-6. [mongoid_touch_parents_recursively][16] touch parents recursively in Mongoid
-7. [acts_as_time_racing][17] ActiveRecord plugin which record one item's start and finish time.
-8. [mongoid_many_or_many_to_many_setter][18] Instead of the default `_id` primary key, use another
-   field to setup the many-to-many or one-to many ORM relations.
-
-
-[1]:  https://github.com/luiti/luiti
-[2]:  https://github.com/mvj3/faye-online
-[3]:  https://github.com/eoecn/qa-rails
-[4]:  https://github.com/eoecn/videojs_user_track
-[5]:  https://github.com/mvj3/distribute_tree
-[6]:  https://github.com/eoecn/stepstepstep
-[7]:  https://github.com/eoecn/rack_image_assets_cache_control
-[8]:  https://github.com/mvj3/statlysis
-[9]:  https://github.com/mvj3/logpos
-[10]: https://github.com/mvj3/only_one_rake
-[11]: https://github.com/mvj3/activerecord_idnamecache
-[12]: https://github.com/mvj3/mongoid_uuid_generator
-[13]: https://github.com/mvj3/mongoid_sync_with_deserialization
-[14]: https://github.com/mvj3/active_model_as_json_filter
-[15]: https://github.com/mvj3/mongoid_unpack_paperclip
-[16]: https://github.com/mvj3/mongoid_touch_parents_recursively
-[17]: https://github.com/eoecn/acts_as_time_racing
-[18]: https://github.com/mvj3/mongoid_many_or_many_to_many_setter
-[19]: https://github.com/luiti
-[20]: https://github.com/mvj3/detdup
-[21]: https://github.com/17zuoye/textmulclassify
-[22]: https://github.com/17zuoye/tfidf
-[23]: https://github.com/mvj3/phrase_recognizer
-[24]: https://github.com/mvj3/fill_broken_words
-[25]: https://github.com/mvj3/region_unit_recognizer
-[26]: https://github.com/17zuoye/article_segment
-[27]: http://17zuoye.com/
-[28]: https://github.com/spotify/luigi
-[29]: https://github.com/17zuoye/sample-diff
-[30]: http://en.wikipedia.org/wiki/Reservoir_sampling
-[31]: http://en.wikipedia.org/wiki/Reservoir_sampling
-[32]: https://github.com/Luiti/etl_utils
-[33]: https://github.com/Luiti/rsyncrun
-[34]: https://github.com/Luiti/validata
-[35]: https://github.com/Luiti/model_cache
-[36]: https://github.com/17zuoye/nested-keys
-[37]: https://github.com/17zuoye/normalize_nested_params
-[38]: https://github.com/17zuoye/redmine.chosen.js
-[39]: https://github.com/cloudera/hue
-[40]: https://github.com/mvj3/hangman
-
-</pre>
-
-
-
+  
 <div class="comments">
 	<div id="disqus_thread"></div>
 	<script type="text/javascript">
@@ -273,8 +160,6 @@ think the idea is very great, and it's suitable for thousands to millions of ord
 </div>
 
 
-
-  </article>
 
 </div>
 
@@ -358,8 +243,8 @@ div.footer_intro {
 
       ga('create', 'UA-19059295-1', 'auto');
       ga('send', 'pageview', {
-        'page': '/projects/',
-        'title': 'Projects'
+        'page': '/2012/11/01/android_eoemarket_data_collect_and_analysis_system_summary',
+        'title': 'Android优亿市场数据采集分析系统概要'
       });
     }, 1000);
 	</script>

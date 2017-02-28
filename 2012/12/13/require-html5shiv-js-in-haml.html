@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
 
-  <title>Projects</title>
+  <title>HAML引用html5shiv.js</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
 
   <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 
-  <link rel="canonical" href="http://localhost:4000/projects/">
+  <link rel="canonical" href="http://localhost:4000/2012/12/13/require-html5shiv-js-in-haml">
   <link rel="alternate" type="application/rss+xml" title="世界的审美！" href="http://localhost:4000/feed.xml" />
 
 	<script>
@@ -89,173 +89,22 @@
         <div class="post">
 
   <header class="post-header">
-    <!-- <h1 class="post-title">Projects</h1> -->
+    <h1 class="post-title">HAML引用html5shiv.js</h1>
+    <p class="post-meta">Dec 13, 2012</p>
+    <p></p>
   </header>
 
   <article class="post-content">
-    <script src="/bower_components/underscore/underscore-min.js" type="text/javascript"></script>
-<link rel="stylesheet" href="/bower_components/timesheet.js/dist/timesheet.min.css">
-<script src="/bower_components/timesheet.js/dist/timesheet.min.js" type="text/javascript"></script>
-<script src="/bower_components/marked/marked.min.js" type="text/javascript"></script>
-<script src="projects.js" type="text/javascript"></script>
-
-<div id="timesheet">
-</div>
-
-<style>
-#timesheet {
-  height: 1400px;
-}
-#timesheet ul li span.label a {
-  color: white;
-}
-
-pre#project_groups {
-  margin-top: 20px;
-  margin-bottom: -40px;
-  word-wrap: normal;
-  background-color: #fdfdfd;
-  border: none;
-  width: 930px;  /* allow long ul/li project description */
-}
-pre#project_groups p {
-  margin-top: -20px;
-}
-pre#project_groups ol {
-  margin-top: -30px;
-}
-</style>
-
-<!-- TODO need to immprove my English writing.-->
-<pre id="project_groups" style="display:none;">
-### Building the data warehouse in Python (07/2014 - present)
-
-In recent two years, I'm forced on **offline data processing**, the big part is to build a
-data warehouse, and aims to provide reports for millions of users. At the same time, I
-built serveral useful tools, and put them all in https://github.com/luiti organization.
-
-Hadoop is our fundamental infrastructure, includes HDFS, YARN, and Hive. On the top of
-Hadoop, we use [luigi][28], [hue][39], and luiti to manage the business codes.
-
-1. [luiti][1] an offline task management framework, built on top of [luigi][28]. And it's the biggest
-   project I had ever created, and was used and developed more than half of a year.
-2. [etl_utils][32] includes lots of useful utils, e.g. print processing speed on whatever
-   enumrable object, etc.
-3. [rsyncrun][33] Rsync your code to server and run.
-4. [validata][34] A data validator library used to detect invalid data with error informations,
-   based on MongoEngine.
-5. [model_cache][35] Cache data in `{ item_id => item_content }` format, supported storage are
-   memory, sqlite and redis.
+    
+<figure class="highlight"><pre><code class="language-haml" data-lang="haml"><table style="border-spacing: 0"><tbody><tr><td class="gutter gl" style="text-align: right"><pre class="lineno">1
+2</pre></td><td class="code"><pre><span class="c">/</span><span class="cs">[if lt IE 9]</span><span class="c">
+</span>  <span class="nt">%script</span><span class="p">{</span><span class="ss">:src</span><span class="o">=&gt;</span><span class="s2">"html5shiv/dist/html5shiv.js"</span><span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></figure>
 
 
-### Text mining in Python (06/2014 - 05/2015)
+  </article>
 
-All of below projects were built at [17zuoye][27], which collected millions of examination questions.
-And the data team that I belonged to, needed to do some text mining.
-
-1. [detdup][20] Detect duplicated items engine.
-2. [textmulclassify][21] Extract one or multiple tags by giving a text.
-3. [tfidf][22] Compute tf idf with idf and tfidf cache independently.
-4. [phrase_recognizer][23] Phrase recognizer.
-5. [fill_broken_words][24] Fill broken words.
-6. [region_unit_recognizer][25] Region unit recognizer.
-7. [article_segment][26] Article segment.
-8. [hangman][40] Hangman is a word game played between two people. One person selects a secret
-   word, and the other tries to determine the word by guessing it letter-by-letter. I used Ruby
-   to solve this algorithm problem in a two-days remote interview.
-
-### Some JavaScript stuffs (03/2014 - 05/2015)
-
-1. [sample-diff][29] "Sample diff" diffs two big files with a few of them, and require only one IO
-   per file. The sample algorithm is called [Reservoir sampling][30].
-2. [nested-keys][36] CRUD nested keys on JavaScript object.
-3. [normalize_nested_params][37] Normalize nested params.
-4. [redmine.chosen.js][38] Enable chosen.js on Redmine's select boxes
-
-
-### Offline job in Ruby (08/2011 - 12/2013)
-
-[statlysis][8] is a thin Ruby DSL about statistics, support Mongoid and ActiveRecord.
-
-Statlysis's main idea is that report table should be simple, so people can understand quickly,
-and it means no SQL join is great. So we need to prepare the data source that driven by user
-events, using asynchronous tasks to insert new record into a pre-designed single table. This
-project is no longer maintained, cause I would like to use Python in recent years, but I still
-think the idea is very great, and it's suitable for thousands to millions of orders of magnitude.
-
-1. [logpos][9] Use binary search to seek a position in logs that include timestamp in every line.
-2. [only_one_rake][10] ensure only one rake is running at a time.
-
-
-### Rails Engine or related (05/2013 - 12/2013)
-1. [faye-online][2] Faye online user list and time count
-2. [qa-rails][3] A mini forum provided by only a simple helper, written in Backbone.
-3. [videojs_user_track][4] monitoring users playing videos.
-4. [distribute_tree][5] a Rails engine used to sharing data between one cloud server and multiple
-   local servers.
-5. [stepstepstep][6] DSL for defining before_filters's dependencies like rake tasks.
-6. [rack_image_assets_cache_control][7] Cache Control Image Assets in rails development.
-
-
-### ORM(ActiveRecord/Mongoid) plugins (01/2013 - 12/2013)
-1. [activerecord_idnamecache][11] Use Mysql AUTO_INCREMENT to support key value cache.
-2. [mongoid_uuid_generator][12] Generate an uuid column automately in Mongoid
-3. [mongoid_sync_with_deserialization][13] Support advanced data-type serialize when sync data in
-   JSON data format, such as Time.
-4. [active_model_as_json_filter][14] generate `as_json` by config properties directly.
-5. [mongoid_unpack_paperclip][15] In Mongoid with paperclip support, encapsulates uncompressing
-   and cleaning zip package operations.
-6. [mongoid_touch_parents_recursively][16] touch parents recursively in Mongoid
-7. [acts_as_time_racing][17] ActiveRecord plugin which record one item's start and finish time.
-8. [mongoid_many_or_many_to_many_setter][18] Instead of the default `_id` primary key, use another
-   field to setup the many-to-many or one-to many ORM relations.
-
-
-[1]:  https://github.com/luiti/luiti
-[2]:  https://github.com/mvj3/faye-online
-[3]:  https://github.com/eoecn/qa-rails
-[4]:  https://github.com/eoecn/videojs_user_track
-[5]:  https://github.com/mvj3/distribute_tree
-[6]:  https://github.com/eoecn/stepstepstep
-[7]:  https://github.com/eoecn/rack_image_assets_cache_control
-[8]:  https://github.com/mvj3/statlysis
-[9]:  https://github.com/mvj3/logpos
-[10]: https://github.com/mvj3/only_one_rake
-[11]: https://github.com/mvj3/activerecord_idnamecache
-[12]: https://github.com/mvj3/mongoid_uuid_generator
-[13]: https://github.com/mvj3/mongoid_sync_with_deserialization
-[14]: https://github.com/mvj3/active_model_as_json_filter
-[15]: https://github.com/mvj3/mongoid_unpack_paperclip
-[16]: https://github.com/mvj3/mongoid_touch_parents_recursively
-[17]: https://github.com/eoecn/acts_as_time_racing
-[18]: https://github.com/mvj3/mongoid_many_or_many_to_many_setter
-[19]: https://github.com/luiti
-[20]: https://github.com/mvj3/detdup
-[21]: https://github.com/17zuoye/textmulclassify
-[22]: https://github.com/17zuoye/tfidf
-[23]: https://github.com/mvj3/phrase_recognizer
-[24]: https://github.com/mvj3/fill_broken_words
-[25]: https://github.com/mvj3/region_unit_recognizer
-[26]: https://github.com/17zuoye/article_segment
-[27]: http://17zuoye.com/
-[28]: https://github.com/spotify/luigi
-[29]: https://github.com/17zuoye/sample-diff
-[30]: http://en.wikipedia.org/wiki/Reservoir_sampling
-[31]: http://en.wikipedia.org/wiki/Reservoir_sampling
-[32]: https://github.com/Luiti/etl_utils
-[33]: https://github.com/Luiti/rsyncrun
-[34]: https://github.com/Luiti/validata
-[35]: https://github.com/Luiti/model_cache
-[36]: https://github.com/17zuoye/nested-keys
-[37]: https://github.com/17zuoye/normalize_nested_params
-[38]: https://github.com/17zuoye/redmine.chosen.js
-[39]: https://github.com/cloudera/hue
-[40]: https://github.com/mvj3/hangman
-
-</pre>
-
-
-
+  
 <div class="comments">
 	<div id="disqus_thread"></div>
 	<script type="text/javascript">
@@ -273,8 +122,6 @@ think the idea is very great, and it's suitable for thousands to millions of ord
 </div>
 
 
-
-  </article>
 
 </div>
 
@@ -358,8 +205,8 @@ div.footer_intro {
 
       ga('create', 'UA-19059295-1', 'auto');
       ga('send', 'pageview', {
-        'page': '/projects/',
-        'title': 'Projects'
+        'page': '/2012/12/13/require-html5shiv-js-in-haml',
+        'title': 'HAML引用html5shiv.js'
       });
     }, 1000);
 	</script>

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
 
-  <title>Projects</title>
+  <title>前端工程师的面试也可以如此生动</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
 
   <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 
-  <link rel="canonical" href="http://localhost:4000/projects/">
+  <link rel="canonical" href="http://localhost:4000/2013/01/27/interview-frontend-engineer-can-also-be-so-vivid">
   <link rel="alternate" type="application/rss+xml" title="世界的审美！" href="http://localhost:4000/feed.xml" />
 
 	<script>
@@ -89,173 +89,38 @@
         <div class="post">
 
   <header class="post-header">
-    <!-- <h1 class="post-title">Projects</h1> -->
+    <h1 class="post-title">前端工程师的面试也可以如此生动</h1>
+    <p class="post-meta">Jan 27, 2013</p>
+    <p></p>
   </header>
 
   <article class="post-content">
-    <script src="/bower_components/underscore/underscore-min.js" type="text/javascript"></script>
-<link rel="stylesheet" href="/bower_components/timesheet.js/dist/timesheet.min.css">
-<script src="/bower_components/timesheet.js/dist/timesheet.min.js" type="text/javascript"></script>
-<script src="/bower_components/marked/marked.min.js" type="text/javascript"></script>
-<script src="projects.js" type="text/javascript"></script>
+    <p>公司下半年因*.eoe.cn项目要开发上线，寻找合适的前端工程师势在必行。过程很坎坷，我翻了下自己的工作日志，招聘过程达三个月之久。来面试的有互联网公司的，培训学校的，同事推荐的，…，各种基本功薄弱的，薪资漫天要价的，不靠谱啊。最终相中了一个工作两三年的，在偏时尚媒体设计公司待过的女前端工程师。</p>
 
-<div id="timesheet">
-</div>
+<p>面试是和其他同事一起进行的，除了对品性和工作方式的考察外，专业方面看的还是基础知识和经验。前端工程师一般分两类，一种是设计+CSS，关键词也就是Dreamweaver+Photoshop，这种人较多，但通常计算机知识薄弱。另一种是JS+CSS，偏重浏览器内的MVC, 这种人比较少，也是业界稀缺的。可能有人会说两者都包的人，那这种人是全才，基本都可以去创业了。我本身是Ruby(Rails）后端背景的，对前端略懂，而浏览器兼容性几乎没接触过。因此面试偏CSS的不太容易问出什么，也就是面试宝典里的绝对定位法，inline和block区别，jQuery选择器优化，等之类的。</p>
 
-<style>
-#timesheet {
-  height: 1400px;
-}
-#timesheet ul li span.label a {
-  color: white;
-}
+<p>一个偶然的机会，在问到一个前来面试的觉得国内有哪些觉得不错的前端产品的时候，有人提到了网易的新闻聚合（见下图news.tags.163.png），它采用了不同大小矩形色块的TreeMap可视化方式展现了新闻资讯集合。从源码上说，它只有不到150行的规整的HTML结构，足够在短时间内把握。让我们边看这个网页边面试：</p>
 
-pre#project_groups {
-  margin-top: 20px;
-  margin-bottom: -40px;
-  word-wrap: normal;
-  background-color: #fdfdfd;
-  border: none;
-  width: 930px;  /* allow long ul/li project description */
-}
-pre#project_groups p {
-  margin-top: -20px;
-}
-pre#project_groups ol {
-  margin-top: -30px;
-}
-</style>
+<ol>
+  <li>点击右上角的刷新按钮后，每个资讯元素重新滑动排列，这里可以考察HTML5的CSS，下面的”今天, 三天，一周”的时间范围的切换也是。</li>
+  <li>在这里还可以去问这些元素是重新排列，还是从服务器端获取的，可以让对方去源码里找出是哪一行还是引用的文件里调用了ajax。</li>
+  <li>打开chrome的调试器，并点击Network标签，在重新加载后，有些请求的Status变成了304，有些Size变成了from cache，这里可以去考察HTTP常识。</li>
+  <li>刚才我们翻开了HTML源码，问下css引用链接在上而js引用在下的原因，考察浏览器的渲染顺序。</li>
+  <li>接着我们又发现新闻数据并没有在HTML里看到，看对方是否可以知晓js如何调用。</li>
+  <li>看过css后，我们发现一个script标签里的type是text/x-micro-template，问下这是干什么的。如果对方回答出模版后，可以再去模版的实现原理，这样就实际就考察了对js闭包的了解。</li>
+  <li>js代码里面有些英文单词，可以趁机考考英文水平，很多工程师都没听说过github的。</li>
+</ol>
 
-<!-- TODO need to immprove my English writing.-->
-<pre id="project_groups" style="display:none;">
-### Building the data warehouse in Python (07/2014 - present)
+<p>问到这里的时候，水平自然见分晓了。这种方式虽然系统考察了一个前端该具备的技术能力，但事后证明它会让某些在CSS方面不错的和能实际快速的干活的人才错过了。
+对一般的互联网团队来说，1, CSS命名的规范结构化，2, 严格遵守jQuery链式调用规范，而不是一大堆东抄西补的原生js，3, 和快速的动手能力，前端工程师的这三点才是最重要的。</p>
 
-In recent two years, I'm forced on **offline data processing**, the big part is to build a
-data warehouse, and aims to provide reports for millions of users. At the same time, I
-built serveral useful tools, and put them all in https://github.com/luiti organization.
+<p>Android技术招聘可参看@iceskysl 的 <a href="http://my.eoe.cn/iceskysl/archive/21.html">说说我招聘android技术人员的思路</a> ，里面提到的4个点对招聘一般的应用工程师其实都适用。</p>
 
-Hadoop is our fundamental infrastructure, includes HDFS, YARN, and Hive. On the top of
-Hadoop, we use [luigi][28], [hue][39], and luiti to manage the business codes.
+<p>本文存放在 <a href="http://code.eoe.cn/145">code.eoe.cn 的gist版本</a> 。</p>
 
-1. [luiti][1] an offline task management framework, built on top of [luigi][28]. And it's the biggest
-   project I had ever created, and was used and developed more than half of a year.
-2. [etl_utils][32] includes lots of useful utils, e.g. print processing speed on whatever
-   enumrable object, etc.
-3. [rsyncrun][33] Rsync your code to server and run.
-4. [validata][34] A data validator library used to detect invalid data with error informations,
-   based on MongoEngine.
-5. [model_cache][35] Cache data in `{ item_id => item_content }` format, supported storage are
-   memory, sqlite and redis.
+  </article>
 
-
-### Text mining in Python (06/2014 - 05/2015)
-
-All of below projects were built at [17zuoye][27], which collected millions of examination questions.
-And the data team that I belonged to, needed to do some text mining.
-
-1. [detdup][20] Detect duplicated items engine.
-2. [textmulclassify][21] Extract one or multiple tags by giving a text.
-3. [tfidf][22] Compute tf idf with idf and tfidf cache independently.
-4. [phrase_recognizer][23] Phrase recognizer.
-5. [fill_broken_words][24] Fill broken words.
-6. [region_unit_recognizer][25] Region unit recognizer.
-7. [article_segment][26] Article segment.
-8. [hangman][40] Hangman is a word game played between two people. One person selects a secret
-   word, and the other tries to determine the word by guessing it letter-by-letter. I used Ruby
-   to solve this algorithm problem in a two-days remote interview.
-
-### Some JavaScript stuffs (03/2014 - 05/2015)
-
-1. [sample-diff][29] "Sample diff" diffs two big files with a few of them, and require only one IO
-   per file. The sample algorithm is called [Reservoir sampling][30].
-2. [nested-keys][36] CRUD nested keys on JavaScript object.
-3. [normalize_nested_params][37] Normalize nested params.
-4. [redmine.chosen.js][38] Enable chosen.js on Redmine's select boxes
-
-
-### Offline job in Ruby (08/2011 - 12/2013)
-
-[statlysis][8] is a thin Ruby DSL about statistics, support Mongoid and ActiveRecord.
-
-Statlysis's main idea is that report table should be simple, so people can understand quickly,
-and it means no SQL join is great. So we need to prepare the data source that driven by user
-events, using asynchronous tasks to insert new record into a pre-designed single table. This
-project is no longer maintained, cause I would like to use Python in recent years, but I still
-think the idea is very great, and it's suitable for thousands to millions of orders of magnitude.
-
-1. [logpos][9] Use binary search to seek a position in logs that include timestamp in every line.
-2. [only_one_rake][10] ensure only one rake is running at a time.
-
-
-### Rails Engine or related (05/2013 - 12/2013)
-1. [faye-online][2] Faye online user list and time count
-2. [qa-rails][3] A mini forum provided by only a simple helper, written in Backbone.
-3. [videojs_user_track][4] monitoring users playing videos.
-4. [distribute_tree][5] a Rails engine used to sharing data between one cloud server and multiple
-   local servers.
-5. [stepstepstep][6] DSL for defining before_filters's dependencies like rake tasks.
-6. [rack_image_assets_cache_control][7] Cache Control Image Assets in rails development.
-
-
-### ORM(ActiveRecord/Mongoid) plugins (01/2013 - 12/2013)
-1. [activerecord_idnamecache][11] Use Mysql AUTO_INCREMENT to support key value cache.
-2. [mongoid_uuid_generator][12] Generate an uuid column automately in Mongoid
-3. [mongoid_sync_with_deserialization][13] Support advanced data-type serialize when sync data in
-   JSON data format, such as Time.
-4. [active_model_as_json_filter][14] generate `as_json` by config properties directly.
-5. [mongoid_unpack_paperclip][15] In Mongoid with paperclip support, encapsulates uncompressing
-   and cleaning zip package operations.
-6. [mongoid_touch_parents_recursively][16] touch parents recursively in Mongoid
-7. [acts_as_time_racing][17] ActiveRecord plugin which record one item's start and finish time.
-8. [mongoid_many_or_many_to_many_setter][18] Instead of the default `_id` primary key, use another
-   field to setup the many-to-many or one-to many ORM relations.
-
-
-[1]:  https://github.com/luiti/luiti
-[2]:  https://github.com/mvj3/faye-online
-[3]:  https://github.com/eoecn/qa-rails
-[4]:  https://github.com/eoecn/videojs_user_track
-[5]:  https://github.com/mvj3/distribute_tree
-[6]:  https://github.com/eoecn/stepstepstep
-[7]:  https://github.com/eoecn/rack_image_assets_cache_control
-[8]:  https://github.com/mvj3/statlysis
-[9]:  https://github.com/mvj3/logpos
-[10]: https://github.com/mvj3/only_one_rake
-[11]: https://github.com/mvj3/activerecord_idnamecache
-[12]: https://github.com/mvj3/mongoid_uuid_generator
-[13]: https://github.com/mvj3/mongoid_sync_with_deserialization
-[14]: https://github.com/mvj3/active_model_as_json_filter
-[15]: https://github.com/mvj3/mongoid_unpack_paperclip
-[16]: https://github.com/mvj3/mongoid_touch_parents_recursively
-[17]: https://github.com/eoecn/acts_as_time_racing
-[18]: https://github.com/mvj3/mongoid_many_or_many_to_many_setter
-[19]: https://github.com/luiti
-[20]: https://github.com/mvj3/detdup
-[21]: https://github.com/17zuoye/textmulclassify
-[22]: https://github.com/17zuoye/tfidf
-[23]: https://github.com/mvj3/phrase_recognizer
-[24]: https://github.com/mvj3/fill_broken_words
-[25]: https://github.com/mvj3/region_unit_recognizer
-[26]: https://github.com/17zuoye/article_segment
-[27]: http://17zuoye.com/
-[28]: https://github.com/spotify/luigi
-[29]: https://github.com/17zuoye/sample-diff
-[30]: http://en.wikipedia.org/wiki/Reservoir_sampling
-[31]: http://en.wikipedia.org/wiki/Reservoir_sampling
-[32]: https://github.com/Luiti/etl_utils
-[33]: https://github.com/Luiti/rsyncrun
-[34]: https://github.com/Luiti/validata
-[35]: https://github.com/Luiti/model_cache
-[36]: https://github.com/17zuoye/nested-keys
-[37]: https://github.com/17zuoye/normalize_nested_params
-[38]: https://github.com/17zuoye/redmine.chosen.js
-[39]: https://github.com/cloudera/hue
-[40]: https://github.com/mvj3/hangman
-
-</pre>
-
-
-
+  
 <div class="comments">
 	<div id="disqus_thread"></div>
 	<script type="text/javascript">
@@ -273,8 +138,6 @@ think the idea is very great, and it's suitable for thousands to millions of ord
 </div>
 
 
-
-  </article>
 
 </div>
 
@@ -358,8 +221,8 @@ div.footer_intro {
 
       ga('create', 'UA-19059295-1', 'auto');
       ga('send', 'pageview', {
-        'page': '/projects/',
-        'title': 'Projects'
+        'page': '/2013/01/27/interview-frontend-engineer-can-also-be-so-vivid',
+        'title': '前端工程师的面试也可以如此生动'
       });
     }, 1000);
 	</script>
